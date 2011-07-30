@@ -1,5 +1,9 @@
 = Polka
 
+* Add global label by dragging in from the side
+
+* Scroll by moving canvas
+
 * Rename PolkaView::m_listLayout to something more reasonable.
 
 * Retrieve gravatar, all known links and local pictures for picture selector

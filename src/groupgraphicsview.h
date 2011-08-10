@@ -77,8 +77,6 @@ class GroupGraphicsView : public GroupView
 
     IdentityItem *item( const Polka::Identity & ) const;
 
-    bool eventFilter( QObject * watched, QEvent * event );
-
     void positionMenuItems();
 
     void clearItems();
@@ -105,12 +103,6 @@ class GroupGraphicsView : public GroupView
 
     void emitCloneGroup();
     void emitRemoveGroup();
-
-    void addLabelClicked();
-
-    void hideGlobalMenu();
-
-    void slotMouseMoved( const QPoint &pos );
 
     void positionAbsoluteItems();
 
@@ -152,7 +144,6 @@ class GroupGraphicsView : public GroupView
     QAnimationGroup *m_unplaceItemsAnimation;
     QAnimationGroup *m_unhideItemsAnimation;
 
-    FanMenu *m_globalMenu;
     FanMenuItem *m_addLabelItem;
 };
 

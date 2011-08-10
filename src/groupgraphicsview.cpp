@@ -43,7 +43,7 @@ GroupGraphicsView::GroupGraphicsView( PolkaModel *model, QWidget *parent )
     m_groupAdderItem( 0 ), m_newLabelItem( 0 ), m_compactLayout( false ),
     m_morphToAnimation( 0 ), m_morphFromAnimation( 0 ),
     m_removeItemsAnimation( 0 ), m_placeItemsAnimation( 0 ), 
-    m_unplaceItemsAnimation( 0 ), m_unhideItemsAnimation( 0 ), m_globalMenu( 0 )
+    m_unplaceItemsAnimation( 0 ), m_unhideItemsAnimation( 0 )
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
 
@@ -56,7 +56,6 @@ GroupGraphicsView::GroupGraphicsView( PolkaModel *model, QWidget *parent )
   m_view->setRenderHint( QPainter::Antialiasing );
   topLayout->addWidget( m_view );
   m_view->show();
-  m_view->installEventFilter( this );
   connect( m_view, SIGNAL( mouseMoved( const QPoint & ) ),
     SLOT( slotMouseMoved( const QPoint & ) ) );
   connect( m_view, SIGNAL( viewportMoved() ), SLOT( positionAbsoluteItems() ) );
@@ -172,9 +171,6 @@ void GroupGraphicsView::clearItems()
     delete item;
   }
   m_labelItems.clear();
-
-  if ( m_globalMenu ) delete m_globalMenu;
-  m_globalMenu = 0;
 }
 
 void GroupGraphicsView::placeItems()
@@ -347,8 +343,6 @@ IdentityItemGroup GroupGraphicsView::prepareIdentityItems( bool doAnimation )
       SLOT( savePosition( IdentityItem *, const QPointF & ) ) );
     connect( item, SIGNAL( itemChecked( const Polka::Identity &, bool ) ),
       SLOT( saveCheck( const Polka::Identity &, bool ) ) );
-
-    connect( item, SIGNAL( menuShown() ), SLOT( hideGlobalMenu() ) );
 
     item->setDefaultPos( QPointF( posX, posY ) );
 
@@ -589,7 +583,6 @@ LabelItem *GroupGraphicsView::createLabelItem( const Polka::ViewLabel &label )
     SLOT( removeLabel( LabelItem * ) ) );
   connect( item, SIGNAL( renameLabel( LabelItem * ) ),
     SLOT( renameLabel( LabelItem * ) ) );
-  connect( item, SIGNAL( menuShown() ), SLOT( hideGlobalMenu() ) );
 
   m_scene->addItem( item );
 
@@ -737,56 +730,6 @@ IdentityItem *GroupGraphicsView::item( const Polka::Identity &identity ) const
     if ( item->identity().id() == identity.id() ) return item;
   }
   return 0;
-}
-
-bool GroupGraphicsView::eventFilter( QObject *watched, QEvent *event )
-{
-  if ( watched == m_view ) {
-    if ( event->type() == QEvent::MouseButtonPress ) {
-      QMouseEvent *mouseEvent = static_cast<QMouseEvent*>( event );
-
-      if ( !m_globalMenu ) {
-        m_globalMenu = new FanMenu( 0 );
-        m_globalMenu->setZValue( 50 );
-        FanMenuItem *menuItem = m_globalMenu->addItem( i18n("Add label") );
-        connect( menuItem, SIGNAL( clicked() ), SLOT( addLabelClicked() ) );
-        m_globalMenu->setupItems();
-
-        m_scene->addItem( m_globalMenu );
-      }
-      m_globalMenu->setPos( m_view->mapToScene( mouseEvent->pos() ) );
-      m_globalMenu->show();
-    } else if ( event->type() == QEvent::KeyPress ) {
-      QKeyEvent *keyEvent = static_cast<QKeyEvent*>( event );
-      if ( keyEvent->key() == Qt::Key_Escape ) {
-        hideGlobalMenu();
-      }
-    }
-  }
-  return QWidget::eventFilter( watched, event );
-}
-
-void GroupGraphicsView::addLabelClicked()
-{
-  hideGlobalMenu();
-
-  addLabel( m_globalMenu->pos() );
-}
-
-void GroupGraphicsView::hideGlobalMenu()
-{
-  if ( m_globalMenu ) {
-    m_globalMenu->hide();
-  }
-}
-
-void GroupGraphicsView::slotMouseMoved( const QPoint &pos )
-{
-  if ( !m_globalMenu || !m_globalMenu->isVisible() ) return;
-
-  if ( !m_globalMenu->isCloseTo( m_view->mapToScene( pos ) ) ) {
-    hideGlobalMenu();
-  }
 }
 
 void GroupGraphicsView::setAdderGroup( const Polka::Identity &group )

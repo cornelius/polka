@@ -40,7 +40,7 @@
 
 GroupGraphicsView::GroupGraphicsView( PolkaModel *model, QWidget *parent )
   : GroupView( model, parent ), m_mainMenu( 0 ), m_magicMenu( 0 ),
-    m_groupAdderItem( 0 ), m_compactLayout( false ),
+    m_groupAdderItem( 0 ), m_newLabelItem( 0 ), m_compactLayout( false ),
     m_morphToAnimation( 0 ), m_morphFromAnimation( 0 ),
     m_removeItemsAnimation( 0 ), m_placeItemsAnimation( 0 ), 
     m_unplaceItemsAnimation( 0 ), m_unhideItemsAnimation( 0 ), m_globalMenu( 0 )
@@ -447,6 +447,16 @@ void GroupGraphicsView::createMenuItems()
   m_groupAdderItem = new GroupAdderItem( model() );
   m_scene->addItem( m_groupAdderItem );
   m_groupAdderItem->setZValue( -100 );
+
+  Polka::ViewLabel label;
+  label.setText( i18n("New Label") );
+  m_newLabelItem = new LabelItem( model(), label );
+  m_newLabelItem->setMenuEnabled( false );
+  m_scene->addItem( m_newLabelItem );
+
+  connect( m_newLabelItem, SIGNAL( itemMoved( const Polka::ViewLabel &,
+    const QPointF & ) ), SLOT(  newLabelMoved( const Polka::ViewLabel &,
+    const QPointF & ) ) );
 }
 
 void GroupGraphicsView::positionMenuItems()
@@ -463,10 +473,14 @@ void GroupGraphicsView::positionMenuItems()
     m_mainMenu->setPos( upperRightScene.x() - 50, upperRightScene.y() + 50 );
   }
   if ( m_magicMenu ) {
-    m_magicMenu->setPos( upperRightScene.x() - 50, upperRightScene.y() + 130 );
+    m_magicMenu->setPos( upperRightScene.x() - 130, upperRightScene.y() + 50 );
   }
   if ( m_groupAdderItem ) {
     m_groupAdderItem->setPos( lowerLeftScene );
+  }
+  if ( m_newLabelItem ) {
+    m_newLabelItem->setPos( upperRightScene.x() - 10,
+      upperRightScene.y() + 130 );
   }
 }
 
@@ -507,6 +521,14 @@ void GroupGraphicsView::saveCheck( const Polka::Identity &identity,
   bool checked )
 {
   model()->saveViewCheck( group(), identity, checked );
+}
+
+void GroupGraphicsView::newLabelMoved( const Polka::ViewLabel &,
+  const QPointF &pos )
+{
+  addLabel( pos );
+
+  positionMenuItems();  
 }
 
 void GroupGraphicsView::addLabel()

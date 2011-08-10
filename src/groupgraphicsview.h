@@ -123,6 +123,8 @@ class GroupGraphicsView : public GroupView
     void slotIdentityChanged( const Polka::Identity & );
     void slotIdentityRemoved( const Polka::Identity & );
 
+    void newLabelMoved( const Polka::ViewLabel &, const QPointF & );
+
   private:
     QList<IdentityItem *> m_items;
     QList<LabelItem *> m_labelItems;
@@ -134,6 +136,7 @@ class GroupGraphicsView : public GroupView
     MainMenuItem *m_mainMenu;
     MagicMenuItem *m_magicMenu;
     GroupAdderItem *m_groupAdderItem;
+    LabelItem *m_newLabelItem;
 
     QGraphicsScene *m_scene;
     QGraphicsView *m_view;

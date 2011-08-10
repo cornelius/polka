@@ -24,7 +24,7 @@
 #include <KLocale>
 
 LabelItem::LabelItem( PolkaModel *model, const Polka::ViewLabel &label )
-  : QObject( model ), m_model( model ), m_label( label )
+  : QObject( model ), m_model( model ), m_label( label ), m_menuEnabled( true )
 {
   setBrush( QColor( 255,255,230 ) );
 
@@ -69,12 +69,22 @@ void LabelItem::setText( const QString &text )
   m_textItem->setPos( - textWidth / 2, - textHeight / 2 );
 }
 
+void LabelItem::setMenuEnabled( bool enabled )
+{
+  m_menuEnabled = enabled;
+  if ( !m_menuEnabled ) {
+    m_fanMenu->hide();
+  }
+}
+
 void LabelItem::hoverEnterEvent( QGraphicsSceneHoverEvent *event )
 {
   Q_UNUSED( event );
 
-  m_fanMenu->show();
-  emit menuShown();
+  if ( m_menuEnabled ) {
+    m_fanMenu->show();
+    emit menuShown();
+  }
 }
 
 void LabelItem::hoverLeaveEvent( QGraphicsSceneHoverEvent *event )

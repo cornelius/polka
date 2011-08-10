@@ -39,6 +39,8 @@ class LabelItem : public QObject, public RoundedRectItem
     Polka::ViewLabel label() const;
     void setLabel( const Polka::ViewLabel & );
 
+    void setMenuEnabled( bool enabled );
+
   signals:
     void itemMoved( const Polka::ViewLabel &, const QPointF & );
     void removeLabel( LabelItem * );
@@ -66,6 +68,8 @@ class LabelItem : public QObject, public RoundedRectItem
     QGraphicsTextItem *m_textItem;
 
     FanMenu *m_fanMenu;
+
+    bool m_menuEnabled;
 
     QPointF m_movePos;
 };

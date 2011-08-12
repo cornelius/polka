@@ -1,7 +1,5 @@
 = Polka
 
-* Rename PolkaView::m_listLayout to something more reasonable.
-
 * Retrieve gravatar, all known links and local pictures for picture selector
 * Fetch remote pictures
 

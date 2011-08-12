@@ -100,7 +100,7 @@ class PolkaView : public QWidget
     SearchEdit *m_searchEdit;
     SettingsWidget *m_settingsWidget;
     QWidget *m_groupWidget;
-    QStackedLayout *m_listLayout;
+    QStackedLayout *m_viewStack;
     GroupListView *m_groupListView;
     GroupGraphicsView *m_groupGraphicsView;
     PersonView *m_personView;

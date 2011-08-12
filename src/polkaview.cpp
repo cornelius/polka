@@ -82,20 +82,20 @@ PolkaView::PolkaView(QWidget *parent)
   m_groupWidget = new QWidget;
   viewLayout->addWidget( m_groupWidget );
   
-  m_listLayout = new QStackedLayout( m_groupWidget );
+  m_viewStack = new QStackedLayout( m_groupWidget );
 
   m_overview = new Overview;
-  m_listLayout->addWidget( m_overview );
+  m_viewStack->addWidget( m_overview );
   connect( m_overview, SIGNAL( showGroupView() ), SLOT( showGroupView() ) );
   connect( m_overview, SIGNAL( showListView() ), SLOT( showListView() ) );
   connect( m_overview, SIGNAL( showHistory() ), SLOT( showHistory() ) );
 
   m_groupListView = new GroupListView( m_model );
-  m_listLayout->addWidget( m_groupListView );
+  m_viewStack->addWidget( m_groupListView );
   connectGroupView( m_groupListView );
 
   m_groupGraphicsView = new GroupGraphicsView( m_model );
-  m_listLayout->addWidget( m_groupGraphicsView );
+  m_viewStack->addWidget( m_groupGraphicsView );
   connectGroupView( m_groupGraphicsView );
   connect( m_groupGraphicsView, SIGNAL( newGroup() ), SLOT( newSubGroup() ) );
   connect( m_groupGraphicsView, SIGNAL( removeIdentity( const Polka::Identity &,
@@ -116,10 +116,10 @@ PolkaView::PolkaView(QWidget *parent)
     SLOT( closePersonView() ) );
 
   m_historyView = new HistoryView( m_model );
-  m_listLayout->addWidget( m_historyView );
+  m_viewStack->addWidget( m_historyView );
 
   m_searchResultView = new SearchResultView( m_model );
-  m_listLayout->addWidget( m_searchResultView );
+  m_viewStack->addWidget( m_searchResultView );
 
   m_settingsWidget = new SettingsWidget( m_model );
   topLayout->addWidget( m_settingsWidget );
@@ -278,10 +278,10 @@ void PolkaView::continueShowGroup()
 
   if ( m_settingsWidget->fancyMode() ) {
     m_groupGraphicsView->showGroup( m_group );
-    m_listLayout->setCurrentWidget( m_groupGraphicsView );
+    m_viewStack->setCurrentWidget( m_groupGraphicsView );
   } else {
     m_groupListView->showGroup( m_group );
-    m_listLayout->setCurrentWidget( m_groupListView );
+    m_viewStack->setCurrentWidget( m_groupListView );
   }
 }
 
@@ -381,7 +381,7 @@ void PolkaView::showOverview()
 {
   m_backButton->hide();
   m_groupNameLabel->setText( QString() );
-  m_listLayout->setCurrentWidget( m_overview );
+  m_viewStack->setCurrentWidget( m_overview );
 }
 
 void PolkaView::showGroupView()
@@ -400,7 +400,7 @@ void PolkaView::showHistory()
 {
   m_backButton->hide();
   m_groupNameLabel->setText( i18n("<b>History</b>") );
-  m_listLayout->setCurrentWidget( m_historyView );
+  m_viewStack->setCurrentWidget( m_historyView );
 
   m_historyView->loadHistory();
 }
@@ -410,7 +410,7 @@ void PolkaView::showSearch( const QString &text )
   m_groupNameLabel->setText( i18n("<b>Search Results</b>") );
   m_backButton->setEnabled( true );
 
-  m_listLayout->setCurrentWidget( m_searchResultView );
+  m_viewStack->setCurrentWidget( m_searchResultView );
   m_searchResultView->search( text );
 }
 

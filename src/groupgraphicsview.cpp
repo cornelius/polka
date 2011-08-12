@@ -629,6 +629,7 @@ void GroupGraphicsView::morphToCompact()
 {
   m_mainMenu->hide();
   if ( m_magicMenu ) m_magicMenu->hide();
+  if ( m_newLabelItem ) m_newLabelItem->hide();
   foreach( LabelItem *item, m_labelItems ) {
     item->hide();
   }
@@ -716,6 +717,7 @@ void GroupGraphicsView::finishMorphFromCompact()
 {
   m_mainMenu->show();
   if ( m_magicMenu ) m_magicMenu->show();
+  if ( m_newLabelItem ) m_newLabelItem->show();
 
   foreach( LabelItem *item, m_labelItems ) {
     item->show();

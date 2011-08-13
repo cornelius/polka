@@ -1,12 +1,12 @@
 = Polka
 
+* Make icon actually show up.
+
 * Add picture should provide possibility to add twitter, facebook, etc.
 * Show descriptive text instead of URL in picture selector controls (twitter
   instead of twitter url, screen grab instead of nothing )
 * Retrieve gravatar, all known links and local pictures for picture selector
 * Fetch remote pictures
-
-* Application icon
 
 * Show help for creating labels (highlight on hover?)
 

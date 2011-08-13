@@ -34,7 +34,6 @@ MatchList::MatchList( PolkaModel *model, QWidget *parent )
   topLayout->addWidget( m_matchList );
   connect( m_matchList, SIGNAL( activated( const QModelIndex & ) ),
     SIGNAL( activated() ) );
-
 }
 
 MatchList::~MatchList()

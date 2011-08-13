@@ -120,6 +120,9 @@ PolkaView::PolkaView(QWidget *parent)
 
   m_searchResultView = new SearchResultView( m_model );
   m_viewStack->addWidget( m_searchResultView );
+  connect( m_searchResultView,
+    SIGNAL( identityActivated( const Polka::Identity & ) ),
+    SLOT( showPerson( const Polka::Identity & ) ) );
 
   m_settingsWidget = new SettingsWidget( m_model );
   topLayout->addWidget( m_settingsWidget );
@@ -354,7 +357,9 @@ void PolkaView::goBack()
 {
   if ( m_personView->isVisible() ) {
     closePersonView();
-    m_backButton->setEnabled( m_history.size() > 1 );
+    if ( !m_searchResultView->isVisible() ) {
+      m_backButton->setEnabled( m_history.size() > 1 );
+    }
     return;
   }
 

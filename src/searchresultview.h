@@ -19,6 +19,8 @@
 #ifndef SEARCHRESULTVIEW_H
 #define SEARCHRESULTVIEW_H
 
+#include <polka/polka.h>
+
 #include <QtGui>
 
 class MatchList;
@@ -33,6 +35,12 @@ class SearchResultView : public QWidget
   public slots:
     void search( const QString & );
 
+  signals:
+    void identityActivated( const Polka::Identity & );
+
+  protected slots:
+    void slotActivated();
+    
   private:
     PolkaModel *m_model;
     

@@ -31,6 +31,7 @@ SearchResultView::SearchResultView( PolkaModel *model )
   topLayout->addStretch( 1 );
 
   m_matchList = new MatchList( m_model );
+  connect( m_matchList, SIGNAL( activated() ), SLOT( slotActivated() ) );
   topLayout->addWidget( m_matchList );
   
   topLayout->addStretch( 1 );
@@ -39,4 +40,9 @@ SearchResultView::SearchResultView( PolkaModel *model )
 void SearchResultView::search( const QString &text )
 {
   m_matchList->filter( text );
+}
+
+void SearchResultView::slotActivated()
+{
+  emit identityActivated( m_matchList->identity() );
 }

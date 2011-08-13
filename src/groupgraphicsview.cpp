@@ -56,8 +56,6 @@ GroupGraphicsView::GroupGraphicsView( PolkaModel *model, QWidget *parent )
   m_view->setRenderHint( QPainter::Antialiasing );
   topLayout->addWidget( m_view );
   m_view->show();
-  connect( m_view, SIGNAL( mouseMoved( const QPoint & ) ),
-    SLOT( slotMouseMoved( const QPoint & ) ) );
   connect( m_view, SIGNAL( viewportMoved() ), SLOT( positionAbsoluteItems() ) );
 
   connect( model, SIGNAL( identityAdded( const Polka::Identity & ) ),

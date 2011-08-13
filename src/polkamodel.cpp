@@ -597,5 +597,35 @@ void PolkaModel::createFirstStartData()
   welcome.setX( 250 );
   welcome.setY( -30 );
   
-  saveViewLabel( rootGroup(), welcome );  
+  saveViewLabel( rootGroup(), welcome );
+
+  Polka::Identity helpGroup;
+  name.setValue( i18n("Help") );
+  helpGroup.setName( name );
+  helpGroup.setType( "group" );
+  
+  helpGroup = addIdentity( helpGroup, rootGroup() );
+
+  saveViewPosition( rootGroup(), helpGroup, QPointF( -100, 100 ) );
+
+  Polka::ViewLabel helpLabel1;
+  helpLabel1.setText( i18n("Help text for menu") );
+  helpLabel1.setX( 300 );
+  helpLabel1.setY( -200 );
+  
+  saveViewLabel( helpGroup, helpLabel1 );
+
+  Polka::ViewLabel helpLabel2;
+  helpLabel2.setText( i18n("Help text for new label") );
+  helpLabel2.setX( -300 );
+  helpLabel2.setY( 100 );
+  
+  saveViewLabel( helpGroup, helpLabel2 );
+
+  Polka::ViewLabel helpLabel3;
+  helpLabel3.setText( i18n("Help text for group adder") );
+  helpLabel3.setX( -300 );
+  helpLabel3.setY( 200 );
+  
+  saveViewLabel( helpGroup, helpLabel3 );
 }

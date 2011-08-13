@@ -9,6 +9,10 @@
 * Fetch remote pictures
 
 * Create "help" group on startup containing some explanations of the ui.
+    * Add "go to help group for help" text to welcome text.
+    * Fix positions of items on welcome screen
+    * Make more than one label show up
+    * Write help texts
 
 * Menu handler for showing menus on top all the time.
 * Move menu and tracking view code to lib.

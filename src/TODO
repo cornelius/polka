@@ -1,45 +1,43 @@
 = Polka
 
+* Fix overview view
+
+* Use built in functions to show search label.
+* Make search results more useful.
+
+* Handle geo location
+
+* Add picture should provide possibility to add twitter, facebook, etc.
+* Show descriptive text instead of URL in picture selector controls (twitter
+  instead of twitter url, screen grab instead of nothing )
 * Retrieve gravatar, all known links and local pictures for picture selector
 * Fetch remote pictures
 
-* Undo based on git (Rollback from UI)
-
-* Search
-* Handle geo location
-
-* Back button on canvas, top-left-corner, hide when no back
-
-* Multi-person picture importer
-
-* Make PolkaView::insert protected and only use add and update?
-
-* Small pictures of people as group picture
-
-* Add picture should provide possibility to add twitter, facebook, etc.
-
-* Show descriptive text instead of URL in picture selector controls (twitter
-instead of twitter url, screen grab instead of nothing )
-
-* Separate commit for deletion of a person.
-* Put changes in XML for addition of pictures into correct commit.
-
-* Explode sub group
-* Create sub group from checked identities
-* Editing of group names (maybe use special personviewer?)
-
-* Show nice text for links.
+* Show help for creating labels (highlight on hover?)
 
 * Menu handler for showing menus on top all the time.
 * Move menu and tracking view code to lib.
 
-* Make sure new items don't overlap with existing moved ones.
-
-* Drop images e.g. from web pages to add new pictures to person
+* Back button on canvas, top-left-corner, hide when no back
 
 * Cloud connect
+
+* Editing of group names (maybe use special personviewer?)
+
+* Make PolkaView::insert protected and only use add and update?
+* Separate commit for deletion of a person.
+* Put changes in XML for addition of pictures into correct commit.
+* Don't show root group in group selector.
+
+* Show nice text for links.
+* Make sure new items don't overlap with existing moved ones.
+
+* Undo based on git (Rollback from UI)
 * Canvas-based details view
 * Zoom
+* Multi-person picture importer (e.g. from group photo)
+* Drop images e.g. from web pages to add new pictures to person
+* Small pictures of people as group picture
 
 * Clean up git debug output.
 * Handle git errors
@@ -53,11 +51,13 @@ instead of twitter url, screen grab instead of nothing )
 * More than one (remote) repo, to separate for example private and job data. It
   could also be interesting to connect to your friends repos in some way.
 
-* Don't show root group in group selector.
-
 * Migrate data between schema versions
 
+* Explode sub group
+* Create sub group from checked identities
+
 * Group specific display names
+
 
 = kxml_compiler
 

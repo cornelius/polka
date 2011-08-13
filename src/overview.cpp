@@ -26,38 +26,35 @@ Overview::Overview()
 {
   QBoxLayout *topLayout = new QHBoxLayout( this );
 
-  topLayout->addStretch( 1 );
 
   QBoxLayout *buttonLayout = new QVBoxLayout;
-  topLayout->addLayout( buttonLayout );
+  buttonLayout->setSpacing( 20 );
 
-  QPushButton *button = new QPushButton( i18n("Group view") );
+  buttonLayout->addStretch( 1 );
+
+  QPushButton *button = new QPushButton( i18n("Back to group view") );
   buttonLayout->addWidget( button );
   connect( button, SIGNAL( clicked() ), SIGNAL( showGroupView() ) );
-
-  button = new QPushButton( i18n("List view") );
-  buttonLayout->addWidget( button );
-  connect( button, SIGNAL( clicked() ), SIGNAL( showListView() ) );
 
   button = new QPushButton( i18n("History") );
   buttonLayout->addWidget( button );
   connect( button, SIGNAL( clicked() ), SIGNAL( showHistory() ) );
 
-  topLayout->addStretch( 1 );
+  buttonLayout->addStretch( 1 );
 
-  QBoxLayout *rightLayout = new QVBoxLayout;
-  topLayout->addLayout( rightLayout );
+
+  QBoxLayout *infoLayout = new QVBoxLayout;
 
   QString logoPath = KStandardDirs::locate( "appdata", "polka-logo.png" );
   QPixmap logoPixmap = QPixmap( logoPath );
 
   QLabel *logo = new QLabel;
   logo->setPixmap( logoPixmap );
-  rightLayout->addWidget( logo );
+  infoLayout->addWidget( logo );
 
   QLabel *about = new QLabel;
   about->setOpenExternalLinks( true );
-  rightLayout->addWidget( about );
+  infoLayout->addWidget( about );
   
   QString text = "<qt>";
   text += i18n("Polka - the humane address book for the cloud");
@@ -74,5 +71,10 @@ Overview::Overview()
 
   about->setText( text );
 
+
+  topLayout->addStretch( 1 );
+  topLayout->addLayout( infoLayout );
+  topLayout->addStretch( 1 );
+  topLayout->addLayout( buttonLayout );
   topLayout->addStretch( 1 );
 }

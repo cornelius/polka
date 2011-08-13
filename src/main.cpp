@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 {
   KAboutData about( "polka", 0, ki18n("Polka"), version, ki18n(description),
     KAboutData::License_GPL, ki18n("(C) 2011 Cornelius Schumacher"),
-    KLocalizedString(), 0, "schumacher@kde.org");
+    KLocalizedString(), 0, "schumacher@kde.org" );
   about.addAuthor( ki18n("Cornelius Schumacher"), KLocalizedString(),
     "schumacher@kde.org" );
   KCmdLineArgs::init( argc, argv, &about );

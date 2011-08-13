@@ -29,21 +29,12 @@ class SearchEdit : public KLineEdit
   public:
     SearchEdit();
 
-    void setEmpty();
-
   signals:
     void search( const QString & );
     void stopSearch();
 
-  protected:
-    void focusInEvent( QFocusEvent * );
-    void focusOutEvent( QFocusEvent * );
-
   protected slots:
     void slotTextChanged( const QString & );
-
-  private:
-    bool m_empty;
 };
 
 #endif

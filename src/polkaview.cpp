@@ -359,7 +359,7 @@ void PolkaView::goBack()
   }
 
   if ( m_searchResultView->isVisible() ) {
-    m_searchEdit->setEmpty();
+    m_searchEdit->setText( QString() );
     showGroupView();
     return;
   }
@@ -381,6 +381,7 @@ void PolkaView::showOverview()
 {
   m_backButton->hide();
   m_groupNameLabel->setText( QString() );
+  m_searchEdit->setText( QString() );
   m_viewStack->setCurrentWidget( m_overview );
 }
 

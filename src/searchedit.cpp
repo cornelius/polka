@@ -23,42 +23,18 @@
 
 SearchEdit::SearchEdit()
 {
-  setEmpty();
+  setPlaceholderText( i18n("Search...") );
 
   connect( this, SIGNAL( textChanged( const QString & ) ),
     SLOT( slotTextChanged( const QString & ) ) );
 }
 
-void SearchEdit::setEmpty()
-{
-  m_empty = true;
-  setText( i18n("Search...") );
-}
-
 void SearchEdit::slotTextChanged( const QString &text )
 {
-  if ( m_empty ) return;
-
   if ( text.isEmpty() ) {
     clearFocus();
     emit stopSearch();
   } else {
-    m_empty = false;
     emit search( text );
-  }
-}
-
-void SearchEdit::focusInEvent( QFocusEvent * )
-{
-  if ( m_empty ) {
-    setText( "" );
-    m_empty = false;
-  }
-}
-
-void SearchEdit::focusOutEvent( QFocusEvent * )
-{
-  if ( text().isEmpty() ) {
-    setEmpty();
   }
 }

@@ -8,7 +8,7 @@
 * Retrieve gravatar, all known links and local pictures for picture selector
 * Fetch remote pictures
 
-* Show help for creating labels (highlight on hover?)
+* Create "help" group on startup containing some explanations of the ui.
 
 * Menu handler for showing menus on top all the time.
 * Move menu and tracking view code to lib.

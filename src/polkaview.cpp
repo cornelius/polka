@@ -426,6 +426,5 @@ void PolkaView::showSearch( const QString &text )
 
 void PolkaView::stopSearch()
 {
-  qDebug() << "stopSearch";
   showGroupView();
 }

@@ -1,6 +1,8 @@
 = Polka
 
 * Fix overview view
+    * Remove list view
+    * Put buttons on right
 
 * Use built in functions to show search label.
 * Make search results more useful.

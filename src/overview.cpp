@@ -56,6 +56,7 @@ Overview::Overview()
   rightLayout->addWidget( logo );
 
   QLabel *about = new QLabel;
+  about->setOpenExternalLinks( true );
   rightLayout->addWidget( about );
   
   QString text = "<qt>";

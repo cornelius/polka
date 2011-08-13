@@ -8,6 +8,8 @@
 * Search
 * Handle geo location
 
+* Back button on canvas, top-left-corner, hide when no back
+
 * Multi-person picture importer
 
 * Make PolkaView::insert protected and only use add and update?
@@ -28,9 +30,16 @@ instead of twitter url, screen grab instead of nothing )
 
 * Show nice text for links.
 
+* Menu handler for showing menus on top all the time.
+* Move menu and tracking view code to lib.
+
 * Make sure new items don't overlap with existing moved ones.
 
 * Drop images e.g. from web pages to add new pictures to person
+
+* Cloud connect
+* Canvas-based details view
+* Zoom
 
 * Clean up git debug output.
 * Handle git errors

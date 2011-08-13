@@ -381,7 +381,11 @@ void PolkaView::showOverview()
 {
   m_backButton->hide();
   m_groupNameLabel->setText( QString() );
+
+  m_searchEdit->blockSignals( true );
   m_searchEdit->setText( QString() );
+  m_searchEdit->blockSignals( false );
+  
   m_viewStack->setCurrentWidget( m_overview );
 }
 
@@ -417,5 +421,6 @@ void PolkaView::showSearch( const QString &text )
 
 void PolkaView::stopSearch()
 {
+  qDebug() << "stopSearch";
   showGroupView();
 }

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="90mm"
+   height="50mm"
+   id="svg2985"
+   version="1.1"
+   inkscape:version="0.48.1 r9760"
+   sodipodi:docname="polka-icon.svg"
+   inkscape:export-filename="/home/islington/Projects/Current/Polka/Logo.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs3">
+    <inkscape:path-effect
+       effect="vonkoch"
+       id="path-effect3000"
+       is_visible="true"
+       ref_path="m -160.83333,10.498693 39.16666,0"
+       generator="m -116.17159,24.036481 2.81841,-20.8942747 m -3.62164,-16.5107003 14.89149,0.61198"
+       similar_only="false"
+       nbgenerations="3"
+       drawall="true"
+       maxComplexity="5000"
+       generator-nodetypes="cccc" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4"
+     inkscape:cx="57.102456"
+     inkscape:cy="79.327435"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1373"
+     inkscape:window-height="880"
+     inkscape:window-x="-2"
+     inkscape:window-y="-3"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata2989">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       sodipodi:type="arc"
+       style="fill:#0169c9;fill-opacity:0.58823529"
+       id="path3046"
+       sodipodi:cx="67.25"
+       sodipodi:cy="99.790359"
+       sodipodi:rx="15"
+       sodipodi:ry="15.875"
+       d="m 82.25,99.790359 a 15,15.875 0 1 1 -30,0 15,15.875 0 1 1 30,0 z"
+       transform="matrix(0.89161417,0,0,0.84247008,8.66316,21.220755)"
+       inkscape:export-filename="/build/polka/pics/polka-icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       id="rect4010"
+       width="318.89764"
+       height="177.16536"
+       x="177"
+       y="-102" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#339900;fill-opacity:0.58823529;stroke:none"
+       id="path3122"
+       sodipodi:cx="-141.8633"
+       sodipodi:cy="-90.504021"
+       sodipodi:rx="8.1022654"
+       sodipodi:ry="8.1022654"
+       d="m -133.76103,-90.504021 a 8.1022654,8.1022654 0 1 1 -16.20453,0 8.1022654,8.1022654 0 1 1 16.20453,0 z"
+       transform="matrix(2.6406185,0,0,2.6406185,485.20682,361.8651)"
+       inkscape:export-filename="/build/polka/pics/polka-icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path3126"
+       d="m 61.928175,75.426445 c -4.144348,-1.701234 -8.883113,0.279309 -10.584347,4.423673 -1.701233,4.144348 0.279309,8.883097 4.423673,10.58433 4.144348,1.701234 8.883097,-0.279308 10.584331,-4.423656 1.701233,-4.144349 -0.279309,-8.883114 -4.423657,-10.584347 z"
+       style="fill:#f0a513;fill-opacity:0.58823529;stroke:none"
+       inkscape:export-filename="/build/polka/pics/polka-icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path3140"
+       d="m 69.721893,74.507 c -1.740774,3.323238 -0.457962,7.428473 2.865277,9.169263 3.323239,1.740807 7.428457,0.457962 9.169264,-2.865261 1.74079,-3.323255 0.457978,-7.428473 -2.865261,-9.169263 C 75.567918,69.900932 71.4627,71.183744 69.721893,74.507 z"
+       style="fill:#d40000;fill-opacity:0.58823529;stroke:none"
+       inkscape:export-filename="/build/polka/pics/polka-icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path3142"
+       d="m 64.155415,62.910843 c -1.898115,-0.689527 -3.995801,0.290235 -4.685345,2.18835 -0.68951,1.898115 0.290236,3.995834 2.188351,4.685345 1.898114,0.689543 3.995834,-0.29022 4.685344,-2.188334 0.689544,-1.898131 -0.290202,-3.995834 -2.18835,-4.685361 z"
+       style="fill:#6600cc;fill-opacity:0.58823529;stroke:none"
+       inkscape:export-filename="/build/polka/pics/polka-icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       d="m 110.59996,92.7407 c 4.03758,6.6e-5 7.90212,0.788362 11.59369,2.364887 3.69148,1.576641 6.8831,3.7108 9.57489,6.402473 2.69168,2.6918 4.82584,5.90265 6.40248,9.63258 1.57652,3.73001 2.36482,7.63301 2.36488,11.70904 -6e-5,4.11452 -0.78836,8.03677 -2.36488,11.76672 -1.57664,3.73 -3.7108,6.94085 -6.40248,9.63256 -2.69179,2.6533 -5.88341,4.78746 -9.57489,6.40249 -3.69157,1.57659 -7.55611,2.36487 -11.59369,2.36487 -8.2675,0 -15.323667,-2.94166 -21.16856,-8.82503 -5.844925,-5.88335 -8.767363,-12.99721 -8.767363,-21.34161 0,-5.46035 1.326634,-10.49773 3.979919,-15.11217 2.691727,-4.65281 6.325562,-8.30587 10.901523,-10.959204 4.614381,-2.691677 9.632541,-4.03754 15.054481,-4.037606 m -24.802395,30.10898 c -1.6e-5,6.88317 2.422541,12.78574 7.267671,17.70776 4.883554,4.88358 10.766924,7.32537 17.650094,7.32537 6.8831,0 12.74724,-2.44179 17.5924,-7.32537 4.88352,-4.92202 7.32531,-10.82459 7.32537,-17.70776 -6e-5,-6.84467 -2.44185,-12.70879 -7.32537,-17.59241 -4.84516,-4.88352 -10.7093,-7.325306 -17.5924,-7.325355 -6.88317,4.9e-5 -12.76654,2.441835 -17.650094,7.325355 -4.84513,4.88362 -7.267687,10.74774 -7.267671,17.59241"
+       style="font-size:72px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;font-family:Sawasdee;-inkscape-font-specification:Sawasdee"
+       id="path3156"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/build/polka/pics/polka-icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+</svg>

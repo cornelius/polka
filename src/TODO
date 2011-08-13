@@ -1,7 +1,5 @@
 = Polka
 
-* Handle geo location
-
 * Add picture should provide possibility to add twitter, facebook, etc.
 * Show descriptive text instead of URL in picture selector controls (twitter
   instead of twitter url, screen grab instead of nothing )
@@ -29,6 +27,7 @@
 * Show nice text for links.
 * Make sure new items don't overlap with existing moved ones.
 
+* Handle geo location (locations/location/label|x|y)
 * Undo based on git (Rollback from UI)
 * Canvas-based details view
 * Zoom

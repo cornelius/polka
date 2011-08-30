@@ -30,7 +30,7 @@ PictureSelector::PictureSelector( PolkaModel *model, QWidget *parent )
   QPushButton *addButton = new QPushButton( "+" );
   addButton->setFixedSize( 78, 78 );
   m_layout->addWidget( addButton );
-  connect( addButton, SIGNAL( clicked() ), SIGNAL( grabPicture() ) );
+  connect( addButton, SIGNAL( clicked() ), SIGNAL( addPicture() ) );
 }
 
 void PictureSelector::setPictures( const Polka::Pictures &pictures )

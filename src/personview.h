@@ -29,6 +29,7 @@ class PictureSelectorControls;
 class RegionGrabber;
 class PolkaModel;
 class KDirWatch;
+class AddPictureDialog;
 
 class PersonView : public QWidget
 {
@@ -49,6 +50,8 @@ class PersonView : public QWidget
   
     void setImage( const QPixmap & );
 
+    void addPicture();
+    
     void grabPicture();
     void slotRegionGrabbed( const QPixmap & );
 
@@ -98,6 +101,8 @@ class PersonView : public QWidget
     RegionGrabber *m_regionGrabber;
 
     KDirWatch *m_dirWatch;
+    
+    AddPictureDialog *m_addPictureDialog;
 };
 
 #endif

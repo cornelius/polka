@@ -33,6 +33,7 @@
 #include "addresseditor.h"
 #include "pictureselectorcontrols.h"
 #include "settings.h"
+#include "addpicturedialog.h"
 
 #include <KLocale>
 #include <KUrl>
@@ -43,7 +44,8 @@
 #include <KProcess>
 
 PersonView::PersonView( PolkaModel *model, QWidget *parent )
-  : QWidget( parent ), m_model( model ), m_dirWatch( 0 )
+  : QWidget( parent ), m_model( model ), m_dirWatch( 0 ),
+    m_addPictureDialog( 0 )
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
 
@@ -62,7 +64,7 @@ PersonView::PersonView( PolkaModel *model, QWidget *parent )
 
   m_pictureSelector = new PictureSelector( m_model );
   pictureSelectorLayout->addWidget( m_pictureSelector );
-  connect( m_pictureSelector, SIGNAL( grabPicture() ), SLOT( grabPicture() ) );
+  connect( m_pictureSelector, SIGNAL( addPicture() ), SLOT( addPicture() ) );
 
   connect( m_pictureSelector,
     SIGNAL( pictureSelected( const Polka::Picture & ) ),
@@ -117,6 +119,16 @@ void PersonView::setImage( const QPixmap &pixmap )
   Q_UNUSED( pixmap )
   
   // FIXME: Update HTML view
+}
+
+void PersonView::addPicture()
+{
+  if ( !m_addPictureDialog ) {
+    m_addPictureDialog = new AddPictureDialog( m_model, this );
+    connect( m_addPictureDialog, SIGNAL( grabPicture() ),
+             SLOT( grabPicture() ) );
+  }
+  m_addPictureDialog->exec();
 }
 
 void PersonView::grabPicture()

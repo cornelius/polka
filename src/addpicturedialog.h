@@ -16,35 +16,38 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
     USA.
 */
-#ifndef PICTURESELECTOR_H
-#define PICTURESELECTOR_H
+#ifndef ADDPICTUREDIALOG_H
+#define ADDPICTUREDIALOG_H
 
 #include "polka/polka.h"
+#include "polkamodel.h"
+
+#include <KDialog>
 
 #include <QtGui>
 
-class PolkaModel;
-class PictureSelectorButton;
+class MatchList;
 
-class PictureSelector : public QWidget
+class AddPictureDialog : public KDialog
 {
     Q_OBJECT
   public:
-    PictureSelector( PolkaModel *model, QWidget *parent = 0 );
-
-    void setPictures( const Polka::Pictures & );
+    AddPictureDialog( PolkaModel *, QWidget *parent = 0 );
+    ~AddPictureDialog();
 
   signals:
-    void pictureSelected( const Polka::Picture & );
+    void grabPicture();
+    
+  protected slots:
+    void grabScreen();
+    void getTwitter();
+    void getFacebook();
 
-    void addPicture();
-
+  private slots:
+    void emitGrabPicture();
+    
   private:
     PolkaModel *m_model;
-  
-    QBoxLayout *m_layout;
-
-    QList<PictureSelectorButton *> m_buttons;
 };
 
 #endif

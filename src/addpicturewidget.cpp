@@ -66,10 +66,12 @@ AddPictureWidget::AddPictureWidget( PolkaModel *model, QWidget *parent )
   button = new QPushButton( i18n("Get from Facebook") );
   connect( button, SIGNAL( clicked() ), SLOT( getFacebook() ) );
   facebookLayout->addWidget( button );
-  
-  button = new QPushButton( i18n("Get from Google") );
-  connect( button, SIGNAL( clicked() ), SLOT( getGoogle() ) );
-  topLayout->addWidget( button );
+
+  if ( false ) {
+    button = new QPushButton( i18n("Get from Google") );
+    connect( button, SIGNAL( clicked() ), SLOT( getGoogle() ) );
+    topLayout->addWidget( button );
+  }
 }
 
 AddPictureWidget::~AddPictureWidget()

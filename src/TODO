@@ -2,7 +2,6 @@
 
 * Make icon actually show up.
 
-* Add picture from Google
 * Show descriptive text instead of URL in picture selector controls (twitter
   instead of twitter url, screen grab instead of nothing )
 * Retrieve gravatars

@@ -1,6 +1,8 @@
 /*
     This file is part of KDE.
 
+    Copyright (c) 2008 Cornelius Schumacher <schumacher@kde.org>
+
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
@@ -16,40 +18,41 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
     USA.
 */
-#ifndef ADDPICTUREWIDGET_H
-#define ADDPICTUREWIDGET_H
+#ifndef IMAGELOADERTWITTER_H
+#define IMAGELOADERTWITTER_H
 
-#include "polka/polka.h"
-#include "polkamodel.h"
+#include <KUrl>
+#include <KJob>
+#include <kio/job.h>
 
-#include <QtGui>
+#include <QObject>
+#include <QMap>
 
-class MatchList;
-
-class AddPictureWidget : public QWidget
+class ImageLoaderTwitter : public QObject
 {
     Q_OBJECT
   public:
-    AddPictureWidget( PolkaModel *, QWidget *parent = 0 );
-    ~AddPictureWidget();
+    ImageLoaderTwitter();
 
+    static ImageLoaderTwitter *load( const QString & );
+    
+    void setUrl( const KUrl & );
+    KUrl url() const;
+
+    void setScaledSize( const QSize & );
+    
   signals:
-    void grabPicture();
-    void gotPicture( const QPixmap & );
+    void loaded( const QPixmap & );
+    void error( const QString &text );
 
   protected slots:
-    void grabScreen();
-    void getTwitter();
-    void getFacebook();
-    void getGoogle();
+    void slotResult( KJob *job );
+    void slotData( KIO::Job *job, const QByteArray &data );
 
-  private slots:
-    void emitGrabPicture();
-    
   private:
-    PolkaModel *m_model;
-    
-    QLineEdit *m_twitterNameEdit;
+    KUrl m_url;
+    QByteArray m_data;
+    QSize m_scaledSize;
 };
 
 #endif

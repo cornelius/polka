@@ -1,4 +1,5 @@
 set(polka_bin_SRCS
+  imageloadertwitter.cpp
   addpicturewidget.cpp
   matchlist.cpp
   searchresultview.cpp

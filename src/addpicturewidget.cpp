@@ -19,7 +19,7 @@
 
 #include "addpicturewidget.h"
 
-#include "matchlist.h"
+#include "imageloadertwitter.h"
 
 #include <KConfig>
 #include <KMessageBox>
@@ -37,10 +37,20 @@ AddPictureWidget::AddPictureWidget( PolkaModel *model, QWidget *parent )
   button = new QPushButton( i18n("Grab from screen") );
   connect( button, SIGNAL( clicked() ), SLOT( grabScreen() ) );
   topLayout->addWidget( button );
+
+  QHBoxLayout *twitterLayout = new QHBoxLayout;
+  topLayout->addLayout( twitterLayout );
+  
+  twitterLayout->addWidget( new QLabel( i18n("Twitter name:") ) );
+  
+  m_twitterNameEdit = new QLineEdit;
+  twitterLayout->addWidget( m_twitterNameEdit );
+  connect( m_twitterNameEdit, SIGNAL( returnPressed() ),
+           SLOT( getTwitter() ) );
   
   button = new QPushButton( i18n("Get from Twitter") );
   connect( button, SIGNAL( clicked() ), SLOT( getTwitter() ) );
-  topLayout->addWidget( button );
+  twitterLayout->addWidget( button );
   
   button = new QPushButton( i18n("Get from Facebook") );
   connect( button, SIGNAL( clicked() ), SLOT( getFacebook() ) );
@@ -67,6 +77,10 @@ void AddPictureWidget::emitGrabPicture()
 
 void AddPictureWidget::getTwitter()
 {
+  ImageLoaderTwitter *loader;
+  loader = ImageLoaderTwitter::load( m_twitterNameEdit->text() );
+  connect( loader, SIGNAL( loaded( const QPixmap & ) ),
+           SIGNAL( gotPicture( const QPixmap & ) ) );
 }
 
 void AddPictureWidget::getFacebook()

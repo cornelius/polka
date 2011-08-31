@@ -52,6 +52,7 @@ class AddPictureWidget : public QWidget
     PolkaModel *m_model;
     
     QLineEdit *m_twitterNameEdit;
+    QLineEdit *m_facebookNameEdit;
 };
 
 #endif

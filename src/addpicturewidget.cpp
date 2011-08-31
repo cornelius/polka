@@ -20,6 +20,7 @@
 #include "addpicturewidget.h"
 
 #include "imageloadertwitter.h"
+#include "imageloaderfacebook.h"
 
 #include <KConfig>
 #include <KMessageBox>
@@ -52,9 +53,19 @@ AddPictureWidget::AddPictureWidget( PolkaModel *model, QWidget *parent )
   connect( button, SIGNAL( clicked() ), SLOT( getTwitter() ) );
   twitterLayout->addWidget( button );
   
+  QBoxLayout *facebookLayout = new QHBoxLayout;
+  topLayout->addLayout( facebookLayout );
+  
+  facebookLayout->addWidget( new QLabel( i18n("Facebook name:") ) );
+  
+  m_facebookNameEdit = new QLineEdit;
+  facebookLayout->addWidget( m_facebookNameEdit );
+  connect( m_facebookNameEdit, SIGNAL( returnPressed() ),
+           SLOT( getFacebook() ) );
+  
   button = new QPushButton( i18n("Get from Facebook") );
   connect( button, SIGNAL( clicked() ), SLOT( getFacebook() ) );
-  topLayout->addWidget( button );
+  facebookLayout->addWidget( button );
   
   button = new QPushButton( i18n("Get from Google") );
   connect( button, SIGNAL( clicked() ), SLOT( getGoogle() ) );
@@ -72,6 +83,7 @@ void AddPictureWidget::show( const Polka::Identity &identity )
   // FIXME: show Twitter name, if known
   
   m_twitterNameEdit->clear();
+  m_facebookNameEdit->clear();
   
   QWidget::show();
 }
@@ -96,6 +108,10 @@ void AddPictureWidget::getTwitter()
 
 void AddPictureWidget::getFacebook()
 {
+  ImageLoaderFacebook *loader;
+  loader = ImageLoaderFacebook::load( m_facebookNameEdit->text() );
+  connect( loader, SIGNAL( loaded( const QPixmap & ) ),
+           SIGNAL( gotPicture( const QPixmap & ) ) );
 }
 
 void AddPictureWidget::getGoogle()

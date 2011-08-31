@@ -65,6 +65,17 @@ AddPictureWidget::~AddPictureWidget()
 {
 }
 
+void AddPictureWidget::show( const Polka::Identity &identity )
+{
+  Q_UNUSED( identity )
+  
+  // FIXME: show Twitter name, if known
+  
+  m_twitterNameEdit->clear();
+  
+  QWidget::show();
+}
+
 void AddPictureWidget::grabScreen()
 {
   QTimer::singleShot( 0, this, SLOT( emitGrabPicture() ) );

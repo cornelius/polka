@@ -33,6 +33,8 @@ class AddPictureWidget : public QWidget
     AddPictureWidget( PolkaModel *, QWidget *parent = 0 );
     ~AddPictureWidget();
 
+    void show( const Polka::Identity & );
+    
   signals:
     void grabPicture();
     void gotPicture( const QPixmap & );

@@ -133,7 +133,7 @@ void PersonView::addPicture()
 {
   if ( m_addPictureWidget->isHidden() ) {
     m_pictureSelectorControls->hide();
-    m_addPictureWidget->show();
+    m_addPictureWidget->show( m_identity );
   } else {
     m_addPictureWidget->hide();
   }

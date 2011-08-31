@@ -81,8 +81,11 @@ void PictureSelectorControls::setPicture( const Polka::Picture &picture )
   
   m_pictureLabel->setPixmap( m_model->pixmap( picture ) );
   m_urlLabel->setText( picture.url() );
-  
-  show();
+}
+
+Polka::Picture PictureSelectorControls::picture() const
+{
+  return m_picture;
 }
 
 void PictureSelectorControls::makeDefault()

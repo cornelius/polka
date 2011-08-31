@@ -1,5 +1,5 @@
 set(polka_bin_SRCS
-  addpicturedialog.cpp
+  addpicturewidget.cpp
   matchlist.cpp
   searchresultview.cpp
   searchedit.cpp

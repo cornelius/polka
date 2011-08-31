@@ -33,7 +33,7 @@
 #include "addresseditor.h"
 #include "pictureselectorcontrols.h"
 #include "settings.h"
-#include "addpicturedialog.h"
+#include "addpicturewidget.h"
 
 #include <KLocale>
 #include <KUrl>
@@ -44,8 +44,7 @@
 #include <KProcess>
 
 PersonView::PersonView( PolkaModel *model, QWidget *parent )
-  : QWidget( parent ), m_model( model ), m_dirWatch( 0 ),
-    m_addPictureDialog( 0 )
+  : QWidget( parent ), m_model( model ), m_dirWatch( 0 )
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
 
@@ -55,6 +54,12 @@ PersonView::PersonView( PolkaModel *model, QWidget *parent )
   connect( m_webView->page(), SIGNAL( linkClicked( const QUrl & ) ),
     SLOT( slotLinkClicked( const QUrl & ) ) );
 
+  m_addPictureWidget = new AddPictureWidget( m_model );
+  topLayout->addWidget( m_addPictureWidget );
+  m_addPictureWidget->hide();
+  connect( m_addPictureWidget, SIGNAL( grabPicture() ),
+           SLOT( grabPicture() ) );
+  
   m_pictureSelectorControls = new PictureSelectorControls( m_model );
   topLayout->addWidget( m_pictureSelectorControls );
   m_pictureSelectorControls->hide();
@@ -68,7 +73,7 @@ PersonView::PersonView( PolkaModel *model, QWidget *parent )
 
   connect( m_pictureSelector,
     SIGNAL( pictureSelected( const Polka::Picture & ) ),
-    m_pictureSelectorControls, SLOT( setPicture( const Polka::Picture & ) ) );
+    SLOT( selectPicture( const Polka::Picture & ) ) );
 
   pictureSelectorLayout->addStretch( 1 );
 
@@ -82,6 +87,7 @@ void PersonView::showIdentity( const Polka::Identity &identity )
 
   Polka::Pictures pictures = identity.pictures();
 
+  m_addPictureWidget->hide();
   m_pictureSelectorControls->hide();
   m_pictureSelectorControls->setIdentity( identity );
   m_pictureSelector->setPictures( pictures );
@@ -123,12 +129,27 @@ void PersonView::setImage( const QPixmap &pixmap )
 
 void PersonView::addPicture()
 {
-  if ( !m_addPictureDialog ) {
-    m_addPictureDialog = new AddPictureDialog( m_model, this );
-    connect( m_addPictureDialog, SIGNAL( grabPicture() ),
-             SLOT( grabPicture() ) );
+  if ( m_addPictureWidget->isHidden() ) {
+    m_pictureSelectorControls->hide();
+    m_addPictureWidget->show();
+  } else {
+    m_addPictureWidget->hide();
   }
-  m_addPictureDialog->exec();
+}
+
+void PersonView::selectPicture( const Polka::Picture &picture )
+{
+  if ( m_pictureSelectorControls->isHidden() ) {
+    m_addPictureWidget->hide();
+    m_pictureSelectorControls->setPicture( picture );
+    m_pictureSelectorControls->show();
+  } else {
+    if ( m_pictureSelectorControls->picture().id() == picture.id() ) {
+      m_pictureSelectorControls->hide();
+    } else {
+      m_pictureSelectorControls->setPicture( picture );
+    }
+  }
 }
 
 void PersonView::grabPicture()

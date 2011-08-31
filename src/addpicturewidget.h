@@ -16,24 +16,22 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
     USA.
 */
-#ifndef ADDPICTUREDIALOG_H
-#define ADDPICTUREDIALOG_H
+#ifndef ADDPICTUREWIDGET_H
+#define ADDPICTUREWIDGET_H
 
 #include "polka/polka.h"
 #include "polkamodel.h"
-
-#include <KDialog>
 
 #include <QtGui>
 
 class MatchList;
 
-class AddPictureDialog : public KDialog
+class AddPictureWidget : public QWidget
 {
     Q_OBJECT
   public:
-    AddPictureDialog( PolkaModel *, QWidget *parent = 0 );
-    ~AddPictureDialog();
+    AddPictureWidget( PolkaModel *, QWidget *parent = 0 );
+    ~AddPictureWidget();
 
   signals:
     void grabPicture();
@@ -42,6 +40,7 @@ class AddPictureDialog : public KDialog
     void grabScreen();
     void getTwitter();
     void getFacebook();
+    void getGoogle();
 
   private slots:
     void emitGrabPicture();

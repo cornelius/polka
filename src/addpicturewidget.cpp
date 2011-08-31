@@ -17,7 +17,7 @@
     USA.
 */
 
-#include "addpicturedialog.h"
+#include "addpicturewidget.h"
 
 #include "matchlist.h"
 
@@ -27,17 +27,10 @@
 #include <KGlobal>
 #include <KLocale>
 
-AddPictureDialog::AddPictureDialog( PolkaModel *model, QWidget *parent )
-  : KDialog( parent ), m_model( model )
+AddPictureWidget::AddPictureWidget( PolkaModel *model, QWidget *parent )
+  : QWidget( parent ), m_model( model )
 {
-  setCaption( "AddPicture" );
-  setButtons( KDialog::Close );
-  setModal( true );
-
-  QWidget *topWidget = new QWidget;
-  setMainWidget( topWidget );
-  
-  QBoxLayout *topLayout = new QVBoxLayout( topWidget );
+  QBoxLayout *topLayout = new QVBoxLayout( this );
 
   QPushButton *button;
   
@@ -53,30 +46,33 @@ AddPictureDialog::AddPictureDialog( PolkaModel *model, QWidget *parent )
   connect( button, SIGNAL( clicked() ), SLOT( getFacebook() ) );
   topLayout->addWidget( button );
   
-  restoreDialogSize( KGlobal::config()->group("AddPictureDialog") );
+  button = new QPushButton( i18n("Get from Google") );
+  connect( button, SIGNAL( clicked() ), SLOT( getGoogle() ) );
+  topLayout->addWidget( button );
 }
 
-AddPictureDialog::~AddPictureDialog()
+AddPictureWidget::~AddPictureWidget()
 {
-  KConfigGroup cg( KGlobal::config(), "AddPictureDialog" );
-  saveDialogSize( cg );
 }
 
-void AddPictureDialog::grabScreen()
+void AddPictureWidget::grabScreen()
 {
   QTimer::singleShot( 0, this, SLOT( emitGrabPicture() ) );
-  accept();
 }
 
-void AddPictureDialog::emitGrabPicture()
+void AddPictureWidget::emitGrabPicture()
 {
   emit grabPicture();
 }
 
-void AddPictureDialog::getTwitter()
+void AddPictureWidget::getTwitter()
 {
 }
 
-void AddPictureDialog::getFacebook()
+void AddPictureWidget::getFacebook()
+{
+}
+
+void AddPictureWidget::getGoogle()
 {
 }

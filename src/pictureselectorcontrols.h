@@ -36,6 +36,8 @@ class PictureSelectorControls : public QWidget
 
     void setIdentity( const Polka::Identity & );
 
+    Polka::Picture picture() const;
+    
   public slots:
     void setPicture( const Polka::Picture & );
 

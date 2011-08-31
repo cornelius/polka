@@ -2,11 +2,19 @@
 
 * Make icon actually show up.
 
-* Add picture should provide possibility to add twitter, facebook, etc.
+* Add picture from Facebook
+* Add picture from Google
 * Show descriptive text instead of URL in picture selector controls (twitter
   instead of twitter url, screen grab instead of nothing )
-* Retrieve gravatar, all known links and local pictures for picture selector
+* Retrieve gravatars
 * Fetch remote pictures
+* Show progress when loading picture
+* Make sure right picture is stored to right person (pass Identity to
+  ImageLoader)
+* Show picture in addpicturewidget, if there already is one
+* Add link to Twitter account, if it isn't already there (etc.)
+* Provide a way to refresh pictures (automatically reload when addwidget is
+  shown?)
 
 * Create "help" group on startup containing some explanations of the ui.
     * Add "go to help group for help" text to welcome text.

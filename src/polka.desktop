@@ -1,9 +1,10 @@
 [Desktop Entry]
 Name=Polka
 Name[x-test]=xxPolkaxx
-Exec=polka %i -caption "%c"
+Exec=polka
 Icon=polka
 Type=Application
 X-DocPath=polka/index.html
 GenericName=Address book
 Terminal=false
+Categories=Qt;KDE;Office;ContactManagement;

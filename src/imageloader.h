@@ -21,6 +21,8 @@
 #ifndef IMAGELOADER_H
 #define IMAGELOADER_H
 
+#include <polka/polka.h>
+
 #include <KUrl>
 #include <KJob>
 #include <kio/job.h>
@@ -31,31 +33,18 @@
 class ImageLoader : public QObject
 {
     Q_OBJECT
-  public:
-    class Cache {
-      public:
-        static Cache *self();
-        
-        bool hasPixmap( const KUrl & );
-        QPixmap pixmap( const KUrl & );
-        void setPixmap( const KUrl &, const QPixmap & );
-        
-      private:
-        Cache();
-        
-        static Cache *m_self;
-
-        QMap<KUrl,QPixmap> m_pixmaps;
-    };
-  
+  public:  
     ImageLoader();
 
-    static ImageLoader *load( const KUrl & );
+    void setIdentity( const Polka::Identity & );
+    Polka::Identity identity() const;
     
     void setUrl( const KUrl & );
     KUrl url() const;
 
     void setScaledSize( const QSize & );
+    
+    void load( const KUrl & );
     
   signals:
     void loaded( const QPixmap & );
@@ -65,9 +54,8 @@ class ImageLoader : public QObject
     void slotResult( KJob *job );
     void slotData( KIO::Job *job, const QByteArray &data );
 
-    void emitCached();
-
   private:
+    Polka::Identity m_identity;
     KUrl m_url;
     QByteArray m_data;
     QSize m_scaledSize;

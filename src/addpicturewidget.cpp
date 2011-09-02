@@ -80,7 +80,7 @@ AddPictureWidget::~AddPictureWidget()
 
 void AddPictureWidget::show( const Polka::Identity &identity )
 {
-  Q_UNUSED( identity )
+  m_identity = identity;
   
   // FIXME: show Twitter name, if known
   
@@ -102,16 +102,18 @@ void AddPictureWidget::emitGrabPicture()
 
 void AddPictureWidget::getTwitter()
 {
-  ImageLoaderTwitter *loader;
-  loader = ImageLoaderTwitter::load( m_twitterNameEdit->text() );
+  ImageLoaderTwitter *loader = new ImageLoaderTwitter;
+  loader->setIdentity( m_identity );
+  loader->load( m_twitterNameEdit->text() );
   connect( loader, SIGNAL( loaded( const QPixmap & ) ),
            SIGNAL( gotPicture( const QPixmap & ) ) );
 }
 
 void AddPictureWidget::getFacebook()
 {
-  ImageLoaderFacebook *loader;
-  loader = ImageLoaderFacebook::load( m_facebookNameEdit->text() );
+  ImageLoaderFacebook *loader = new ImageLoaderFacebook;
+  loader->setIdentity( m_identity );
+  loader->load( m_facebookNameEdit->text() );
   connect( loader, SIGNAL( loaded( const QPixmap & ) ),
            SIGNAL( gotPicture( const QPixmap & ) ) );
 }

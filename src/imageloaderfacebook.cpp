@@ -21,67 +21,9 @@
 
 #include "imageloaderfacebook.h"
 
-#include <QDebug>
-#include <QTimer>
-
-ImageLoaderFacebook::ImageLoaderFacebook()
-{
-}
-
-ImageLoaderFacebook *ImageLoaderFacebook::load( const QString &facebookName )
+void ImageLoaderFacebook::load( const QString &facebookName )
 {
   KUrl url( "http://graph.facebook.com/" + facebookName + "/picture" );
-  
-  qDebug() << url;
-  
-  ImageLoaderFacebook *loader = new ImageLoaderFacebook;
-  loader->setUrl( url );
 
-  KJob *job = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
-  QObject::connect( job, SIGNAL( result( KJob * ) ), loader,
-    SLOT( slotResult( KJob * ) ) );
-  QObject::connect( job, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
-    loader, SLOT( slotData( KIO::Job *, const QByteArray & ) ) );
-
-  return loader;
-}
-
-void ImageLoaderFacebook::setUrl( const KUrl &url )
-{
-  m_url = url;
-}
-
-KUrl ImageLoaderFacebook::url() const
-{
-  return m_url;
-}
-
-void ImageLoaderFacebook::slotResult( KJob *job )
-{
-  if ( job->error() ) {
-    qWarning() << "Error retrieving image:" << url() << job->errorText();
-    emit error( job->errorText() );
-  } else {
-    QPixmap pic;
-    if ( !pic.loadFromData( m_data ) ) {
-      qWarning() << "Unable to parse image data" << url();
-    } else {
-      if ( m_scaledSize.isValid() ) {
-        pic = pic.scaled( m_scaledSize );
-      }
-      emit loaded( pic );
-    }
-  }
-  
-  deleteLater();
-}
-
-void ImageLoaderFacebook::slotData( KIO::Job *, const QByteArray &data )
-{
-  m_data.append( data );
-}
-
-void ImageLoaderFacebook::setScaledSize( const QSize &size )
-{
-  m_scaledSize = size;
+  ImageLoader::load( url );
 }

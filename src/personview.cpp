@@ -19,10 +19,6 @@
 
 #include "personview.h"
 
-#ifndef MAKE_IT_MEEGO
-#include "imageloader.h"
-#endif
-
 #include "pictureselector.h"
 #include "regiongrabber.h"
 #include "polkamodel.h"
@@ -93,14 +89,6 @@ void PersonView::showIdentity( const Polka::Identity &identity )
   m_pictureSelectorControls->hide();
   m_pictureSelectorControls->setIdentity( identity );
   m_pictureSelector->setPictures( pictures );
-
-#ifndef MAKE_IT_MEEGO
-  if ( !pictures.pictureList().isEmpty() ) {
-    KUrl u( pictures.pictureList().first().url() );
-    connect( ImageLoader::load(u), SIGNAL( loaded(const QPixmap &) ),
-      SLOT( setImage( const QPixmap & ) ) );
-  }
-#endif
 
   Polka::HtmlRenderer renderer;
 

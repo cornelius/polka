@@ -24,56 +24,29 @@
 #include <QDebug>
 #include <QTimer>
 
-ImageLoader::Cache *ImageLoader::Cache::m_self = 0;
-
-ImageLoader::Cache *ImageLoader::Cache::self()
-{
-  if ( !m_self ) {
-    m_self = new Cache();
-  }
-  return m_self;
-}
-
-ImageLoader::Cache::Cache()
-{
-}
-
-bool ImageLoader::Cache::hasPixmap( const KUrl &url )
-{
-  return m_pixmaps.contains( url );
-}
-
-QPixmap ImageLoader::Cache::pixmap( const KUrl &url )
-{
-  return m_pixmaps.value( url );
-}
-
-void ImageLoader::Cache::setPixmap( const KUrl &url, const QPixmap &pixmap )
-{
-  m_pixmaps.insert( url, pixmap );
-}
-
-
 ImageLoader::ImageLoader()
 {
 }
 
-ImageLoader *ImageLoader::load( const KUrl &url )
+void ImageLoader::setIdentity( const Polka::Identity &identity )
 {
-  ImageLoader *loader = new ImageLoader;
-  loader->setUrl( url );
+  m_identity = identity;
+}
 
-  if ( Cache::self()->hasPixmap( url ) ) {
-    QTimer::singleShot( 0, loader, SLOT( emitCached() ) );
-  } else {
-    KJob *job = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
-    QObject::connect( job, SIGNAL( result( KJob * ) ), loader,
-      SLOT( slotResult( KJob * ) ) );
-    QObject::connect( job, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
-      loader, SLOT( slotData( KIO::Job *, const QByteArray & ) ) );
-  }
+Polka::Identity ImageLoader::identity() const
+{
+  return m_identity;
+}
 
-  return loader;
+void ImageLoader::load( const KUrl &url )
+{
+  setUrl( url );
+
+  KJob *job = KIO::get( url, KIO::NoReload, KIO::HideProgressInfo );
+  QObject::connect( job, SIGNAL( result( KJob * ) ),
+    SLOT( slotResult( KJob * ) ) );
+  QObject::connect( job, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
+    SLOT( slotData( KIO::Job *, const QByteArray & ) ) );
 }
 
 void ImageLoader::setUrl( const KUrl &url )
@@ -84,11 +57,6 @@ void ImageLoader::setUrl( const KUrl &url )
 KUrl ImageLoader::url() const
 {
   return m_url;
-}
-
-void ImageLoader::emitCached()
-{
-  emit loaded( Cache::self()->pixmap( url() ) );
 }
 
 void ImageLoader::slotResult( KJob *job )
@@ -104,7 +72,6 @@ void ImageLoader::slotResult( KJob *job )
       if ( m_scaledSize.isValid() ) {
         pic = pic.scaled( m_scaledSize );
       }
-      Cache::self()->setPixmap( url(), pic );
       emit loaded( pic );
     }
   }

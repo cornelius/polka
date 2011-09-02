@@ -21,38 +21,12 @@
 #ifndef IMAGELOADERTWITTER_H
 #define IMAGELOADERTWITTER_H
 
-#include <KUrl>
-#include <KJob>
-#include <kio/job.h>
+#include "imageloader.h"
 
-#include <QObject>
-#include <QMap>
-
-class ImageLoaderTwitter : public QObject
+class ImageLoaderTwitter : public ImageLoader
 {
-    Q_OBJECT
   public:
-    ImageLoaderTwitter();
-
-    static ImageLoaderTwitter *load( const QString & );
-    
-    void setUrl( const KUrl & );
-    KUrl url() const;
-
-    void setScaledSize( const QSize & );
-    
-  signals:
-    void loaded( const QPixmap & );
-    void error( const QString &text );
-
-  protected slots:
-    void slotResult( KJob *job );
-    void slotData( KIO::Job *job, const QByteArray &data );
-
-  private:
-    KUrl m_url;
-    QByteArray m_data;
-    QSize m_scaledSize;
+    void load( const QString &twitterName );
 };
 
 #endif

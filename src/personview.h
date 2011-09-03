@@ -49,8 +49,6 @@ class PersonView : public QWidget
   protected slots:
     void showIdentity();
   
-    void setImage( const QPixmap & );
-
     void addPicture();
     void addPicture( const QPixmap & );
     void addPicture( ImageLoader * );

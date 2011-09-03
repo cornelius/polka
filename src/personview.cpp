@@ -111,13 +111,6 @@ Polka::Identity PersonView::identity() const
   return m_identity;
 }
 
-void PersonView::setImage( const QPixmap &pixmap )
-{
-  Q_UNUSED( pixmap )
-  
-  // FIXME: Update HTML view
-}
-
 void PersonView::addPicture()
 {
   if ( m_addPictureWidget->isHidden() ) {
@@ -161,8 +154,6 @@ void PersonView::slotRegionGrabbed( const QPixmap &pixmap )
 void PersonView::addPicture( const QPixmap &pixmap )
 {  
   if ( !pixmap.isNull() ) {
-    setImage( pixmap );
-
     m_model->importPicture( pixmap, m_identity );
   }
 }

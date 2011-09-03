@@ -3,6 +3,7 @@
 * Make icon actually show up.
 
 * Retrieve gravatars
+* Retrieve RoboHashes
 * Fetch remote pictures
 * Show progress when loading picture
 * Show picture in addpicturewidget, if there already is one

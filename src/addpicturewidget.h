@@ -24,7 +24,7 @@
 
 #include <QtGui>
 
-class MatchList;
+class ImageLoader;
 
 class AddPictureWidget : public QWidget
 {
@@ -37,7 +37,7 @@ class AddPictureWidget : public QWidget
     
   signals:
     void grabPicture();
-    void gotPicture( const QPixmap & );
+    void gotPicture( ImageLoader * );
 
   protected slots:
     void grabScreen();

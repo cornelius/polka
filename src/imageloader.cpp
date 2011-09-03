@@ -28,6 +28,11 @@ ImageLoader::ImageLoader()
 {
 }
 
+QPixmap ImageLoader::pixmap() const
+{
+  return m_pixmap;
+}
+
 void ImageLoader::setIdentity( const Polka::Identity &identity )
 {
   m_identity = identity;
@@ -65,14 +70,13 @@ void ImageLoader::slotResult( KJob *job )
     qWarning() << "Error retrieving image:" << url() << job->errorText();
     emit error( job->errorText() );
   } else {
-    QPixmap pic;
-    if ( !pic.loadFromData( m_data ) ) {
+    if ( !m_pixmap.loadFromData( m_data ) ) {
       qWarning() << "Unable to parse image data" << url();
     } else {
       if ( m_scaledSize.isValid() ) {
-        pic = pic.scaled( m_scaledSize );
+        m_pixmap = m_pixmap.scaled( m_scaledSize );
       }
-      emit loaded( pic );
+      emit loaded( this );
     }
   }
   

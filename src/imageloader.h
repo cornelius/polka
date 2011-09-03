@@ -46,8 +46,10 @@ class ImageLoader : public QObject
     
     void load( const KUrl & );
     
+    QPixmap pixmap() const;
+    
   signals:
-    void loaded( const QPixmap & );
+    void loaded( ImageLoader * );
     void error( const QString &text );
 
   protected slots:
@@ -59,6 +61,7 @@ class ImageLoader : public QObject
     KUrl m_url;
     QByteArray m_data;
     QSize m_scaledSize;
+    QPixmap m_pixmap;
 };
 
 #endif

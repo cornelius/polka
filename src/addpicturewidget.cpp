@@ -105,8 +105,8 @@ void AddPictureWidget::getTwitter()
   ImageLoaderTwitter *loader = new ImageLoaderTwitter;
   loader->setIdentity( m_identity );
   loader->load( m_twitterNameEdit->text() );
-  connect( loader, SIGNAL( loaded( const QPixmap & ) ),
-           SIGNAL( gotPicture( const QPixmap & ) ) );
+  connect( loader, SIGNAL( loaded( ImageLoader * ) ),
+           SIGNAL( gotPicture( ImageLoader * ) ) );
 }
 
 void AddPictureWidget::getFacebook()
@@ -114,8 +114,8 @@ void AddPictureWidget::getFacebook()
   ImageLoaderFacebook *loader = new ImageLoaderFacebook;
   loader->setIdentity( m_identity );
   loader->load( m_facebookNameEdit->text() );
-  connect( loader, SIGNAL( loaded( const QPixmap & ) ),
-           SIGNAL( gotPicture( const QPixmap & ) ) );
+  connect( loader, SIGNAL( loaded( ImageLoader * ) ),
+           SIGNAL( gotPicture( ImageLoader * ) ) );
 }
 
 void AddPictureWidget::getGoogle()

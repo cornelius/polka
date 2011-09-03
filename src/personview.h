@@ -30,6 +30,7 @@ class RegionGrabber;
 class PolkaModel;
 class KDirWatch;
 class AddPictureWidget;
+class ImageLoader;
 
 class PersonView : public QWidget
 {
@@ -52,6 +53,7 @@ class PersonView : public QWidget
 
     void addPicture();
     void addPicture( const QPixmap & );
+    void addPicture( ImageLoader * );
     void selectPicture( const Polka::Picture & );
     
     void grabPicture();

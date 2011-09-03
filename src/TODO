@@ -2,15 +2,12 @@
 
 * Make icon actually show up.
 
-* Emit ImageLoader object as result of image loading
 * Transfer info about picture and its URL via ImageLoader to Picture
 * Show descriptive text instead of URL in picture selector controls (twitter
   instead of twitter url, screen grab instead of nothing )
 * Retrieve gravatars
 * Fetch remote pictures
 * Show progress when loading picture
-* Make sure right picture is stored to right person (pass Identity to
-  ImageLoader)
 * Show picture in addpicturewidget, if there already is one
 * Add link to Twitter account, if it isn't already there (etc.)
 * Provide a way to refresh pictures (automatically reload when addwidget is

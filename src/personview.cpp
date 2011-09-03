@@ -30,6 +30,7 @@
 #include "pictureselectorcontrols.h"
 #include "settings.h"
 #include "addpicturewidget.h"
+#include "imageloader.h"
 
 #include <KLocale>
 #include <KUrl>
@@ -55,8 +56,8 @@ PersonView::PersonView( PolkaModel *model, QWidget *parent )
   m_addPictureWidget->hide();
   connect( m_addPictureWidget, SIGNAL( grabPicture() ),
            SLOT( grabPicture() ) );
-  connect( m_addPictureWidget, SIGNAL( gotPicture( const QPixmap & ) ),
-           SLOT( addPicture( const QPixmap & ) ) );
+  connect( m_addPictureWidget, SIGNAL( gotPicture( ImageLoader * ) ),
+           SLOT( addPicture( ImageLoader * ) ) );
   
   m_pictureSelectorControls = new PictureSelectorControls( m_model );
   topLayout->addWidget( m_pictureSelectorControls );
@@ -164,6 +165,11 @@ void PersonView::addPicture( const QPixmap &pixmap )
 
     m_model->importPicture( pixmap, m_identity );
   }
+}
+
+void PersonView::addPicture( ImageLoader *loader )
+{
+  m_model->importPicture( loader->pixmap(), loader->identity() );
 }
 
 void PersonView::slotLinkClicked( const QUrl &url )

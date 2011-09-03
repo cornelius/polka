@@ -73,7 +73,8 @@ class PolkaModel : public QObject
     QPixmap pixmap( const Polka::Identity & ) const;
     QString pixmapPath( const Polka::Identity & ) const;
 
-    void importPicture( const QPixmap &, const Polka::Identity & );
+    void insertPicture( const QPixmap &, const Polka::Picture &,
+                        const Polka::Identity & );
 
     void removePicture( const Polka::Picture &, Polka::Identity & );
     void setDefaultPicture( const Polka::Picture &, Polka::Identity & );

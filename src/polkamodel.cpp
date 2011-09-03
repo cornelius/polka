@@ -435,19 +435,17 @@ LocalPicture *PolkaModel::localPicture( const Polka::Picture &picture ) const
   return localPicture;
 }
 
-void PolkaModel::importPicture( const QPixmap &pixmap,
-  const Polka::Identity &target )
+void PolkaModel::insertPicture( const QPixmap &pixmap,
+                                const Polka::Picture &picture,
+                                const Polka::Identity &target )
 {
   Polka::Identity identity = findIdentity( target.id() );
   
   Polka::Pictures pictures = identity.pictures();
   Polka::Picture::List pictureList = pictures.pictureList();
   
-  Polka::Picture picture;
-  picture.setId( KRandom::randomString( 10 ) );
-
   LocalPicture *localPicture = new LocalPicture( m_gitDir, picture );
-  localPicture->setPixmap( pixmap, identity );  
+  localPicture->setPixmap( pixmap, identity );
   
   pictureList.append( picture );
   pictures.setPictureList( pictureList );

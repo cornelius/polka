@@ -48,6 +48,11 @@ class ImageLoader : public QObject
     
     QPixmap pixmap() const;
     
+    Polka::Picture picture();
+    
+    void setPictureType( const QString & );
+    QString pictureType() const;
+    
   signals:
     void loaded( ImageLoader * );
     void error( const QString &text );
@@ -62,6 +67,7 @@ class ImageLoader : public QObject
     QByteArray m_data;
     QSize m_scaledSize;
     QPixmap m_pixmap;
+    QString m_pictureType;
 };
 
 #endif

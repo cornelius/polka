@@ -50,7 +50,6 @@ class PersonView : public QWidget
     void showIdentity();
   
     void addPicture();
-    void addPicture( const QPixmap & );
     void addPicture( ImageLoader * );
     void selectPicture( const Polka::Picture & );
     

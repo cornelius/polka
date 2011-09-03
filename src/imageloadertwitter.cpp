@@ -23,6 +23,8 @@
 
 void ImageLoaderTwitter::load( const QString &twitterName )
 {
+  setPictureType( "twitter" );
+  
   KUrl url( "http://api.twitter.com/1/users/profile_image/" + twitterName +
     "?size=bigger" );
 

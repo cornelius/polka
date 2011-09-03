@@ -148,19 +148,19 @@ void PersonView::slotRegionGrabbed( const QPixmap &pixmap )
   delete m_regionGrabber;
   m_regionGrabber = 0;
 
-  addPicture( pixmap );
-}
-
-void PersonView::addPicture( const QPixmap &pixmap )
-{  
   if ( !pixmap.isNull() ) {
-    m_model->importPicture( pixmap, m_identity );
+    Polka::Picture picture;
+    picture.setId( KRandom::randomString( 10 ) );
+    picture.setPictureType( "grabbed" );
+
+    m_model->insertPicture( pixmap, picture, m_identity );
   }
 }
 
 void PersonView::addPicture( ImageLoader *loader )
 {
-  m_model->importPicture( loader->pixmap(), loader->identity() );
+  m_model->insertPicture( loader->pixmap(), loader->picture(),
+                          loader->identity() );
 }
 
 void PersonView::slotLinkClicked( const QUrl &url )

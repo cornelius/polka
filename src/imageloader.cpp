@@ -24,6 +24,8 @@
 #include <QDebug>
 #include <QTimer>
 
+#include <KRandom>
+
 ImageLoader::ImageLoader()
 {
 }
@@ -91,4 +93,25 @@ void ImageLoader::slotData( KIO::Job *, const QByteArray &data )
 void ImageLoader::setScaledSize( const QSize &size )
 {
   m_scaledSize = size;
+}
+
+void ImageLoader::setPictureType( const QString &t )
+{
+  m_pictureType = t;
+}
+
+QString ImageLoader::pictureType() const
+{
+  return m_pictureType;
+}
+
+Polka::Picture ImageLoader::picture()
+{
+  Polka::Picture picture;
+  picture.setId( KRandom::randomString( 10 ) );
+
+  picture.setUrl( url().url() );
+  picture.setPictureType( pictureType() );
+  
+  return picture;
 }

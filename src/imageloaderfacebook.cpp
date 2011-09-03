@@ -23,6 +23,8 @@
 
 void ImageLoaderFacebook::load( const QString &facebookName )
 {
+  setPictureType( "facebook" );
+  
   KUrl url( "http://graph.facebook.com/" + facebookName + "/picture" );
 
   ImageLoader::load( url );

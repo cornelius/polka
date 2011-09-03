@@ -38,10 +38,10 @@ PictureSelectorControls::PictureSelectorControls( PolkaModel *model,
   QBoxLayout *middleLayout = new QVBoxLayout;
   topLayout->addLayout( middleLayout );
 
-  middleLayout->addStretch( 1 );
-  
   m_urlLabel = new QLabel;
   middleLayout->addWidget( m_urlLabel );
+
+  middleLayout->addStretch( 1 ); 
 
   QBoxLayout *controlsLayout = new QHBoxLayout;
   middleLayout->addLayout( controlsLayout );
@@ -58,9 +58,14 @@ PictureSelectorControls::PictureSelectorControls( PolkaModel *model,
 
   topLayout->addStretch( 1 );
 
+  QBoxLayout *hideLayout = new QVBoxLayout;
+  topLayout->addLayout( hideLayout );
+  
   button = new QPushButton( i18n("Hide Settings") );
-  topLayout->addWidget( button );
+  hideLayout->addWidget( button );
   connect( button, SIGNAL( clicked() ), SLOT( hide() ) );
+
+  hideLayout->addStretch( 1 );  
 }
 
 PictureSelectorControls::~PictureSelectorControls()
@@ -74,13 +79,24 @@ void PictureSelectorControls::setIdentity( const Polka::Identity &identity )
 
 void PictureSelectorControls::setPicture( const Polka::Picture &picture )
 {
-  qDebug() << "PICTURE" << picture.id();
-  qDebug() << "URL" << picture.url();
-
   m_picture = picture;
   
   m_pictureLabel->setPixmap( m_model->pixmap( picture ) );
-  m_urlLabel->setText( picture.url() );
+
+  QString t = picture.pictureType();
+  if ( t.isEmpty() ) {
+    m_urlLabel->setText( picture.url() );
+  } else {
+    QString txt = t;
+    if ( t == "twitter" ) {
+      txt = "Twitter";
+    } else if ( t == "facebook" ) {
+      txt = "Facebook";
+    } else if ( t == "grabbed" ) {
+      txt = i18n("Grabbed from screen");
+    }
+    m_urlLabel->setText( "<b>" + txt + "</b>" );
+  }
 }
 
 Polka::Picture PictureSelectorControls::picture() const

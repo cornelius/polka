@@ -2,8 +2,6 @@
 
 * Make icon actually show up.
 
-* Show descriptive text instead of URL in picture selector controls (twitter
-  instead of twitter url, screen grab instead of nothing )
 * Retrieve gravatars
 * Fetch remote pictures
 * Show progress when loading picture

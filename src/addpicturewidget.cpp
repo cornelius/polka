@@ -31,47 +31,37 @@
 AddPictureWidget::AddPictureWidget( PolkaModel *model, QWidget *parent )
   : QWidget( parent ), m_model( model )
 {
-  QBoxLayout *topLayout = new QVBoxLayout( this );
+  QGridLayout *topLayout = new QGridLayout( this );
 
   QPushButton *button;
   
   button = new QPushButton( i18n("Grab from screen") );
   connect( button, SIGNAL( clicked() ), SLOT( grabScreen() ) );
-  topLayout->addWidget( button );
+  topLayout->addWidget( button, 0, 2 );
 
-  QHBoxLayout *twitterLayout = new QHBoxLayout;
-  topLayout->addLayout( twitterLayout );
-  
-  twitterLayout->addWidget( new QLabel( i18n("Twitter name:") ) );
+  topLayout->addWidget( new QLabel( i18n("Twitter name:") ), 1, 0,
+    Qt::AlignRight );
   
   m_twitterNameEdit = new QLineEdit;
-  twitterLayout->addWidget( m_twitterNameEdit );
+  topLayout->addWidget( m_twitterNameEdit, 1, 1 );
   connect( m_twitterNameEdit, SIGNAL( returnPressed() ),
            SLOT( getTwitter() ) );
   
   button = new QPushButton( i18n("Get from Twitter") );
   connect( button, SIGNAL( clicked() ), SLOT( getTwitter() ) );
-  twitterLayout->addWidget( button );
+  topLayout->addWidget( button, 1, 2 );
   
-  QBoxLayout *facebookLayout = new QHBoxLayout;
-  topLayout->addLayout( facebookLayout );
-  
-  facebookLayout->addWidget( new QLabel( i18n("Facebook name:") ) );
+  topLayout->addWidget( new QLabel( i18n("Facebook name:") ), 2, 0,
+    Qt::AlignRight );
   
   m_facebookNameEdit = new QLineEdit;
-  facebookLayout->addWidget( m_facebookNameEdit );
+  topLayout->addWidget( m_facebookNameEdit, 2, 1 );
   connect( m_facebookNameEdit, SIGNAL( returnPressed() ),
            SLOT( getFacebook() ) );
   
   button = new QPushButton( i18n("Get from Facebook") );
   connect( button, SIGNAL( clicked() ), SLOT( getFacebook() ) );
-  facebookLayout->addWidget( button );
-
-  if ( false ) {
-    button = new QPushButton( i18n("Get from Google") );
-    connect( button, SIGNAL( clicked() ), SLOT( getGoogle() ) );
-    topLayout->addWidget( button );
-  }
+  topLayout->addWidget( button, 2, 2 );
 }
 
 AddPictureWidget::~AddPictureWidget()
@@ -116,8 +106,4 @@ void AddPictureWidget::getFacebook()
   loader->load( m_facebookNameEdit->text() );
   connect( loader, SIGNAL( loaded( ImageLoader * ) ),
            SIGNAL( gotPicture( ImageLoader * ) ) );
-}
-
-void AddPictureWidget::getGoogle()
-{
 }

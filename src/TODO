@@ -11,7 +11,6 @@
 * Add link to Twitter account, if it isn't already there (etc.)
 * Provide a way to refresh pictures (automatically reload when addwidget is
   shown?)
-* Properly align elements in addpicturewidget
 
 * Create "help" group on startup containing some explanations of the ui.
     * Add "go to help group for help" text to welcome text.

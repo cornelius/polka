@@ -43,7 +43,6 @@ class AddPictureWidget : public QWidget
     void grabScreen();
     void getTwitter();
     void getFacebook();
-    void getGoogle();
 
   private slots:
     void emitGrabPicture();

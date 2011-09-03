@@ -2,7 +2,6 @@
 
 * Make icon actually show up.
 
-* Transfer info about picture and its URL via ImageLoader to Picture
 * Show descriptive text instead of URL in picture selector controls (twitter
   instead of twitter url, screen grab instead of nothing )
 * Retrieve gravatars

@@ -264,6 +264,8 @@ class POLKA_EXPORT Link
     QString id() const;
     void setLinkType( const QString &v );
     QString linkType() const;
+    void setUsername( const QString &v );
+    QString username() const;
     void setUrl( const QString &v );
     QString url() const;
     void setComment( const Comment &v );
@@ -279,6 +281,7 @@ class POLKA_EXPORT Link
     QDateTime mUpdatedAt;
     QString mId;
     QString mLinkType;
+    QString mUsername;
     QString mUrl;
     Comment mComment;
 };

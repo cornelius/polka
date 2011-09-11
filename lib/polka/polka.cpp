@@ -910,6 +910,17 @@ QString Link::linkType() const
   return mLinkType;
 }
 
+void Link::setUsername( const QString &v )
+{
+  mUsername = v;
+  setUpdatedAt( QDateTime::currentDateTime() );
+}
+
+QString Link::username() const
+{
+  return mUsername;
+}
+
 void Link::setUrl( const QString &v )
 {
   mUrl = v;
@@ -951,6 +962,9 @@ Link Link::parseElement( const QDomElement &element, bool *ok )
     else if ( e.tagName() == "link_type" ) {
       result.setLinkType( e.text() );
     }
+    else if ( e.tagName() == "username" ) {
+      result.setUsername( e.text() );
+    }
     else if ( e.tagName() == "url" ) {
       result.setUrl( e.text() );
     }
@@ -982,6 +996,9 @@ void Link::writeElement( QXmlStreamWriter &xml )
   }
   if ( !linkType().isEmpty() ) {
     xml.writeTextElement(  "link_type", linkType() );
+  }
+  if ( !username().isEmpty() ) {
+    xml.writeTextElement(  "username", username() );
   }
   if ( !url().isEmpty() ) {
     xml.writeTextElement(  "url", url() );

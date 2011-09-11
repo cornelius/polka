@@ -27,6 +27,8 @@ class ImageLoaderTwitter : public ImageLoader
 {
   public:
     void load( const QString &twitterName );
+    
+    KUrl profileUrl() const;
 };
 
 #endif

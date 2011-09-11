@@ -72,10 +72,8 @@ void AddPictureWidget::show( const Polka::Identity &identity )
 {
   m_identity = identity;
   
-  // FIXME: show Twitter name, if known
-  
-  m_twitterNameEdit->clear();
-  m_facebookNameEdit->clear();
+  m_twitterNameEdit->setText( m_model->link( identity, "twitter" ).username() );
+  m_facebookNameEdit->setText( m_model->link( identity, "facebook" ).username() );
   
   QWidget::show();
 }

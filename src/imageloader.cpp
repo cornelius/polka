@@ -66,6 +66,11 @@ KUrl ImageLoader::url() const
   return m_url;
 }
 
+KUrl ImageLoader::profileUrl() const
+{
+  return KUrl();
+}
+
 void ImageLoader::slotResult( KJob *job )
 {
   if ( job->error() ) {
@@ -103,6 +108,16 @@ void ImageLoader::setPictureType( const QString &t )
 QString ImageLoader::pictureType() const
 {
   return m_pictureType;
+}
+
+void ImageLoader::setUsername( const QString &username )
+{
+  m_username = username;
+}
+
+QString ImageLoader::username() const
+{
+  return m_username;
 }
 
 Polka::Picture ImageLoader::picture()

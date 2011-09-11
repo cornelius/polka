@@ -27,6 +27,7 @@
 
 class GitDir;
 class GitRemote;
+class ImageLoader;
 
 class PolkaModel : public QObject
 {
@@ -73,6 +74,7 @@ class PolkaModel : public QObject
     QPixmap pixmap( const Polka::Identity & ) const;
     QString pixmapPath( const Polka::Identity & ) const;
 
+    void insertPicture( ImageLoader * );
     void insertPicture( const QPixmap &, const Polka::Picture &,
                         const Polka::Identity & );
 
@@ -94,6 +96,8 @@ class PolkaModel : public QObject
 
     Polka::GroupView groupView( const Polka::Identity &group );
 
+    Polka::Link link( const Polka::Identity &, const QString &linkType ) const;
+    
   public slots:
     bool readData();
 

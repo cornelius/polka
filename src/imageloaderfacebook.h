@@ -27,6 +27,8 @@ class ImageLoaderFacebook : public ImageLoader
 {
   public:
     void load( const QString & );
+
+    KUrl profileUrl() const;    
 };
 
 #endif

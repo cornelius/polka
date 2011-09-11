@@ -24,6 +24,7 @@
 #include "settings.h"
 #include "polkaallitemmodel.h"
 #include "polkapersonsitemmodel.h"
+#include "imageloader.h"
 
 #include <KRandom>
 #include <KLocale>
@@ -435,6 +436,36 @@ LocalPicture *PolkaModel::localPicture( const Polka::Picture &picture ) const
   return localPicture;
 }
 
+void PolkaModel::insertPicture( ImageLoader *loader )
+{
+  insertPicture( loader->pixmap(), loader->picture(), loader->identity() );
+
+  Polka::Identity identity = findIdentity( loader->identity().id() );
+
+  Polka::Link link;
+  link.setId( KRandom::randomString( 10 ) );
+  
+  Polka::Links links = identity.links();  
+
+  foreach( Polka::Link l, links.linkList() ) {
+    if ( l.linkType() == loader->picture().pictureType() ) {
+      link = l;
+      break;
+    }
+  }
+  
+  link.setLinkType( loader->picture().pictureType() );
+  link.setUsername( loader->username() );
+  link.setUrl( loader->profileUrl().url() );
+  
+  links.insert( link );
+  identity.setLinks( links );
+  
+  m_polka.insert( identity );
+  
+  emit identityChanged( identity );
+}
+
 void PolkaModel::insertPicture( const QPixmap &pixmap,
                                 const Polka::Picture &picture,
                                 const Polka::Identity &target )
@@ -626,4 +657,13 @@ void PolkaModel::createFirstStartData()
   helpLabel3.setY( 200 );
   
   saveViewLabel( helpGroup, helpLabel3 );
+}
+
+Polka::Link PolkaModel::link( const Polka::Identity &identity,
+  const QString &linkType ) const
+{
+  foreach( Polka::Link link, identity.links().linkList() ) {
+    if ( link.linkType() == linkType ) return link;
+  }
+  return Polka::Link();
 }

@@ -4,10 +4,10 @@
 
 * Retrieve gravatars
 * Retrieve RoboHashes
+* Make adding pictures a proper commit
 * Fetch remote pictures
 * Show progress when loading picture
 * Show picture in addpicturewidget, if there already is one
-* Add link to Twitter account, if it isn't already there (etc.)
 * Provide a way to refresh pictures (automatically reload when addwidget is
   shown?)
 
@@ -19,6 +19,8 @@
 
 * Menu handler for showing menus on top all the time.
 * Move menu and tracking view code to lib.
+
+* Rename ImageLoader to CloudHandler?
 
 * Back button on canvas, top-left-corner, hide when no back
 

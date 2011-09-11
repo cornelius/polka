@@ -159,8 +159,7 @@ void PersonView::slotRegionGrabbed( const QPixmap &pixmap )
 
 void PersonView::addPicture( ImageLoader *loader )
 {
-  m_model->insertPicture( loader->pixmap(), loader->picture(),
-                          loader->identity() );
+  m_model->insertPicture( loader );
 }
 
 void PersonView::slotLinkClicked( const QUrl &url )

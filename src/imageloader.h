@@ -42,6 +42,11 @@ class ImageLoader : public QObject
     void setUrl( const KUrl & );
     KUrl url() const;
 
+    virtual KUrl profileUrl() const;
+    
+    void setUsername( const QString & );
+    QString username() const;
+    
     void setScaledSize( const QSize & );
     
     void load( const KUrl & );
@@ -68,6 +73,7 @@ class ImageLoader : public QObject
     QSize m_scaledSize;
     QPixmap m_pixmap;
     QString m_pictureType;
+    QString m_username;
 };
 
 #endif

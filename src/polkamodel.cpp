@@ -628,6 +628,9 @@ void PolkaModel::createFirstStartData()
   
   saveViewLabel( rootGroup(), welcome );
 
+  // Disable help texts for now. Reenable when they are done.
+  return;
+  
   Polka::Identity helpGroup;
   name.setValue( i18n("Help") );
   helpGroup.setName( name );

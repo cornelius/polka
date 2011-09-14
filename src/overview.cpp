@@ -19,6 +19,8 @@
 
 #include "overview.h"
 
+#include "polkaversion.h"
+
 #include <KLocale>
 #include <KStandardDirs>
 
@@ -60,7 +62,15 @@ Overview::Overview()
   text += i18n("Polka - the humane address book for the cloud");
   text += "<br/>";
   text += "<br/>";
+  text += "<em>";
+  text += "Version ";
+  text += POLKA_VERSION;
+  text += "</em>";
+  text += "<br/>";
+  text += "<br/>";
   text += "Copyright (c) 2011 Cornelius Schumacher";
+  text += "<br/>";
+  text += "<br/>";
   text += "<br/>";
   text += "This program is distributed under the terms of the ";
   text += "<a href=\"http://gpl.org\">GPL</a>";

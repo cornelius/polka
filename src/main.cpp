@@ -21,6 +21,8 @@
 
 #include "mainwindow.h"
 
+#include "polkaversion.h"
+
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
@@ -29,7 +31,7 @@
 static const char description[] =
   I18N_NOOP("The humane address book for the cloud");
 
-static const char version[] = "0.1";
+static const char version[] = POLKA_VERSION;
 
 int main(int argc, char **argv)
 {

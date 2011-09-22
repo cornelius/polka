@@ -518,6 +518,8 @@ void PolkaModel::removePicture( const Polka::Picture &picture,
   identity.setPictures( pictures );
   
   m_polka.insert( identity );
+
+  writeData( i18n("Removed picture of %1").arg( identity.name().value() ) );
   
   emit identityChanged( identity );  
 }

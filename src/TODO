@@ -2,8 +2,6 @@
 
 == 0.9
 
-* Make removal of picture a proper commit.
-
 * Create "help" group on startup containing some explanations of the ui.
     * Add "go to help group for help" text to welcome text.
     * Fix positions of items on welcome screen

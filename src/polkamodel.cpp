@@ -334,6 +334,8 @@ void PolkaModel::removeIdentity( const Polka::Identity &identity,
     m_polka.remove( identity );
     
     setupGroups();
+
+    writeData( i18n("Deleted %1").arg( identity.name().value() ) );
     
     emit identityRemoved( identity );
   } else {
@@ -345,6 +347,10 @@ void PolkaModel::removeIdentity( const Polka::Identity &identity,
     m_polka.insert( newIdentity );
     
     setupGroups();
+
+    writeData( i18n("Removed %1 from group %2")
+      .arg( newIdentity.name().value() )
+      .arg( group.name().value() ) );
     
     emit identityChanged( newIdentity );
   }

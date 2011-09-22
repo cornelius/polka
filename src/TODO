@@ -1,7 +1,5 @@
 = Polka
 
-* Make icon actually show up.
-
 * Retrieve gravatars
 * Retrieve RoboHashes
 * Make adding pictures a proper commit

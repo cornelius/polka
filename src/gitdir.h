@@ -40,10 +40,13 @@ class GitDir : public QObject
     */
     void createPath( const QString &fileName );
     /**
-      Add file to git repo.
+      Add file to git repo and commit.
     */
     void addFile( const QString &fileName, const QString &msg );
-
+    /**
+      Add file to git repo, but don't commit.
+    */
+    void addFileWithoutCommit( const QString &fileName );
   
     QString filePath( const QString &fileName );
   

@@ -95,6 +95,16 @@ void GitDir::addFile( const QString &fileName, const QString &msg )
   }
 }
 
+void GitDir::addFileWithoutCommit( const QString &fileName )
+{
+  QString filePath = GitDir::filePath( fileName );
+  if ( !QFile::exists( filePath ) ) {
+    qDebug() << "ERROR: file" << filePath << "doesn't exist";
+  } else {
+    executeCommand( "add", fileName );
+  }
+}
+
 int GitDir::commitData( const QString &msg )
 {
   return executeCommit( "-a", msg );

@@ -122,6 +122,9 @@ class PolkaModel : public QObject
 
     void createFirstStartData();
 
+    void doInsertPicture( const QPixmap &, const Polka::Picture &,
+       const Polka::Identity & );
+
   private:
     GitDir *m_gitDir;
     GitRemote *m_gitRemote;

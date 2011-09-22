@@ -438,7 +438,7 @@ LocalPicture *PolkaModel::localPicture( const Polka::Picture &picture ) const
 
 void PolkaModel::insertPicture( ImageLoader *loader )
 {
-  insertPicture( loader->pixmap(), loader->picture(), loader->identity() );
+  doInsertPicture( loader->pixmap(), loader->picture(), loader->identity() );
 
   Polka::Identity identity = findIdentity( loader->identity().id() );
 
@@ -462,30 +462,40 @@ void PolkaModel::insertPicture( ImageLoader *loader )
   identity.setLinks( links );
   
   m_polka.insert( identity );
-  
+
+  writeData( i18n("Added picture of %1").arg( identity.name().value() ) );
+
   emit identityChanged( identity );
 }
 
 void PolkaModel::insertPicture( const QPixmap &pixmap,
                                 const Polka::Picture &picture,
-                                const Polka::Identity &target )
+                                const Polka::Identity &identity )
+{
+  doInsertPicture( pixmap, picture, identity );
+
+  writeData( i18n("Added picture of %1").arg( identity.name().value() ) );
+  
+  emit identityChanged( m_polka.findIdentity( identity.id() ) );
+}
+
+void PolkaModel::doInsertPicture( const QPixmap &pixmap,
+  const Polka::Picture &picture, const Polka::Identity &target )
 {
   Polka::Identity identity = findIdentity( target.id() );
-  
+
   Polka::Pictures pictures = identity.pictures();
   Polka::Picture::List pictureList = pictures.pictureList();
-  
+
   LocalPicture *localPicture = new LocalPicture( m_gitDir, picture );
   localPicture->setPixmap( pixmap, identity );
-  
+
   pictureList.append( picture );
   pictures.setPictureList( pictureList );
   identity.setPictures( pictures );
   m_polka.insert( identity );
 
   m_localPictures.insert( picture.id(), localPicture );
-
-  emit identityChanged( identity );
 }
 
 void PolkaModel::setDefaultPicture( const Polka::Picture &picture,

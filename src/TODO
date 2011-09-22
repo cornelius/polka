@@ -1,19 +1,26 @@
 = Polka
 
-* Retrieve gravatars
-* Retrieve RoboHashes
-* Make adding pictures a proper commit
-* Fetch remote pictures
-* Show progress when loading picture
-* Show picture in addpicturewidget, if there already is one
-* Provide a way to refresh pictures (automatically reload when addwidget is
-  shown?)
+== 0.9
+
+* Make removal of picture a proper commit.
 
 * Create "help" group on startup containing some explanations of the ui.
     * Add "go to help group for help" text to welcome text.
     * Fix positions of items on welcome screen
     * Make more than one label show up
     * Write help texts
+
+* Separate commit for deletion of a person.
+
+== Post 1.0
+
+* Retrieve gravatars
+* Retrieve RoboHashes
+* Fetch remote pictures
+* Show progress when loading picture
+* Show picture in addpicturewidget, if there already is one
+* Provide a way to refresh pictures (automatically reload when addwidget is
+  shown?)
 
 * Menu handler for showing menus on top all the time.
 * Move menu and tracking view code to lib.
@@ -27,8 +34,6 @@
 * Editing of group names (maybe use special personviewer?)
 
 * Make PolkaView::insert protected and only use add and update?
-* Separate commit for deletion of a person.
-* Put changes in XML for addition of pictures into correct commit.
 * Don't show root group in group selector.
 
 * Show nice text for links.
@@ -36,6 +41,7 @@
 
 * Handle geo location (locations/location/label|x|y)
 * Undo based on git (Rollback from UI)
+* Provide a way to get back to old images
 * Canvas-based details view
 * Zoom
 * Multi-person picture importer (e.g. from group photo)

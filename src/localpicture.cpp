@@ -63,8 +63,7 @@ void LocalPicture::setPixmap( const QPixmap &pixmap,
   if ( !fileExists() ) {
     m_gitDir->createPath( localFilePath() );
     m_pixmap.save( fullFilePath(), "PNG" );
-    m_gitDir->addFile( localFilePath(), i18n("Adding picture of %1").
-      arg( identity.name().value() ) );
+    m_gitDir->addFileWithoutCommit( localFilePath() );
   }
   
   emit pixmapChanged( m_pixmap );

@@ -474,6 +474,8 @@ class POLKA_EXPORT Picture
     QString id() const;
     void setUrl( const QString &v );
     QString url() const;
+    void setUsername( const QString &v );
+    QString username() const;
     void setComment( const Comment &v );
     Comment comment() const;
     /**
@@ -488,6 +490,7 @@ class POLKA_EXPORT Picture
     QDateTime mUpdatedAt;
     QString mId;
     QString mUrl;
+    QString mUsername;
     Comment mComment;
 };
 

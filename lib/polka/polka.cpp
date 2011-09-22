@@ -1694,6 +1694,17 @@ QString Picture::url() const
   return mUrl;
 }
 
+void Picture::setUsername( const QString &v )
+{
+  mUsername = v;
+  setUpdatedAt( QDateTime::currentDateTime() );
+}
+
+QString Picture::username() const
+{
+  return mUsername;
+}
+
 void Picture::setComment( const Comment &v )
 {
   mComment = v;
@@ -1723,6 +1734,9 @@ Picture Picture::parseElement( const QDomElement &element, bool *ok )
     }
     else if ( e.tagName() == "url" ) {
       result.setUrl( e.text() );
+    }
+    else if ( e.tagName() == "username" ) {
+      result.setUsername( e.text() );
     }
     else if ( e.tagName() == "comment" ) {
       bool ok;
@@ -1756,6 +1770,9 @@ void Picture::writeElement( QXmlStreamWriter &xml )
   }
   if ( !url().isEmpty() ) {
     xml.writeTextElement(  "url", url() );
+  }
+  if ( !username().isEmpty() ) {
+    xml.writeTextElement(  "username", username() );
   }
   comment().writeElement( xml );
   xml.writeEndElement();

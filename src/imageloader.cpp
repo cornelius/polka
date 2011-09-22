@@ -127,6 +127,7 @@ Polka::Picture ImageLoader::picture()
 
   picture.setUrl( url().url() );
   picture.setPictureType( pictureType() );
+  picture.setUsername( username() );
   
   return picture;
 }

@@ -29,6 +29,8 @@
 
 #include <QObject>
 #include <QMap>
+#include <QSize>
+#include <QPixmap>
 
 class ImageLoader : public QObject
 {

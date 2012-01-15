@@ -1,11 +1,16 @@
 #ifndef MICROKDE_KURL
 #define MICROKDE_KURL
 
+#include <QUrl>
+
 class KUrl : public QUrl
 {
   public:
+    KUrl() {}
     KUrl( const QString & ) {}
     KUrl( const QUrl & ) {}
+
+    QString url() const { return toString(); }
 };
 
 #endif

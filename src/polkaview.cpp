@@ -84,11 +84,13 @@ PolkaView::PolkaView(QWidget *parent)
   
   m_viewStack = new QStackedLayout( m_groupWidget );
 
+#ifndef MAKE_IT_MEEGO
   m_overview = new Overview;
   m_viewStack->addWidget( m_overview );
   connect( m_overview, SIGNAL( showGroupView() ), SLOT( showGroupView() ) );
   connect( m_overview, SIGNAL( showListView() ), SLOT( showListView() ) );
   connect( m_overview, SIGNAL( showHistory() ), SLOT( showHistory() ) );
+#endif
 
   m_groupListView = new GroupListView( m_model );
   m_viewStack->addWidget( m_groupListView );

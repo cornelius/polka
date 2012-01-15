@@ -1,0 +1,16 @@
+#ifndef MICROKDE_KJOB_H
+#define MICROKDE_KJOB_H
+
+#include <QObject>
+
+class KJob : public QObject
+{
+    Q_OBJECT
+  public:
+    KJob();
+
+    bool error() const;
+    QString errorText() const;
+};
+
+#endif

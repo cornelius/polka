@@ -1,17 +1,30 @@
+QMAKE_MAC_SDK = /Developer/SDKs/MacOSX10.6.sdk
+
 QT       += core gui xml webkit
 
 TARGET = Polka
-CONFIG += meegotouch
 TEMPLATE = app
-target.path=/usr/local/bin
 INSTALLS=target
 DEFINES += MAKE_IT_MEEGO
 INCLUDEPATH += ../lib ../microkde meego
 
 SOURCES += main_polka.cpp \
+    ../microkde/KDialog.cpp \
+    ../microkde/KInputDialog.cpp \
+    ../microkde/KJob.cpp \
+    ../microkde/KLineEdit.cpp \
+    ../microkde/KLocale.cpp \
+    ../microkde/KMessageBox.cpp \
+    ../microkde/KPushButton.cpp \
+    ../microkde/KRandom.cpp \
+    ../microkde/KStandardDirs.cpp \
+    ../microkde/kio/job.cpp \
+    matchlist.cpp \
+    searchresultview.cpp \
+    searchedit.cpp \
+    meegomainwindow.cpp \
     polkaview.cpp \
     polkamodel.cpp \
-    ../microkde/KLocale.cpp \
     overview.cpp \
     grouplistview.cpp \
     groupgraphicsview.cpp \
@@ -19,18 +32,15 @@ SOURCES += main_polka.cpp \
     historyview.cpp \
     settingswidget.cpp \
     meego/settings.cpp \
-    ../microkde/KMessageBox.cpp \
     gitremote.cpp \
     newgroupdialog.cpp \
     ../lib/polka/polka.cpp \
-    ../microkde/KInputDialog.cpp \
     newpersondialog.cpp \
     groupview.cpp \
     gitdir.cpp \
     polkaallitemmodel.cpp \
     polkapersonsitemmodel.cpp \
     polkaitemmodel.cpp \
-    ../microkde/KRandom.cpp \
     gitcommand.cpp \
     localpicture.cpp \
     trackinggraphicsview.cpp \
@@ -54,21 +64,36 @@ SOURCES += main_polka.cpp \
     commenteditor.cpp \
     buttonitem.cpp \
     addresseditor.cpp \
-    ../microkde/KDialog.cpp \
-    ../microkde/KPushButton.cpp \
-    ../microkde/KStandardDirs.cpp
+    addpicturewidget.cpp \
+    imageloader.cpp \
+    imageloaderfacebook.cpp \
+    imageloadertwitter.cpp
 
 HEADERS += \
     ../microkde/kdemacros.h \
-    polkaview.h \
-    meego/settings.h \
-    ../microkde/KInputDialog \
-    ../microkde/KMessageBox \
-    ../microkde/KLocale \
-    ../microkde/KGlobal \
     ../microkde/KConfig \
-    polkamodel.h \
+    ../microkde/KDialog.h \
+    ../microkde/KGlobal \
+    ../microkde/KInputDialog \
+    ../microkde/KJob \
+    ../microkde/KLineEdit \
+    ../microkde/KLocale \
+    ../microkde/KMessageBox \
+    ../microkde/KPushButton \
     ../microkde/KRandom \
+    ../microkde/KStandardDirs.h \
+    ../microkde/kio/job.h \
+    imageloader.h \
+    imageloaderfacebook.h \
+    imageloadertwitter.h \
+    addpicturewidget.h \
+    matchlist.h \
+    searchresultview.h \
+    searchedit.h \
+    polkaview.h \
+    meegomainwindow.h \
+    meego/settings.h \
+    polkamodel.h \
     overview.h \
     grouplistview.h \
     groupview.h \
@@ -103,10 +128,24 @@ HEADERS += \
     fanmenu.h \
     commenteditor.h \
     addresseditor.h \
-    buttonitem.h \
-    ../microkde/KPushButton \
-    ../microkde/KDialog.h \
-    ../microkde/KStandardDirs.h
+    buttonitem.h
 
 RESOURCES += \
     ../polka.qrc
+
+# Please do not modify the following two lines. Required for deployment.
+include(deployment.pri)
+
+OTHER_FILES += \
+    qtc_packaging/debian_harmattan/rules \
+    qtc_packaging/debian_harmattan/README \
+    qtc_packaging/debian_harmattan/manifest.aegis \
+    qtc_packaging/debian_harmattan/copyright \
+    qtc_packaging/debian_harmattan/control \
+    qtc_packaging/debian_harmattan/compat \
+    qtc_packaging/debian_harmattan/changelog
+
+contains(MEEGO_EDITION,harmattan) {
+    target.path = /opt/Polka/bin
+    INSTALLS += target
+}

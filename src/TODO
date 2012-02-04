@@ -2,11 +2,7 @@
 
 == 0.9
 
-* Create "help" group on startup containing some explanations of the ui.
-    * Add "go to help group for help" text to welcome text.
-    * Fix positions of items on welcome screen
-    * Make more than one label show up
-    * Write help texts
+* Get rid of "git command still running messages on startup"
 
 == Post 1.0
 

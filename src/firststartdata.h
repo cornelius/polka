@@ -30,6 +30,9 @@ class FirstStartData
 
     void create();
 
+    void createLabel( const Polka::Identity &group, const QString &text,
+      int x, int y );
+    
   private:
     PolkaModel *m_model;
 };

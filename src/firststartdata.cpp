@@ -22,6 +22,7 @@
 #include "firststartdata.h"
 
 #include <KLocale>
+#include <KRandom>
 
 FirstStartData::FirstStartData( PolkaModel *model )
   : m_model( model )
@@ -55,8 +56,9 @@ void FirstStartData::create()
 
   m_model->saveViewPosition( m_model->rootGroup(), me, QPointF( 0, 0 ) );
 
-  Polka::ViewLabel welcome;
-  welcome.setText( i18n("Welcome to Polka!\n\n"
+  QString txt;
+  
+  txt = i18n("Welcome to Polka!\n\n"
     "The goal of Polka is to provide a humane way\n"
     "for managing your information about other people,\n"
     "using natural concepts like groups, pictures,\n"
@@ -64,15 +66,10 @@ void FirstStartData::create()
     "It hooks into the cloud, and aims at providing\n"
     "a dynamic and elegant user interface.\n\n"
     "This is an early preview. Feedback is welcome.\n\n"
-    "Have fun with Polka." ) );
-  welcome.setX( 274 );
-  welcome.setY( -142 );
-  
-  m_model->saveViewLabel( m_model->rootGroup(), welcome );
+    "For some help with the UI, go to the Help group.\n\n"
+    "Have fun with Polka." );
+  createLabel( m_model->rootGroup(), txt, 274, -142 );
 
-  // Disable help texts for now. Reenable when they are done.
-  return;
-  
   Polka::Identity helpGroup;
   name.setValue( i18n("Help") );
   helpGroup.setName( name );
@@ -81,26 +78,35 @@ void FirstStartData::create()
   helpGroup = m_model->addIdentity( helpGroup, m_model->rootGroup() );
 
   m_model->saveViewPosition( m_model->rootGroup(), helpGroup,
-    QPointF( -100, 100 ) );
+    QPointF( -200, -300 ) );
 
-  Polka::ViewLabel helpLabel1;
-  helpLabel1.setText( i18n("Help text for menu") );
-  helpLabel1.setX( 300 );
-  helpLabel1.setY( -200 );
-  
-  m_model->saveViewLabel( helpGroup, helpLabel1 );
+  txt = i18n("Hover or touch the menu at the top right for\n"
+    "some general actions.");
+  createLabel( helpGroup, txt, 160, -200 );
 
-  Polka::ViewLabel helpLabel2;
-  helpLabel2.setText( i18n("Help text for new label") );
-  helpLabel2.setX( -300 );
-  helpLabel2.setY( 100 );
-  
-  m_model->saveViewLabel( helpGroup, helpLabel2 );
+  txt = i18n("Drag label at the side to the canvas\n"
+    "to create a new label.");
+  createLabel( helpGroup, txt, 250, -100 );
 
-  Polka::ViewLabel helpLabel3;
-  helpLabel3.setText( i18n("Help text for group adder") );
-  helpLabel3.setX( -300 );
-  helpLabel3.setY( 200 );
+  txt = i18n("Click the plus icon at the bottom left to open the"
+    "group target.\n"
+    "Drop people or groups on the target to add them\n"
+    "to the selected group. Use arrows to select the target group." );
+  createLabel( helpGroup, txt, -100, 150 );
+
+  txt = i18n("Click the left arrow button outside of the view\n"
+    "to get back to the previous group." );
+  createLabel( helpGroup, txt, -300, -250 );
+}
+
+void FirstStartData::createLabel( const Polka::Identity &group,
+  const QString &text, int x, int y )
+{
+  Polka::ViewLabel label;
+  label.setId( KRandom::randomString( 10 ) );
+  label.setText( text );
+  label.setX( x );
+  label.setY( y );
   
-  m_model->saveViewLabel( helpGroup, helpLabel3 );  
+  m_model->saveViewLabel( group, label );  
 }

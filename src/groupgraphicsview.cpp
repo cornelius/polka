@@ -194,9 +194,10 @@ void GroupGraphicsView::placeItems()
 
   clearItems();
 
-  IdentityItemGroup items = prepareIdentityItems( doAnimation );
+  ItemGroup items = prepareItems( doAnimation );
 
-  m_items = items.items;
+  m_items = items.identityItems;
+  m_labelItems = items.labelItems;
   foreach( IdentityItem *item, m_items ) {
     m_scene->addItem( item );
   }
@@ -210,7 +211,9 @@ void GroupGraphicsView::placeItems()
   
     m_placeItemsAnimation->start();
   } else {
-    createLabelItems();
+    foreach( LabelItem *item, m_labelItems ) {
+      m_scene->addItem( item );
+    }
   }
 
   foreach( IdentityItem *item, m_items ) {
@@ -220,7 +223,9 @@ void GroupGraphicsView::placeItems()
 
 void GroupGraphicsView::finishPlaceItems()
 {
-  createLabelItems();
+  foreach( LabelItem *item, m_labelItems ) {
+    m_scene->addItem( item );
+  }
 }
 
 void GroupGraphicsView::unplaceItems()
@@ -239,7 +244,7 @@ void GroupGraphicsView::unplaceItems()
   }
   m_unplaceItemsAnimation->clear();
 
-  m_newItems = prepareIdentityItems( false );
+  m_newItems = prepareItems( false );
 
   if ( !m_newItems.previousGroup ) {
     recreateItems();
@@ -272,13 +277,16 @@ void GroupGraphicsView::unhideItems()
 {
   clearItems();
 
-  m_items = m_newItems.items;
+  m_items = m_newItems.identityItems;
   foreach( IdentityItem *item, m_items ) {
     item->setOpacity( 0 );
     m_scene->addItem( item );
   }
 
-  createLabelItems();
+  m_labelItems = m_newItems.labelItems;
+  foreach( LabelItem *item, m_labelItems ) {
+    m_scene->addItem( item );
+  }
 
   m_view->centerOn( m_newItems.center );
 
@@ -299,14 +307,14 @@ void GroupGraphicsView::unhideItems()
     }
   }
 
-  m_newItems = IdentityItemGroup();
+  m_newItems = ItemGroup();
 
   m_unhideItemsAnimation->start();
 }
 
-IdentityItemGroup GroupGraphicsView::prepareIdentityItems( bool doAnimation )
+ItemGroup GroupGraphicsView::prepareItems( bool doAnimation )
 {
-  IdentityItemGroup result;
+  ItemGroup result;
   
   Polka::Identity::List identities = model()->identitiesOfGroup( group() );
 
@@ -330,7 +338,7 @@ IdentityItemGroup GroupGraphicsView::prepareIdentityItems( bool doAnimation )
     qreal posY = y * spacing * 0.866; // sin(60 degree)
 
     IdentityItem *item = new IdentityItem( model(), identity );
-    result.items.append( item );
+    result.identityItems.append( item );
 
     connect( item, SIGNAL( showIdentity( const Polka::Identity & ) ),
       SIGNAL( showIdentity( const Polka::Identity & ) ) );
@@ -400,22 +408,25 @@ IdentityItemGroup GroupGraphicsView::prepareIdentityItems( bool doAnimation )
       result.previousGroup = item;
     }
   }
-  
+
+  foreach( Polka::ViewLabel label, view.viewLabelList() ) {
+    LabelItem *labelItem = createLabelItem( label );
+    result.labelItems.append( labelItem );
+    
+    QRectF r = labelItem->sceneBoundingRect();
+    
+    if ( r.x() < minX ) minX = r.x();
+    if ( r.x() + r.width() > maxX ) maxX = r.x() + r.width();
+    if ( r.y() < minY ) minY = r.y();
+    if ( r.y() + r.height() > maxY ) maxY = r.y() + r.height();
+  }
+
   qreal centerX = ( minX + maxX ) / 2;
   qreal centerY = ( minY + maxY ) / 2;
 
   result.center = QPointF( centerX, centerY );
 
   return result;
-}
-
-void GroupGraphicsView::createLabelItems()
-{
-  Polka::GroupView view = model()->groupView( group() );
-
-  foreach( Polka::ViewLabel label, view.viewLabelList() ) {
-    createLabelItem( label );
-  }
 }
 
 void GroupGraphicsView::createMenuItems()
@@ -542,7 +553,9 @@ void GroupGraphicsView::addLabel( const QPointF &pos )
     label.setX( pos.x() );
     label.setY( pos.y() );
     
-    createLabelItem( label );
+    LabelItem *item = createLabelItem( label );
+    m_scene->addItem( item );
+    m_labelItems.append( item );
     
     model()->saveViewLabel( group(), label );
   }
@@ -582,11 +595,7 @@ LabelItem *GroupGraphicsView::createLabelItem( const Polka::ViewLabel &label )
   connect( item, SIGNAL( renameLabel( LabelItem * ) ),
     SLOT( renameLabel( LabelItem * ) ) );
 
-  m_scene->addItem( item );
-
   item->setPos( label.x(), label.y() );
-
-  m_labelItems.append( item );
 
   return item;
 }

@@ -32,11 +32,12 @@ class MainMenuItem;
 class MagicMenuItem;
 class GroupAdderItem;
 
-struct IdentityItemGroup {
+struct ItemGroup {
 
-  IdentityItemGroup() : previousGroup( 0 ) {}
+  ItemGroup() : previousGroup( 0 ) {}
 
-  QList<IdentityItem *> items;
+  QList<IdentityItem *> identityItems;
+  QList<LabelItem *> labelItems;
   QPointF center;
   IdentityItem *previousGroup;
 };
@@ -66,9 +67,8 @@ class GroupGraphicsView : public GroupView
   protected:
     void doShowGroup();
 
-    IdentityItemGroup prepareIdentityItems( bool doAnimation );
+    ItemGroup prepareItems( bool doAnimation );
     void createMenuItems();
-    void createLabelItems();
   
     LabelItem *createLabelItem( const Polka::ViewLabel &label );
 
@@ -123,7 +123,7 @@ class GroupGraphicsView : public GroupView
 
     IdentityItem *m_previousItem;
 
-    IdentityItemGroup m_newItems;
+    ItemGroup m_newItems;
 
     MainMenuItem *m_mainMenu;
     MagicMenuItem *m_magicMenu;

@@ -1,4 +1,5 @@
 set(polka_bin_SRCS
+  firststartdata.cpp
   imageloaderfacebook.cpp
   imageloadertwitter.cpp
   addpicturewidget.cpp

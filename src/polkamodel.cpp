@@ -25,6 +25,7 @@
 #include "polkaallitemmodel.h"
 #include "polkapersonsitemmodel.h"
 #include "imageloader.h"
+#include "firststartdata.h"
 
 #include <KRandom>
 #include <KLocale>
@@ -195,7 +196,8 @@ bool PolkaModel::readData()
   setupGroups();
 
   if ( !QFile::exists( dataFile ) ) {
-    createFirstStartData();
+    FirstStartData data( this );
+    data.create();
   }
 
   return true;
@@ -602,82 +604,6 @@ void PolkaModel::saveViewCheck( const Polka::Identity &group,
 Polka::GroupView PolkaModel::groupView( const Polka::Identity &group )
 {
   return m_polka.findGroupView( group.id() );
-}
-
-void PolkaModel::createFirstStartData()
-{
-  Polka::Identity me;
-  Polka::Name name = me.name();
-  name.setValue( "Cornelius Schumacher" );
-  me.setName( name );
-  me = addIdentity( me, rootGroup() );
-  
-  Polka::Email email;
-  email.setEmailAddress( "schumacher@kde.org" );
-  Polka::Emails emails;
-  emails.addEmail( email );
-  me.setEmails( emails );
-
-  Polka::Comment comment;
-  comment.setValue( i18n("I'm Cornelius Schumacher, the author of Polka, "
-    "the humane address book for the cloud. "
-    "If you have feedback or questions, or you would like to help, "
-    "please don't hesitate to contact me. Have fun with Polka.") );  
-  Polka::Comments comments;
-  comments.addComment( comment );
-  me.setComments( comments );
-  
-  insert( me, i18n("Welcome to Polka") );
-
-  saveViewPosition( rootGroup(), me, QPointF( 0, 0 ) );
-
-  Polka::ViewLabel welcome;
-  welcome.setText( i18n("Welcome to Polka!\n\n"
-    "The goal of Polka is to provide a humane way\n"
-    "for managing your information about other people,\n"
-    "using natural concepts like groups, pictures,\n"
-    "history, annotations, ubiquitous access.\n\n"
-    "It hooks into the cloud, and aims at providing\n"
-    "a dynamic and elegant user interface.\n\n"
-    "This is an early preview. Feedback is welcome.\n\n"
-    "Have fun with Polka." ) );
-  welcome.setX( 250 );
-  welcome.setY( -30 );
-  
-  saveViewLabel( rootGroup(), welcome );
-
-  // Disable help texts for now. Reenable when they are done.
-  return;
-  
-  Polka::Identity helpGroup;
-  name.setValue( i18n("Help") );
-  helpGroup.setName( name );
-  helpGroup.setType( "group" );
-  
-  helpGroup = addIdentity( helpGroup, rootGroup() );
-
-  saveViewPosition( rootGroup(), helpGroup, QPointF( -100, 100 ) );
-
-  Polka::ViewLabel helpLabel1;
-  helpLabel1.setText( i18n("Help text for menu") );
-  helpLabel1.setX( 300 );
-  helpLabel1.setY( -200 );
-  
-  saveViewLabel( helpGroup, helpLabel1 );
-
-  Polka::ViewLabel helpLabel2;
-  helpLabel2.setText( i18n("Help text for new label") );
-  helpLabel2.setX( -300 );
-  helpLabel2.setY( 100 );
-  
-  saveViewLabel( helpGroup, helpLabel2 );
-
-  Polka::ViewLabel helpLabel3;
-  helpLabel3.setText( i18n("Help text for group adder") );
-  helpLabel3.setX( -300 );
-  helpLabel3.setY( 200 );
-  
-  saveViewLabel( helpGroup, helpLabel3 );
 }
 
 Polka::Link PolkaModel::link( const Polka::Identity &identity,

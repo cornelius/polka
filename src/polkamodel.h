@@ -120,8 +120,6 @@ class PolkaModel : public QObject
     QPixmap defaultPixmap( const Polka::Identity &identity ) const;
     QString defaultPixmapPath( const Polka::Identity &identity ) const;
 
-    void createFirstStartData();
-
     void doInsertPicture( const QPixmap &, const Polka::Picture &,
        const Polka::Identity & );
 

@@ -1,9 +1,5 @@
 = Polka
 
-== 0.9
-
-* Get rid of "git command still running messages on startup"
-
 == Post 1.0
 
 * GroupGraphicsView: Rename m_items to m_identityItems

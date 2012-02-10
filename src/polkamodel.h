@@ -22,6 +22,7 @@
 #include "polka/polka.h"
 #include "polkaitemmodel.h"
 #include "localpicture.h"
+#include "writetransaction.h"
 
 #include <QObject>
 
@@ -31,6 +32,8 @@ class ImageLoader;
 
 class PolkaModel : public QObject
 {
+    friend class WriteTransaction;
+  
     Q_OBJECT
   public:
     PolkaModel( QObject *parent = 0 );
@@ -124,9 +127,14 @@ class PolkaModel : public QObject
        const Polka::Identity & );
 
   private:
+    void setWritesEnabled( bool enabled );
+
+  private:
     GitDir *m_gitDir;
     GitRemote *m_gitRemote;
-  
+ 
+    bool m_writesEnabled;
+    
     Polka::Polka m_polka;
     bool m_dataIsValid;
 
@@ -139,7 +147,7 @@ class PolkaModel : public QObject
     PolkaItemModel *m_groupItemModel;
     QMap<QString,PolkaItemModel *> m_itemModels;
     
-    int m_commitCommand;
+    QList<int> m_commitCommands;
 
     QMap<QString,QPixmap> m_pictures;
     mutable QMap<QString,LocalPicture *> m_localPictures;

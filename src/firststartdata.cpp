@@ -21,6 +21,8 @@
 
 #include "firststartdata.h"
 
+#include "writetransaction.h"
+
 #include <KLocale>
 #include <KRandom>
 
@@ -31,6 +33,8 @@ FirstStartData::FirstStartData( PolkaModel *model )
 
 void FirstStartData::create()
 {
+  WriteTransaction t( m_model, i18n("Creating first start data.") );
+  
   Polka::Identity me;
   Polka::Name name = me.name();
   name.setValue( "Cornelius Schumacher" );

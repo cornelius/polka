@@ -36,8 +36,7 @@
 
 PolkaModel::PolkaModel( QObject *parent )
   : QObject( parent ), m_allItemModel( 0 ), m_personsItemModel( 0 ),
-    m_groupItemModel( 0 ),
-    m_commitCommand( 0 )
+    m_groupItemModel( 0 )
 {
   m_defaultGroupPixmapPath = KStandardDirs::locate( "appdata",
     "polka_group.png" );
@@ -231,28 +230,44 @@ void PolkaModel::setupGroups()
   }
 }
 
+void PolkaModel::setWritesEnabled( bool enabled )
+{
+  m_writesEnabled = enabled;
+}
+
 void PolkaModel::writeData( const QString &msg )
 {
+  if ( !m_writesEnabled ) {
+    return;
+  }
+
   if ( !m_dataIsValid) {
     emit dataWritten();
     return;
   }
 
-  // FIXME: Queue commands instead of silently failing them.
-  if ( m_commitCommand > 0 ) {
-    qDebug() << "ERROR" << "Commit command still running";
+  // FIXME: If writeData is called multiple times in short sequence, especially
+  // if done from code, it it likely that the git command hasn't run yet, and
+  // data is not committed then. It is committed on exit of the application.
+  // To properly fix this, the writing of the data would have to be queued
+  // together with the commit.
+  // It might be easier to just eliminate subsequent commits from code, assuming
+  // that user interactions are never faster than git.
+  if ( !m_commitCommands.isEmpty() ) {
+    qDebug() << "WARNING: Commit still running, not committing:" << msg;
     return;
   }
 
   m_polka.writeFile( m_gitDir->filePath( "std.polka" ) );
   m_gitDir->addFile( "std.polka", msg );
-  m_commitCommand = m_gitDir->commitData( i18n("Saving pending changes") );
+  m_commitCommands.append(
+    m_gitDir->commitData( i18n("Saving pending changes") ) );
 }
 
 void PolkaModel::slotCommandExecuted( const GitCommand &cmd )
 {
-  if ( cmd.id() == m_commitCommand ) {
-    m_commitCommand = 0;
+  m_commitCommands.removeOne( cmd.id() );
+  if ( m_commitCommands.isEmpty() ) {
     if ( !Settings::remoteSyncingEnabled() ) {
       emit dataWritten();
     }

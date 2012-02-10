@@ -1,4 +1,5 @@
 set(polka_bin_SRCS
+  writetransaction.cpp
   firststartdata.cpp
   imageloaderfacebook.cpp
   imageloadertwitter.cpp

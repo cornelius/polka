@@ -26,7 +26,8 @@ system tag_cmd
 
 puts "Writing to #{output_path}"
 
-tar_cmd = "cd ..; tar czf polka/#{output_path} --exclude-vcs --exclude TODO --exclude do_release polka"
+tar_cmd = "cd ..; tar czf #{output_path} --exclude-vcs --exclude TODO" +
+  " --exclude do_release polka"
 system tar_cmd
 
 puts "Please push tag and upload tar ball."

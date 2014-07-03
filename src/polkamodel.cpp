@@ -35,7 +35,8 @@
 #include <QDebug>
 
 PolkaModel::PolkaModel( QObject *parent )
-  : QObject( parent ), m_allItemModel( 0 ), m_personsItemModel( 0 ),
+  : QObject( parent ), m_writesEnabled( true ),
+    m_allItemModel( 0 ), m_personsItemModel( 0 ),
     m_groupItemModel( 0 )
 {
   m_defaultGroupPixmapPath = KStandardDirs::locate( "appdata",

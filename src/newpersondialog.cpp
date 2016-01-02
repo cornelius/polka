@@ -47,9 +47,7 @@ NewPersonDialog::NewPersonDialog( PolkaModel *model, QWidget *parent )
   connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
   connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
-  QWidget *topWidget = new QWidget(this);
-
-  QBoxLayout *topLayout = new QVBoxLayout( topWidget );
+  QBoxLayout *topLayout = new QVBoxLayout( this );
 
   QLabel *label = new QLabel( "Enter name of new person" );
   topLayout->addWidget( label );

@@ -39,9 +39,7 @@ NewGroupDialog::NewGroupDialog( PolkaModel *model, QWidget *parent )
 
   setModal( true );
 
-  QWidget *topWidget = new QWidget;
-
-  QBoxLayout *topLayout = new QVBoxLayout( topWidget );
+  QBoxLayout *topLayout = new QVBoxLayout( this );
 
   QLabel *label = new QLabel( "Enter name of new group" );
   topLayout->addWidget( label );

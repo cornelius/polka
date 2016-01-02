@@ -643,8 +643,6 @@ void GroupGraphicsView::morphToCompact()
   }
   m_groupAdderItem->hide();
 
-  QRectF rect = m_scene->sceneRect();
-
   QPointF leftBorder = m_view->mapToScene( 0, 0 );
 
   int x = leftBorder.x() + 60;

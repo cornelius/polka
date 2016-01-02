@@ -158,7 +158,7 @@ void PolkaView::connectGroupView( GroupView *groupView )
 
 void PolkaView::readConfig()
 {
-  Settings::self()->readConfig();
+  Settings::self()->load();
 
   m_settingsWidget->readConfig();
 }
@@ -169,7 +169,7 @@ void PolkaView::writeConfig()
 
   Settings::setHistory( m_history );
 
-  Settings::self()->writeConfig();
+  Settings::self()->save();
 }
 
 void PolkaView::readData()

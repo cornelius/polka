@@ -53,7 +53,7 @@ QPixmap LocalPicture::pixmap()
 }
 
 void LocalPicture::setPixmap( const QPixmap &pixmap,
-  const Polka::Identity &identity )
+  const Polka::Identity & )
 {
   m_pixmap = scalePicture( pixmap );
 

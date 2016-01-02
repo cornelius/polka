@@ -556,13 +556,11 @@ void PersonView::debugHtml()
   file.close();
 
   if ( !m_dirWatch ) {
-#ifndef MAKE_IT_MEEGO
     m_dirWatch = new KDirWatch( this );
     m_dirWatch->addFile( file.fileName() );
     connect( m_dirWatch, SIGNAL( dirty( const QString & ) ),
       SLOT( reloadDebugHtml() ) );
-#endif
-}
+  }
 
   m_webView->setHtml( html );
 

@@ -1,2 +1,0 @@
-#define KDE_IMPORT
-

@@ -19,20 +19,20 @@
 #ifndef LINKEDITOR_H
 #define LINKEDITOR_H
 
-#include <QtGui>
-
-#include <KDialog>
-
 #include "polka/polka.h"
 
-class LinkEditor : public KDialog
+#include <QDialog>
+
+class QLineEdit;
+
+class LinkEditor : public QDialog
 {
   public:
     LinkEditor( QWidget *parent );
 
     void setLink( const Polka::Link & );
     Polka::Link link();
-    
+
   private:
     Polka::Link m_link;
 

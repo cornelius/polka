@@ -28,9 +28,9 @@
 #include "firststartdata.h"
 
 #include <KRandom>
-#include <KLocale>
-#include <KStandardDirs>
+#include <KLocalizedString>
 
+#include <QStandardPaths>
 #include <QDir>
 #include <QDebug>
 
@@ -39,10 +39,10 @@ PolkaModel::PolkaModel( QObject *parent )
     m_allItemModel( 0 ), m_personsItemModel( 0 ),
     m_groupItemModel( 0 )
 {
-  m_defaultGroupPixmapPath = KStandardDirs::locate( "appdata",
+  m_defaultGroupPixmapPath = QStandardPaths::locate( QStandardPaths::DataLocation,
     "polka_group.png" );
   m_defaultGroupPixmap = QPixmap( m_defaultGroupPixmapPath );
-  m_defaultPersonPixmapPath = KStandardDirs::locate( "appdata",
+  m_defaultPersonPixmapPath = QStandardPaths::locate( QStandardPaths::DataLocation,
     "polka_person.png" );
   m_defaultPersonPixmap = QPixmap( m_defaultPersonPixmapPath );
 
@@ -179,12 +179,12 @@ bool PolkaModel::readData()
   m_rootGroup = m_polka.findIdentity( rootGroup.id() );
   if ( !m_rootGroup.isValid() ) {
     m_rootGroup.setId( KRandom::randomString( 10 ) );
-    
+
     m_rootGroup.setType( "group" );
     Polka::Name n;
     n.setValue( i18n("Your people") );
     m_rootGroup.setName( n );
-    
+
     m_polka.insert( m_rootGroup );
 
     Polka::Root root;
@@ -192,7 +192,7 @@ bool PolkaModel::readData()
     root.setGroup( rootGroup );
     m_polka.setRoot( root );
   }
-  
+
   setupGroups();
 
   if ( !QFile::exists( dataFile ) ) {
@@ -214,11 +214,11 @@ void PolkaModel::setupGroups()
       identity.setType( "group" );
       m_polka.insert( identity );
     }
-      
+
     if ( identity.type() == "group" ) {
       m_groups.append( identity );
     }
-    
+
     foreach( Polka::Group group, identity.groups().groupList() ) {
       if ( m_groupMap.contains( group.id() ) ) {
         m_groupMap[ group.id() ].append( identity );
@@ -332,7 +332,7 @@ Polka::Identity PolkaModel::addIdentity( const Polka::Identity &person,
     return insert( p, i18n("Add %1 to group %2").arg( person.name().value() )
       .arg( group.name().value() ) );
   }
-  
+
   return Polka::Identity();
 }
 
@@ -341,35 +341,35 @@ void PolkaModel::removeIdentity( const Polka::Identity &identity,
 {
   Polka::Group::List groups = identity.groups().groupList();
   Polka::Group::List newGroups;
-  
+
   foreach( Polka::Group g, groups ) {
     if ( g.id() != group.id() ) {
       newGroups.append( g );
     }
   }
-  
+
   if ( identity.type() != "group" && newGroups.isEmpty() ) {
     m_polka.remove( identity );
-    
+
     setupGroups();
 
     writeData( i18n("Deleted %1").arg( identity.name().value() ) );
-    
+
     emit identityRemoved( identity );
   } else {
     Polka::Identity newIdentity = identity;
-  
+
     Polka::Groups gg;
     gg.setGroupList( newGroups );
     newIdentity.setGroups( gg );
     m_polka.insert( newIdentity );
-    
+
     setupGroups();
 
     writeData( i18n("Removed %1 from group %2")
       .arg( newIdentity.name().value() )
       .arg( group.name().value() ) );
-    
+
     emit identityChanged( newIdentity );
   }
 }
@@ -384,14 +384,14 @@ void PolkaModel::removeGroup( const Polka::Identity &group )
   m_polka.remove( m_polka.findGroupView( group.id() ) );
 
   setupGroups();
-  
+
   emit identityRemoved( group );
 }
 
 QPixmap PolkaModel::pixmap( const Polka::Picture &picture ) const
 {
   LocalPicture *local = localPicture( picture );
-  
+
   if ( !local ) return m_defaultPersonPixmap;
 
   return local->pixmap();
@@ -400,7 +400,7 @@ QPixmap PolkaModel::pixmap( const Polka::Picture &picture ) const
 QPixmap PolkaModel::pixmap( const Polka::Identity &identity ) const
 {
   Polka::Pictures pictures = identity.pictures();
-  
+
   if ( pictures.pictureList().isEmpty() ) return defaultPixmap( identity );
 
   Polka::Picture selectedPicture = pictures.findPicture(
@@ -410,7 +410,7 @@ QPixmap PolkaModel::pixmap( const Polka::Identity &identity ) const
   }
 
   LocalPicture *local = localPicture( selectedPicture );
-  
+
   if ( !local ) return defaultPixmap( identity );
 
   return local->pixmap();
@@ -419,7 +419,7 @@ QPixmap PolkaModel::pixmap( const Polka::Identity &identity ) const
 QString PolkaModel::pixmapPath( const Polka::Identity &identity ) const
 {
   Polka::Pictures pictures = identity.pictures();
-  
+
   if ( pictures.pictureList().isEmpty() ) return defaultPixmapPath( identity );
 
   Polka::Picture selectedPicture = pictures.findPicture(
@@ -429,7 +429,7 @@ QString PolkaModel::pixmapPath( const Polka::Identity &identity ) const
   }
 
   LocalPicture *local = localPicture( selectedPicture );
-  
+
   if ( !local ) return defaultPixmapPath( identity );
 
   return local->fullFilePath();
@@ -468,8 +468,8 @@ void PolkaModel::insertPicture( ImageLoader *loader )
 
   Polka::Link link;
   link.setId( KRandom::randomString( 10 ) );
-  
-  Polka::Links links = identity.links();  
+
+  Polka::Links links = identity.links();
 
   foreach( Polka::Link l, links.linkList() ) {
     if ( l.linkType() == loader->picture().pictureType() ) {
@@ -477,14 +477,14 @@ void PolkaModel::insertPicture( ImageLoader *loader )
       break;
     }
   }
-  
+
   link.setLinkType( loader->picture().pictureType() );
   link.setUsername( loader->username() );
   link.setUrl( loader->profileUrl().url() );
-  
+
   links.insert( link );
   identity.setLinks( links );
-  
+
   m_polka.insert( identity );
 
   writeData( i18n("Added picture of %1").arg( identity.name().value() ) );
@@ -499,7 +499,7 @@ void PolkaModel::insertPicture( const QPixmap &pixmap,
   doInsertPicture( pixmap, picture, identity );
 
   writeData( i18n("Added picture of %1").arg( identity.name().value() ) );
-  
+
   emit identityChanged( m_polka.findIdentity( identity.id() ) );
 }
 
@@ -529,7 +529,7 @@ void PolkaModel::setDefaultPicture( const Polka::Picture &picture,
   pictures.setSelected( picture.id() );
   identity.setPictures( pictures );
   m_polka.insert( identity );
-  
+
   emit identityChanged( identity );
 }
 
@@ -538,14 +538,14 @@ void PolkaModel::removePicture( const Polka::Picture &picture,
 {
   Polka::Pictures pictures = identity.pictures();
   pictures.remove( picture );
-  
+
   identity.setPictures( pictures );
-  
+
   m_polka.insert( identity );
 
   writeData( i18n("Removed picture of %1").arg( identity.name().value() ) );
-  
-  emit identityChanged( identity );  
+
+  emit identityChanged( identity );
 }
 
 void PolkaModel::saveViewLabel( const Polka::Identity &group,

@@ -21,15 +21,15 @@
 #ifndef POLKA_EXPORT_H
 #define POLKA_EXPORT_H
 
-#include <kdemacros.h>
+#include <QtCore/QtGlobal>
 
 #ifndef POLKA_EXPORT
 # if defined(MAKE_POLKA_LIB)
-   /* We are building this library */ 
-#  define POLKA_EXPORT KDE_EXPORT
+   /* We are building this library */
+#  define POLKA_EXPORT Q_DECL_EXPORT
 # else
-   /* We are using this library */ 
-#  define POLKA_EXPORT KDE_IMPORT
+   /* We are using this library */
+#  define POLKA_EXPORT Q_DECL_IMPORT
 # endif
 #endif
 

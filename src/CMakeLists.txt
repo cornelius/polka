@@ -49,12 +49,24 @@ set(polka_bin_SRCS
   trackinggraphicsview.cpp
 )
 
-kde4_add_kcfg_files(polka_bin_SRCS settings.kcfgc )
+kconfig_add_kcfg_files(polka_bin_SRCS settings.kcfgc )
 
-kde4_add_executable(polka_bin ${polka_bin_SRCS})
+add_executable(polka_bin ${polka_bin_SRCS})
 set_target_properties( polka_bin PROPERTIES OUTPUT_NAME polka )
 
-target_link_libraries(polka_bin polka ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${QT_QTWEBKIT_LIBRARY})
+target_link_libraries(polka_bin polka
+  Qt5::Gui
+  Qt5::WebKitWidgets
+  KF5::CoreAddons
+  KF5::KIOCore
+  KF5::WidgetsAddons
+  KF5::ConfigGui
+  KF5::XmlGui
+  KF5::KIOFileWidgets
+  KF5::KIOWidgets
+  KF5::KIONTLM
+  KF5::WindowSystem
+)
 
 install(TARGETS polka_bin ${INSTALL_TARGETS_DEFAULT_ARGS} )
 

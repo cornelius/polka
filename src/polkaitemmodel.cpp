@@ -84,7 +84,8 @@ QVariant PolkaItemModel::headerData(int section, Qt::Orientation orientation,
 
 void PolkaItemModel::updateData()
 {
-  reset();
+  beginResetModel();
+  endResetModel();
 }
 
 Polka::Identity PolkaItemModel::identity( const QModelIndex &index )

@@ -19,11 +19,14 @@
 
 #include "buttonitem.h"
 
+#include <QBrush>
+#include <QPen>
+
 ButtonItem::ButtonItem( QGraphicsItem *parentItem )
   : QGraphicsEllipseItem( parentItem ), m_defaultItemSize( 30 )
 {
   setItemSize( m_defaultItemSize );
- 
+
   setBrush( QColor( 250, 250, 250 ) );
 
   QPen pen;
@@ -70,7 +73,7 @@ ButtonItem::ButtonItem( QGraphicsItem *parentItem )
 
 void ButtonItem::setPlus()
 {
-  m_decoration->setPolygon( m_plusPolygon );  
+  m_decoration->setPolygon( m_plusPolygon );
 }
 
 void ButtonItem::setMinus()

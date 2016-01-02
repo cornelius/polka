@@ -19,7 +19,7 @@
 #ifndef BUTTONITEM_H
 #define BUTTONITEM_H
 
-#include <QtGui>
+#include <QGraphicsEllipseItem>
 
 class ButtonItem : public QObject, public QGraphicsEllipseItem
 {
@@ -49,7 +49,7 @@ class ButtonItem : public QObject, public QGraphicsEllipseItem
     int m_defaultItemSize;
 
     QGraphicsPolygonItem *m_decoration;
-    
+
     QPolygonF m_plusPolygon;
     QPolygonF m_minusPolygon;
     QPolygonF m_arrowPolygon;

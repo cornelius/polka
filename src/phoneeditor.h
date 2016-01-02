@@ -19,20 +19,20 @@
 #ifndef PHONEEDITOR_H
 #define PHONEEDITOR_H
 
-#include <QtGui>
-
-#include <KDialog>
-
 #include "polka/polka.h"
 
-class PhoneEditor : public KDialog
+#include <QDialog>
+
+class QLineEdit;
+
+class PhoneEditor : public QDialog
 {
   public:
     PhoneEditor( QWidget *parent );
 
     void setPhone( const Polka::Phone & );
     Polka::Phone phone();
-    
+
   private:
     Polka::Phone m_phone;
 

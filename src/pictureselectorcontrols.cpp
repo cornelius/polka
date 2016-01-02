@@ -24,7 +24,11 @@
 #include "settings.h"
 #include "polkamodel.h"
 
-#include <KLocale>
+#include <KLocalizedString>
+
+#include <QBoxLayout>
+#include <QLabel>
+#include <QPushButton>
 
 PictureSelectorControls::PictureSelectorControls( PolkaModel *model,
   QWidget *parent)
@@ -41,31 +45,31 @@ PictureSelectorControls::PictureSelectorControls( PolkaModel *model,
   m_urlLabel = new QLabel;
   middleLayout->addWidget( m_urlLabel );
 
-  middleLayout->addStretch( 1 ); 
+  middleLayout->addStretch( 1 );
 
   QBoxLayout *controlsLayout = new QHBoxLayout;
   middleLayout->addLayout( controlsLayout );
-  
+
   QPushButton *button = new QPushButton( i18n("Make default") );
   controlsLayout->addWidget( button );
   connect( button, SIGNAL( clicked() ), SLOT( makeDefault() ) );
-  
+
   button = new QPushButton( i18n("Remove picture") );
   controlsLayout->addWidget( button );
   connect( button, SIGNAL( clicked() ), SLOT( removePicture() ) );
-  
+
   controlsLayout->addStretch( 1 );
 
   topLayout->addStretch( 1 );
 
   QBoxLayout *hideLayout = new QVBoxLayout;
   topLayout->addLayout( hideLayout );
-  
+
   button = new QPushButton( i18n("Hide Settings") );
   hideLayout->addWidget( button );
   connect( button, SIGNAL( clicked() ), SLOT( hide() ) );
 
-  hideLayout->addStretch( 1 );  
+  hideLayout->addStretch( 1 );
 }
 
 PictureSelectorControls::~PictureSelectorControls()
@@ -80,7 +84,7 @@ void PictureSelectorControls::setIdentity( const Polka::Identity &identity )
 void PictureSelectorControls::setPicture( const Polka::Picture &picture )
 {
   m_picture = picture;
-  
+
   m_pictureLabel->setPixmap( m_model->pixmap( picture ) );
 
   QString t = picture.pictureType();
@@ -112,6 +116,6 @@ void PictureSelectorControls::makeDefault()
 void PictureSelectorControls::removePicture()
 {
   m_model->removePicture( m_picture, m_identity );
-  
+
   hide();
 }

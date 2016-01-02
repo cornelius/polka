@@ -21,7 +21,6 @@
 
 #include "polka/polka.h"
 
-#include <QtGui>
 #include <QWebView>
 
 class PictureSelector;
@@ -31,6 +30,8 @@ class PolkaModel;
 class KDirWatch;
 class AddPictureWidget;
 class ImageLoader;
+
+class QLabel;
 
 class PersonView : public QWidget
 {
@@ -45,14 +46,14 @@ class PersonView : public QWidget
 
   signals:
     void closeRequested();
-  
+
   protected slots:
     void showIdentity();
-  
+
     void addPicture();
     void addPicture( ImageLoader * );
     void selectPicture( const Polka::Picture & );
-    
+
     void grabPicture();
     void slotRegionGrabbed( const QPixmap & );
 
@@ -89,11 +90,11 @@ class PersonView : public QWidget
     void removeComment( const QString &id );
 
     void requestClose();
-  
+
   private:
     PolkaModel *m_model;
     Polka::Identity m_identity;
-  
+
     QLabel *m_titleLabel;
     QWebView *m_webView;
     PictureSelector *m_pictureSelector;
@@ -102,7 +103,7 @@ class PersonView : public QWidget
     RegionGrabber *m_regionGrabber;
 
     KDirWatch *m_dirWatch;
-    
+
     AddPictureWidget *m_addPictureWidget;
 };
 

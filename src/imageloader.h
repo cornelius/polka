@@ -23,10 +23,10 @@
 
 #include <polka/polka.h>
 
-#include <KUrl>
 #include <KJob>
 #include <kio/job.h>
 
+#include <QUrl>
 #include <QObject>
 #include <QMap>
 #include <QSize>
@@ -35,31 +35,31 @@
 class ImageLoader : public QObject
 {
     Q_OBJECT
-  public:  
+  public:
     ImageLoader();
 
     void setIdentity( const Polka::Identity & );
     Polka::Identity identity() const;
-    
-    void setUrl( const KUrl & );
-    KUrl url() const;
 
-    virtual KUrl profileUrl() const;
-    
+    void setUrl( const QUrl & );
+    QUrl url() const;
+
+    virtual QUrl profileUrl() const;
+
     void setUsername( const QString & );
     QString username() const;
-    
+
     void setScaledSize( const QSize & );
-    
-    void load( const KUrl & );
-    
+
+    void load( const QUrl & );
+
     QPixmap pixmap() const;
-    
+
     Polka::Picture picture();
-    
+
     void setPictureType( const QString & );
     QString pictureType() const;
-    
+
   signals:
     void loaded( ImageLoader * );
     void error( const QString &text );
@@ -70,7 +70,7 @@ class ImageLoader : public QObject
 
   private:
     Polka::Identity m_identity;
-    KUrl m_url;
+    QUrl m_url;
     QByteArray m_data;
     QSize m_scaledSize;
     QPixmap m_pixmap;

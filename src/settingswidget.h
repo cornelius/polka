@@ -21,9 +21,11 @@
 #ifndef SETTINGSWIDGET_H
 #define SETTINGSWIDGET_H
 
-#include <QtGui>
+#include <QWidget>
 
 class PolkaModel;
+
+class QCheckBox;
 
 class SettingsWidget : public QWidget
 {

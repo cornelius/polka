@@ -4,9 +4,13 @@ set(polka_LIB_SRCS
   htmlcreator.cpp
 )
 
-kde4_add_library( polka SHARED ${polka_LIB_SRCS} )
+add_library( polka SHARED ${polka_LIB_SRCS} )
 
-target_link_libraries( polka ${KDE4_KDEUI_LIBS} ${QT_QTCORE_LIBRARY} ${QT_QTXML_LIBRARY} )
+target_link_libraries( polka
+  Qt5::Core
+  Qt5::Xml
+  KF5::I18n
+)
 
 set_target_properties( polka PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION} )
 install( TARGETS polka ${INSTALL_TARGETS_DEFAULT_ARGS} )

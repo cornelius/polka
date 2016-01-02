@@ -21,8 +21,12 @@
 
 #include "polkaversion.h"
 
-#include <KLocale>
-#include <KStandardDirs>
+#include <KLocalizedString>
+
+#include <QStandardPaths>
+#include <QBoxLayout>
+#include <QPushButton>
+#include <QLabel>
 
 Overview::Overview()
 {
@@ -47,7 +51,7 @@ Overview::Overview()
 
   QBoxLayout *infoLayout = new QVBoxLayout;
 
-  QString logoPath = KStandardDirs::locate( "appdata", "polka-logo.png" );
+  QString logoPath = QStandardPaths::locate( QStandardPaths::DataLocation, "polka-logo.png" );
   QPixmap logoPixmap = QPixmap( logoPath );
 
   QLabel *logo = new QLabel;
@@ -57,7 +61,7 @@ Overview::Overview()
   QLabel *about = new QLabel;
   about->setOpenExternalLinks( true );
   infoLayout->addWidget( about );
-  
+
   QString text = "<qt>";
   text += i18n("Polka - the humane address book for the cloud");
   text += "<br/>";

@@ -21,7 +21,7 @@
 
 #include "polka/polka.h"
 
-#include <QtGui>
+#include <QWidget>
 
 class PolkaItemModel;
 class PolkaModel;

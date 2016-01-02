@@ -24,7 +24,7 @@
 #include <QDesktopWidget>
 #include <QToolTip>
 
-#include <KLocale>
+#include <KLocalizedString>
 #include <KWindowSystem>
 
 RegionGrabber::RegionGrabber( ) :

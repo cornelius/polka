@@ -22,6 +22,9 @@
 #include "pictureselectorbutton.h"
 #include "polkamodel.h"
 
+#include <QPushButton>
+#include <QHBoxLayout>
+
 PictureSelector::PictureSelector( PolkaModel *model, QWidget *parent )
   : QWidget( parent ), m_model( model ), m_layout( 0 )
 {
@@ -42,7 +45,7 @@ void PictureSelector::setPictures( const Polka::Pictures &pictures )
     PictureSelectorButton *button = new PictureSelectorButton( m_model );
     m_buttons.append( button );
     m_layout->insertWidget( m_layout->count() - 1, button );
-    
+
     button->setPicture( picture );
     if ( pictures.selected() == picture.id() ) {
       button->setSelected( true );

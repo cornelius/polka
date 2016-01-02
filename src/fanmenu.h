@@ -19,7 +19,7 @@
 #ifndef FANMENU_H
 #define FANMENU_H
 
-#include <QtGui>
+#include <QGraphicsLineItem>
 
 #include "fanmenuitem.h"
 
@@ -36,7 +36,7 @@ class FanMenu : public QObject, public QGraphicsLineItem
     */
     void setupItems( int coverage = 67 );
 
-    FanMenuItem *addItem( const QString &text ); 
+    FanMenuItem *addItem( const QString &text );
 
     bool isCloseTo( const QPointF & );
 

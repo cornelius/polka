@@ -21,6 +21,9 @@
 
 #include "polkamodel.h"
 
+#include <QBoxLayout>
+#include <QListWidget>
+
 HistoryView::HistoryView( PolkaModel *model )
   : m_model( model ), m_logCommand( -1 )
 {
@@ -46,7 +49,7 @@ void HistoryView::slotCommandExecuted( const GitCommand &cmd )
   if ( m_logCommand == cmd.id() ) {
     m_logCommand = -1;
     m_list->clear();
-    
+
     foreach( QString line, cmd.result() ) {
       int pos = line.indexOf( " " );
       QString revision = line.left( pos );

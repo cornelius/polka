@@ -25,7 +25,7 @@
 #include <QList>
 #include <QDateTime>
 #include <QDate>
-#include <QtXml/QXmlStreamWriter>
+#include <QXmlStreamWriter>
 
 namespace Polka {
 

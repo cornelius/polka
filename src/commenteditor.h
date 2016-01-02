@@ -19,11 +19,11 @@
 #ifndef COMMENTEDITOR_H
 #define COMMENTEDITOR_H
 
-#include <QtGui>
+#include <QDialog>
 
-#include <KDialog>
+class QTextEdit;
 
-class CommentEditor : public KDialog
+class CommentEditor : public QDialog
 {
     Q_OBJECT
   public:
@@ -34,7 +34,7 @@ class CommentEditor : public KDialog
 
   protected slots:
     void clearComment();
-    
+
   private:
     QTextEdit *m_edit;
 };

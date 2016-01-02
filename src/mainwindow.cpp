@@ -23,14 +23,12 @@
 #include "polkaview.h"
 #include "settings.h"
 
-#include <kstatusbar.h>
-#include <kmenubar.h>
+#include <KStandardAction>
+#include <KLocalizedString>
+#include <KActionCollection>
 
-#include <kaction.h>
-#include <kactioncollection.h>
-#include <kstandardaction.h>
-
-#include <KDE/KLocale>
+#include <QStatusBar>
+#include <QMenuBar>
 
 MainWindow::MainWindow()
   : KXmlGuiWindow(), m_closing( false )

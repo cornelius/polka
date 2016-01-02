@@ -21,7 +21,7 @@
 
 #include "polkamodel.h"
 
-#include <KLocale>
+#include <KLocalizedString>
 
 LabelItem::LabelItem( PolkaModel *model, const Polka::ViewLabel &label )
   : QObject( model ), m_model( model ), m_label( label ), m_menuEnabled( true )

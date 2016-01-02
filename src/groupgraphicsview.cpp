@@ -30,19 +30,20 @@
 #include "settings.h"
 #include "groupadderitem.h"
 
-#include <KLocale>
-#include <KInputDialog>
+#include <KLocalizedString>
 #include <KRandom>
 
-#if QT_VERSION >= 0x040600
+#include <QInputDialog>
 #include <QPropertyAnimation>
-#endif
+#include <QGraphicsView>
+#include <QBoxLayout>
+#include <QLabel>
 
 GroupGraphicsView::GroupGraphicsView( PolkaModel *model, QWidget *parent )
   : GroupView( model, parent ), m_mainMenu( 0 ), m_magicMenu( 0 ),
     m_groupAdderItem( 0 ), m_newLabelItem( 0 ), m_compactLayout( false ),
     m_morphToAnimation( 0 ), m_morphFromAnimation( 0 ),
-    m_removeItemsAnimation( 0 ), m_placeItemsAnimation( 0 ), 
+    m_removeItemsAnimation( 0 ), m_placeItemsAnimation( 0 ),
     m_unplaceItemsAnimation( 0 ), m_unhideItemsAnimation( 0 )
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
@@ -74,7 +75,7 @@ GroupGraphicsView::GroupGraphicsView( PolkaModel *model, QWidget *parent )
 void GroupGraphicsView::slotIdentityChanged( const Polka::Identity &identity )
 {
   IdentityItem *i = item( identity );
-    
+
   if ( identity.groups().findGroup( group().id() ).isValid() && i ) {
     i->updateItem( identity );
   } else {
@@ -155,7 +156,7 @@ void GroupGraphicsView::hideItems()
     animation->setDuration( 200 );
   }
 
-  m_removeItemsAnimation->start();  
+  m_removeItemsAnimation->start();
 }
 
 void GroupGraphicsView::clearItems()
@@ -208,7 +209,7 @@ void GroupGraphicsView::placeItems()
     foreach( QPropertyAnimation *animation, m_placeItemsAnimations ) {
       animation->setStartValue( m_view->mapToScene( previousItemPos ) );
     }
-  
+
     m_placeItemsAnimation->start();
   } else {
     foreach( LabelItem *item, m_labelItems ) {
@@ -257,17 +258,17 @@ void GroupGraphicsView::unplaceItems()
   QPoint currentViewportCenter( viewportRect.width() / 2,
     viewportRect.height() / 2 );
   QPointF currentCenter = m_view->mapToScene( currentViewportCenter );
-  
+
   target.setX( target.x() - m_newItems.center.x() + currentCenter.x() );
   target.setY( target.y() - m_newItems.center.y() + currentCenter.y() );
-  
+
   foreach( IdentityItem *item, m_items ) {
     QPropertyAnimation *animation = new QPropertyAnimation(item, "pos", this);
     m_unplaceItemsAnimation->insertAnimation( 0, animation );
 
     animation->setDuration( 300 );
     animation->setEndValue( target );
-    animation->setEasingCurve( QEasingCurve::OutCubic );    
+    animation->setEasingCurve( QEasingCurve::OutCubic );
   }
 
   m_unplaceItemsAnimation->start();
@@ -315,7 +316,7 @@ void GroupGraphicsView::unhideItems()
 ItemGroup GroupGraphicsView::prepareItems( bool doAnimation )
 {
   ItemGroup result;
-  
+
   Polka::Identity::List identities = model()->identitiesOfGroup( group() );
 
   int columns = sqrt( identities.size() );
@@ -379,7 +380,7 @@ ItemGroup GroupGraphicsView::prepareItems( bool doAnimation )
 
     if ( firstItem ) {
       firstItem = false;
-    
+
       minX = itemX;
       minY = itemY;
       maxX = itemX;
@@ -397,7 +398,7 @@ ItemGroup GroupGraphicsView::prepareItems( bool doAnimation )
     }
 
     x++;
-    
+
     if ( x >= ( columns + ( y + 1 ) % 2 ) ) {
       x = 0;
       y++;
@@ -412,9 +413,9 @@ ItemGroup GroupGraphicsView::prepareItems( bool doAnimation )
   foreach( Polka::ViewLabel label, view.viewLabelList() ) {
     LabelItem *labelItem = createLabelItem( label );
     result.labelItems.append( labelItem );
-    
+
     QRectF r = labelItem->sceneBoundingRect();
-    
+
     if ( r.x() < minX ) minX = r.x();
     if ( r.x() + r.width() > maxX ) maxX = r.x() + r.width();
     if ( r.y() < minY ) minY = r.y();
@@ -434,7 +435,7 @@ void GroupGraphicsView::createMenuItems()
   if ( Settings::enableMagic() ) {
     m_magicMenu = new MagicMenuItem();
     m_scene->addItem( m_magicMenu );
-  
+
     connect( m_magicMenu, SIGNAL( resetLayout() ), SLOT( resetLayout() ) );
     connect( m_magicMenu, SIGNAL( showSettings() ), SIGNAL( showSettings() ) );
   }
@@ -531,7 +532,7 @@ void GroupGraphicsView::newLabelMoved( const Polka::ViewLabel &,
 {
   addLabel( pos );
 
-  positionMenuItems();  
+  positionMenuItems();
 }
 
 void GroupGraphicsView::addLabel()
@@ -542,8 +543,8 @@ void GroupGraphicsView::addLabel()
 void GroupGraphicsView::addLabel( const QPointF &pos )
 {
   bool ok;
-  QString name = KInputDialog::getText( i18n("Add Label"),
-    i18n("Enter text of label"), QString(),
+  QString name = QInputDialog::getText( this, i18n("Add Label"),
+    i18n("Enter text of label"), QLineEdit::Normal, QString(),
     &ok );
   if ( ok ) {
     Polka::ViewLabel label;
@@ -552,11 +553,11 @@ void GroupGraphicsView::addLabel( const QPointF &pos )
 
     label.setX( pos.x() );
     label.setY( pos.y() );
-    
+
     LabelItem *item = createLabelItem( label );
     m_scene->addItem( item );
     m_labelItems.append( item );
-    
+
     model()->saveViewLabel( group(), label );
   }
 }
@@ -574,8 +575,8 @@ void GroupGraphicsView::renameLabel( LabelItem *item )
   Polka::ViewLabel label = item->label();
 
   bool ok;
-  QString name = KInputDialog::getText( i18n("Rename Label"),
-    i18n("Enter new text of label"), label.text(),
+  QString name = QInputDialog::getText( this, i18n("Rename Label"),
+    i18n("Enter new text of label"), QLineEdit::Normal, label.text(),
     &ok );
   if ( ok ) {
     label.setText( name );
@@ -669,15 +670,15 @@ void GroupGraphicsView::morphToCompact()
     QPointF target( x, y );
     animation->setEndValue( target );
     animation->setEasingCurve( QEasingCurve::OutCubic );
-    
+
     animation = new QPropertyAnimation(item, "scale", this );
     m_morphToAnimation->insertAnimation( 0, animation );
-    
+
     animation->setDuration( 300 );
     animation->setStartValue( item->scale() );
     animation->setEndValue( 0.5 );
     animation->setEasingCurve( QEasingCurve::OutCubic );
-    
+
     y += spacing;
   }
 
@@ -710,13 +711,13 @@ void GroupGraphicsView::morphFromCompact()
 
     animation = new QPropertyAnimation(item, "scale", this );
     m_morphFromAnimation->insertAnimation( 0, animation );
-    
+
     animation->setDuration( 300 );
     animation->setStartValue( item->scale() );
     animation->setEndValue( 1 );
     animation->setEasingCurve( QEasingCurve::OutCubic );
   }
-  
+
   m_morphFromAnimation->start();
 }
 
@@ -728,8 +729,8 @@ void GroupGraphicsView::finishMorphFromCompact()
 
   foreach( LabelItem *item, m_labelItems ) {
     item->show();
-  }  
-  
+  }
+
   m_groupAdderItem->show();
 }
 

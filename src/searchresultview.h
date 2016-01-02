@@ -21,7 +21,7 @@
 
 #include <polka/polka.h>
 
-#include <QtGui>
+#include <QWidget>
 
 class MatchList;
 class PolkaModel;
@@ -40,10 +40,10 @@ class SearchResultView : public QWidget
 
   protected slots:
     void slotActivated();
-    
+
   private:
     PolkaModel *m_model;
-    
+
     MatchList *m_matchList;
 };
 

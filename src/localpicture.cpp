@@ -19,9 +19,6 @@
 
 #include "localpicture.h"
 
-#include <KStandardDirs>
-#include <KLocale>
-
 #include <QFile>
 #include <QDir>
 #include <QDebug>
@@ -65,7 +62,7 @@ void LocalPicture::setPixmap( const QPixmap &pixmap,
     m_pixmap.save( fullFilePath(), "PNG" );
     m_gitDir->addFileWithoutCommit( localFilePath() );
   }
-  
+
   emit pixmapChanged( m_pixmap );
 }
 

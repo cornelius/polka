@@ -24,9 +24,12 @@
 
 #include <KConfig>
 #include <KMessageBox>
-#include <KPushButton>
-#include <KGlobal>
-#include <KLocale>
+#include <KLocalizedString>
+
+#include <QGridLayout>
+#include <QPushButton>
+#include <QLabel>
+#include <QTimer>
 
 AddPictureWidget::AddPictureWidget( PolkaModel *model, QWidget *parent )
   : QWidget( parent ), m_model( model )
@@ -34,31 +37,31 @@ AddPictureWidget::AddPictureWidget( PolkaModel *model, QWidget *parent )
   QGridLayout *topLayout = new QGridLayout( this );
 
   QPushButton *button;
-  
+
   button = new QPushButton( i18n("Grab from screen") );
   connect( button, SIGNAL( clicked() ), SLOT( grabScreen() ) );
   topLayout->addWidget( button, 0, 2 );
 
   topLayout->addWidget( new QLabel( i18n("Twitter name:") ), 1, 0,
     Qt::AlignRight );
-  
+
   m_twitterNameEdit = new QLineEdit;
   topLayout->addWidget( m_twitterNameEdit, 1, 1 );
   connect( m_twitterNameEdit, SIGNAL( returnPressed() ),
            SLOT( getTwitter() ) );
-  
+
   button = new QPushButton( i18n("Get from Twitter") );
   connect( button, SIGNAL( clicked() ), SLOT( getTwitter() ) );
   topLayout->addWidget( button, 1, 2 );
-  
+
   topLayout->addWidget( new QLabel( i18n("Facebook name:") ), 2, 0,
     Qt::AlignRight );
-  
+
   m_facebookNameEdit = new QLineEdit;
   topLayout->addWidget( m_facebookNameEdit, 2, 1 );
   connect( m_facebookNameEdit, SIGNAL( returnPressed() ),
            SLOT( getFacebook() ) );
-  
+
   button = new QPushButton( i18n("Get from Facebook") );
   connect( button, SIGNAL( clicked() ), SLOT( getFacebook() ) );
   topLayout->addWidget( button, 2, 2 );
@@ -71,10 +74,10 @@ AddPictureWidget::~AddPictureWidget()
 void AddPictureWidget::show( const Polka::Identity &identity )
 {
   m_identity = identity;
-  
+
   m_twitterNameEdit->setText( m_model->link( identity, "twitter" ).username() );
   m_facebookNameEdit->setText( m_model->link( identity, "facebook" ).username() );
-  
+
   QWidget::show();
 }
 

@@ -19,17 +19,36 @@
 
 #include "phoneeditor.h"
 
-#include <KLocale>
+#include <KLocalizedString>
+#include <KConfigGroup>
+
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QLineEdit>
 
 PhoneEditor::PhoneEditor( QWidget *parent )
-  : KDialog( parent )
+  : QDialog( parent )
 {
-  setCaption( i18n("Add phone number") );
-  setButtons( Ok | Cancel );
+  setWindowTitle( i18n("Add phone number") );
+
+  QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+  QWidget *mainWidget = new QWidget(this);
+  QVBoxLayout *mainLayout = new QVBoxLayout;
+  setLayout(mainLayout);
+  mainLayout->addWidget(mainWidget);
+  QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+  okButton->setDefault(true);
+  okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+  connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+  connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
   setModal( true );
 
   m_numberEdit = new QLineEdit;
-  setMainWidget( m_numberEdit );
+
+  mainLayout->addWidget(m_numberEdit);
+  mainLayout->addWidget(buttonBox);
 
   m_numberEdit->setFocus();
 }
@@ -38,7 +57,7 @@ void PhoneEditor::setPhone( const Polka::Phone &phone )
 {
   m_phone = phone;
 
-  setCaption( i18n("Edit phone number") );
+  setWindowTitle( i18n("Edit phone number") );
 
   m_numberEdit->setText( phone.phoneNumber() );
 }

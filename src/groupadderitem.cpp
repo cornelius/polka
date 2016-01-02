@@ -24,13 +24,11 @@
 #include "buttonitem.h"
 #include "identityitem.h"
 
-#include <KLocale>
-
 GroupAdderItem::GroupAdderItem( PolkaModel *model )
   : m_model( model ), m_defaultItemSize( 100 ), m_expanded( false )
 {
   setItemSize( m_defaultItemSize );
- 
+
   setBrush( QColor( 230,229,229 ) );
 
   QPen pen;
@@ -53,7 +51,7 @@ GroupAdderItem::GroupAdderItem( PolkaModel *model )
   m_upButton->hide();
   connect( m_upButton, SIGNAL( clicked() ), SLOT( nextGroup() ) );
   m_upButton->setNext();
-  
+
   m_downButton = new ButtonItem( this );
   m_downButton->setPos( 21, -151 );
   m_downButton->hide();

@@ -19,17 +19,36 @@
 
 #include "linkeditor.h"
 
-#include <KLocale>
+#include <KLocalizedString>
+#include <KConfigGroup>
+
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QLineEdit>
 
 LinkEditor::LinkEditor( QWidget *parent )
-  : KDialog( parent )
+  : QDialog( parent )
 {
-  setCaption( i18n("Add link") );
-  setButtons( Ok | Cancel );
+  setWindowTitle( i18n("Add link") );
+
+  QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+  QWidget *mainWidget = new QWidget(this);
+  QVBoxLayout *mainLayout = new QVBoxLayout;
+  setLayout(mainLayout);
+  mainLayout->addWidget(mainWidget);
+  QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+  okButton->setDefault(true);
+  okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+  connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+  connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
   setModal( true );
 
   m_urlEdit = new QLineEdit;
-  setMainWidget( m_urlEdit );
+
+  mainLayout->addWidget(m_urlEdit);
+  mainLayout->addWidget(buttonBox);
 
   m_urlEdit->setFocus();
 }
@@ -38,7 +57,7 @@ void LinkEditor::setLink( const Polka::Link &link )
 {
   m_link = link;
 
-  setCaption( i18n("Edit link") );
+  setWindowTitle( i18n("Edit link") );
 
   m_urlEdit->setText( link.url() );
 }

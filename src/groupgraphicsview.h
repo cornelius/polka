@@ -22,8 +22,6 @@
 #include "fanmenu.h"
 #include "groupview.h"
 
-#include <QtGui>
-
 class PolkaModel;
 class IdentityItem;
 class LabelItem;
@@ -31,6 +29,10 @@ class QAnimationGroup;
 class MainMenuItem;
 class MagicMenuItem;
 class GroupAdderItem;
+
+class QGraphicsScene;
+class QGraphicsView;
+class QAnimationGroup;
 
 struct ItemGroup {
 
@@ -69,7 +71,7 @@ class GroupGraphicsView : public GroupView
 
     ItemGroup prepareItems( bool doAnimation );
     void createMenuItems();
-  
+
     LabelItem *createLabelItem( const Polka::ViewLabel &label );
 
     void morphToCompact();
@@ -83,7 +85,7 @@ class GroupGraphicsView : public GroupView
 
   protected slots:
     void resetLayout();
-  
+
     void hideItems();
     void placeItems();
     void unplaceItems();

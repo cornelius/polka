@@ -25,14 +25,14 @@ void ImageLoaderTwitter::load( const QString &twitterName )
 {
   setPictureType( "twitter" );
   setUsername( twitterName );
-  
-  KUrl url( "http://api.twitter.com/1/users/profile_image/" + twitterName +
+
+  QUrl url( "http://api.twitter.com/1/users/profile_image/" + twitterName +
     "?size=bigger" );
 
   ImageLoader::load( url );
 }
 
-KUrl ImageLoaderTwitter::profileUrl() const
+QUrl ImageLoaderTwitter::profileUrl() const
 {
-  return KUrl( "http://twitter.com/" + username() );
+  return QUrl( "http://twitter.com/" + username() );
 }

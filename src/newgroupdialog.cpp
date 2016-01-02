@@ -21,23 +21,31 @@
 
 #include <KConfig>
 #include <KMessageBox>
-#include <KPushButton>
-#include <KGlobal>
+#include <KWindowConfig>
+#include <KSharedConfig>
+
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QSortFilterProxyModel>
+#include <QLineEdit>
+#include <QListView>
+#include <QLabel>
 
 NewGroupDialog::NewGroupDialog( PolkaModel *model, QWidget *parent )
-  : KDialog( parent ), m_model( model ), m_proxyModel( 0 ), m_matchList( 0 )
+  : QDialog( parent ), m_model( model ), m_proxyModel( 0 ), m_matchList( 0 )
 {
-  setCaption( "New Group" );
-  setButtons( KDialog::Ok | KDialog::Cancel );
+  setWindowTitle( "New Group" );
+
   setModal( true );
 
   QWidget *topWidget = new QWidget;
-  
+
   QBoxLayout *topLayout = new QVBoxLayout( topWidget );
 
   QLabel *label = new QLabel( "Enter name of new group" );
   topLayout->addWidget( label );
-  
+
   m_nameInput = new QLineEdit;
   topLayout->addWidget( m_nameInput );
   connect( m_nameInput, SIGNAL( textChanged( const QString & ) ),
@@ -45,7 +53,7 @@ NewGroupDialog::NewGroupDialog( PolkaModel *model, QWidget *parent )
 
   if ( !m_model->groups().isEmpty() ) {
     m_matchList = new QListView;
-    
+
     m_proxyModel = new QSortFilterProxyModel(this);
     m_proxyModel->setFilterCaseSensitivity( Qt::CaseInsensitive );
 
@@ -60,9 +68,17 @@ NewGroupDialog::NewGroupDialog( PolkaModel *model, QWidget *parent )
       m_proxyModel, SLOT( setFilterWildcard( const QString & ) ) );
   }
 
-  setMainWidget( topWidget );
+  QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+  topLayout->addWidget( buttonBox );
 
-  restoreDialogSize( KGlobal::config()->group("NewGroupdialog") );
+  m_okButton = buttonBox->button(QDialogButtonBox::Ok);
+  m_okButton->setDefault(true);
+  m_okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+  connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+  connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
+  KConfigGroup cg = KSharedConfig::openConfig()->group("NewGroupDialog");
+  KWindowConfig::restoreWindowSize( windowHandle(), cg );
 
   m_nameInput->setFocus();
 
@@ -71,8 +87,8 @@ NewGroupDialog::NewGroupDialog( PolkaModel *model, QWidget *parent )
 
 NewGroupDialog::~NewGroupDialog()
 {
-  KConfigGroup cg( KGlobal::config(), "NewGroupdialog" );
-  saveDialogSize( cg );
+  KConfigGroup cg = KSharedConfig::openConfig()->group("NewGroupDialog");
+  KWindowConfig::saveWindowSize( windowHandle(), cg );
 }
 
 Polka::Identity NewGroupDialog::identity()
@@ -98,5 +114,5 @@ Polka::Identity NewGroupDialog::identity()
 
 void NewGroupDialog::checkOkButton()
 {
-  button( Ok )->setEnabled( !m_nameInput->text().isEmpty() );
+  m_okButton->setEnabled( !m_nameInput->text().isEmpty() );
 }

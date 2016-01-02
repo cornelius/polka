@@ -23,7 +23,11 @@
 #include "polkaitemmodel.h"
 #include "settings.h"
 
-#include <KLocale>
+#include <KLocalizedString>
+
+#include <QListView>
+#include <QBoxLayout>
+#include <QPushButton>
 
 GroupListView::GroupListView( PolkaModel *model, QWidget *parent )
   : GroupView( model, parent ), m_itemModel( 0 )
@@ -43,7 +47,7 @@ GroupListView::GroupListView( PolkaModel *model, QWidget *parent )
 
     QPushButton *button = new QPushButton( i18n("Magic") );
     buttonLayout->addWidget( button );
-    connect( button, SIGNAL( clicked() ), SIGNAL( showSettings() ) );    
+    connect( button, SIGNAL( clicked() ), SIGNAL( showSettings() ) );
   }
 }
 

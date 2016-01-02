@@ -32,13 +32,16 @@
 #include "addpicturewidget.h"
 #include "imageloader.h"
 
-#include <KLocale>
-#include <KUrl>
-#include <KInputDialog>
+#include <KLocalizedString>
 #include <KRandom>
 #include <KRun>
 #include <KDirWatch>
 #include <KProcess>
+
+#include <QUrl>
+#include <QLabel>
+#include <QBoxLayout>
+#include <QInputDialog>
 
 PersonView::PersonView( PolkaModel *model, QWidget *parent )
   : QWidget( parent ), m_model( model ), m_dirWatch( 0 )
@@ -58,7 +61,7 @@ PersonView::PersonView( PolkaModel *model, QWidget *parent )
            SLOT( grabPicture() ) );
   connect( m_addPictureWidget, SIGNAL( gotPicture( ImageLoader * ) ),
            SLOT( addPicture( ImageLoader * ) ) );
-  
+
   m_pictureSelectorControls = new PictureSelectorControls( m_model );
   topLayout->addWidget( m_pictureSelectorControls );
   m_pictureSelectorControls->hide();
@@ -170,9 +173,9 @@ void PersonView::slotLinkClicked( const QUrl &url )
     QStringList path = url.path().split("/");
     QString action = path.first();
     qDebug() << "ACTION" << action;
-    
+
     if ( action == "editName" ) editName();
-    
+
     else if ( action == "addEmail" ) addEmail();
     else if ( action == "editEmail" ) editEmail( path.value( 1 ) );
     else if ( action == "removeEmail" ) removeEmail( path.value( 1 ) );
@@ -202,7 +205,7 @@ void PersonView::slotLinkClicked( const QUrl &url )
 
     else qDebug() << "unknown action" << action;
   } else {
-    new KRun( KUrl( url ), this );
+    new KRun( QUrl( url ), this );
   }
 }
 
@@ -214,8 +217,8 @@ void PersonView::requestClose()
 void PersonView::addEmail()
 {
   bool ok;
-  QString email = KInputDialog::getText( i18n("Add email"),
-    i18n("Enter new email address"), QString(), &ok );
+  QString email = QInputDialog::getText( this, i18n("Add email"),
+    i18n("Enter new email address"), QLineEdit::Normal, QString(), &ok );
   if ( ok ) {
     Polka::Email e;
     e.setId( KRandom::randomString( 10 ) );
@@ -236,14 +239,14 @@ void PersonView::editEmail( const QString &id )
   Polka::Email e = m_identity.emails().findEmail( id );
 
   bool ok;
-  QString email = KInputDialog::getText( i18n("Add email"),
-    i18n("Enter new email address"), e.emailAddress(), &ok );
+  QString email = QInputDialog::getText( this, i18n("Add email"),
+    i18n("Enter new email address"), QLineEdit::Normal, e.emailAddress(), &ok );
   if ( ok ) {
     Polka::Emails es = m_identity.emails();
     e.setEmailAddress( email );
     es.insert( e );
     m_identity.setEmails( es );
-    
+
     m_model->insert( m_identity, i18n("Edit email address %1 of %2")
       .arg( email ).arg( m_identity.name().value() ) );
   }
@@ -263,7 +266,7 @@ void PersonView::commentEmail( const QString &id )
     e.setComment( comment );
     es.insert( e );
     m_identity.setEmails( es );
-        
+
     m_model->insert( m_identity, i18n("Edit comment of email %2")
       .arg( e.emailAddress() ) );
   }
@@ -275,7 +278,7 @@ void PersonView::removeEmail( const QString &id )
   Polka::Email e = es.findEmail( id );
   es.remove( e );
   m_identity.setEmails( es );
-  
+
   m_model->insert( m_identity, i18n("Remove email address %1 from %2")
     .arg( e.emailAddress() ).arg( m_identity.name().value() ) );
 }
@@ -290,7 +293,7 @@ void PersonView::addAddress()
     c.setLabel( editor->address() );
     cs.insert( c );
     m_identity.setAddresses( cs );
-    
+
     m_model->insert( m_identity, i18n("Add address to %2")
       .arg( m_identity.name().value() ) );
   }
@@ -307,7 +310,7 @@ void PersonView::editAddress( const QString &id )
     address.setLabel( editor->address() );
     cs.insert( address );
     m_identity.setAddresses( cs );
-    
+
     m_model->insert( m_identity, i18n("Edit address of %2")
       .arg( m_identity.name().value() ) );
   }
@@ -319,7 +322,7 @@ void PersonView::removeAddress( const QString &id )
   Polka::Address c = cs.findAddress( id );
   cs.remove( c );
   m_identity.setAddresses( cs );
-  
+
   m_model->insert( m_identity, i18n("Remove address from %2")
     .arg( m_identity.name().value() ) );
 }
@@ -338,7 +341,7 @@ void PersonView::commentAddress( const QString &id )
     a.setComment( comment );
     as.insert( a );
     m_identity.setAddresses( as );
-        
+
     m_model->insert( m_identity, i18n("Edit comment of address of %2")
       .arg( m_identity.name().value() ) );
   }
@@ -355,7 +358,7 @@ void PersonView::addComment()
     c.setValue( editor->comment() );
     cs.insert( c );
     m_identity.setComments( cs );
-    
+
     m_model->insert( m_identity, i18n("Add comment to %2")
       .arg( m_identity.name().value() ) );
   }
@@ -372,7 +375,7 @@ void PersonView::editComment( const QString &id )
     comment.setValue( editor->comment() );
     cs.insert( comment );
     m_identity.setComments( cs );
-    
+
     m_model->insert( m_identity, i18n("Edit comment of %2")
       .arg( m_identity.name().value() ) );
   }
@@ -384,7 +387,7 @@ void PersonView::removeComment( const QString &id )
   Polka::Comment c = cs.findComment( id );
   cs.remove( c );
   m_identity.setComments( cs );
-  
+
   m_model->insert( m_identity, i18n("Remove comment from %2")
     .arg( m_identity.name().value() ) );
 }
@@ -398,7 +401,7 @@ void PersonView::addPhone()
     c.setId( KRandom::randomString( 10 ) );
     cs.insert( c );
     m_identity.setPhones( cs );
-    
+
     m_model->insert( m_identity, i18n("Add phone %1 to %2")
       .arg( c.phoneNumber() ).arg( m_identity.name().value() ) );
   }
@@ -415,7 +418,7 @@ void PersonView::editPhone( const QString &id )
     phone = editor->phone();
     cs.insert( phone );
     m_identity.setPhones( cs );
-    
+
     m_model->insert( m_identity, i18n("Edit phone %1 of %2")
       .arg( phone.phoneNumber() ).arg( m_identity.name().value() ) );
   }
@@ -427,7 +430,7 @@ void PersonView::removePhone( const QString &id )
   Polka::Phone c = cs.findPhone( id );
   cs.remove( c );
   m_identity.setPhones( cs );
-  
+
   m_model->insert( m_identity, i18n("Remove phone %1 from %2")
     .arg( c.phoneNumber() ).arg( m_identity.name().value() ) );
 }
@@ -446,7 +449,7 @@ void PersonView::commentPhone( const QString &id )
     p.setComment( comment );
     ps.insert( p );
     m_identity.setPhones( ps );
-        
+
     m_model->insert( m_identity, i18n("Edit comment of phone %2")
       .arg( p.phoneNumber() ) );
   }
@@ -462,7 +465,7 @@ void PersonView::addLink()
     c.setId( KRandom::randomString( 10 ) );
     cs.insert( c );
     m_identity.setLinks( cs );
-    
+
     m_model->insert( m_identity, i18n("Add link %1 to %2")
       .arg( c.url() ).arg( m_identity.name().value() ) );
   }
@@ -479,7 +482,7 @@ void PersonView::editLink( const QString &id )
     link = editor->link();
     cs.insert( link );
     m_identity.setLinks( cs );
-    
+
     m_model->insert( m_identity, i18n("Edit link %1 of %2")
       .arg( link.url() ).arg( m_identity.name().value() ) );
   }
@@ -491,7 +494,7 @@ void PersonView::removeLink( const QString &id )
   Polka::Link c = cs.findLink( id );
   cs.remove( c );
   m_identity.setLinks( cs );
-  
+
   m_model->insert( m_identity, i18n("Remove link %1 from %2")
     .arg( c.url() ).arg( m_identity.name().value() ) );
 }
@@ -510,7 +513,7 @@ void PersonView::commentLink( const QString &id )
     l.setComment( comment );
     ls.insert( l );
     m_identity.setLinks( ls );
-        
+
     m_model->insert( m_identity, i18n("Edit comment of link %2")
       .arg( l.url() ) );
   }
@@ -523,15 +526,15 @@ void PersonView::editName()
   QString oldNameString = name.value();
 
   bool ok;
-  QString nameString = KInputDialog::getText( i18n("Edit name"),
-    QString(), oldNameString, &ok );
+  QString nameString = QInputDialog::getText( this, i18n("Edit name"),
+    QString(), QLineEdit::Normal, oldNameString, &ok );
   if ( ok ) {
     name.setValue( nameString );
     m_identity.setName( name );
-    
+
     m_model->insert( m_identity, i18n("Changed name from %1 to %2")
       .arg( oldNameString ).arg( nameString ) );
-  }  
+  }
 }
 
 void PersonView::debugHtml()
@@ -540,16 +543,16 @@ void PersonView::debugHtml()
 
   QString html = renderer.personEditor( m_identity,
     m_model->pixmapPath( m_identity ) );
-  
+
   QFile file("polka.html");
   if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
     qDebug() << "Error opening html debug file";
     return;
   }
-  
+
   QTextStream out(&file);
   out << html;
-  
+
   file.close();
 
   if ( !m_dirWatch ) {
@@ -557,15 +560,15 @@ void PersonView::debugHtml()
     m_dirWatch = new KDirWatch( this );
     m_dirWatch->addFile( file.fileName() );
     connect( m_dirWatch, SIGNAL( dirty( const QString & ) ),
-      SLOT( reloadDebugHtml() ) );  
+      SLOT( reloadDebugHtml() ) );
 #endif
 }
-  
+
   m_webView->setHtml( html );
-  
+
   QStringList args;
   args << file.fileName();
-  
+
   KProcess::execute( "nc", args );
 }
 
@@ -578,10 +581,10 @@ void PersonView::reloadDebugHtml()
     qDebug() << "Error opening html debug file";
     return;
   }
-  
+
   QTextStream in(&file);
   QString html = in.readAll();
-  
+
   file.close();
 
   m_webView->setHtml( html );

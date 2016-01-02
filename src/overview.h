@@ -19,7 +19,7 @@
 #ifndef OVERVIEW_H
 #define OVERVIEW_H
 
-#include <QtGui>
+#include <QWidget>
 
 class Overview : public QWidget
 {
@@ -31,7 +31,6 @@ class Overview : public QWidget
     void showGroupView();
     void showListView();
     void showHistory();
-
 };
 
 #endif

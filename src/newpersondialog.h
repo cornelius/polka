@@ -22,13 +22,15 @@
 #include "polka/polka.h"
 #include "polkamodel.h"
 
-#include <KDialog>
-
-#include <QtGui>
+#include <QDialog>
 
 class MatchList;
 
-class NewPersonDialog : public KDialog
+class QLineEdit;
+class QSortFilterProxyModel;
+class QPushButton;
+
+class NewPersonDialog : public QDialog
 {
     Q_OBJECT
   public:
@@ -43,9 +45,10 @@ class NewPersonDialog : public KDialog
   private:
     PolkaModel *m_model;
     QSortFilterProxyModel *m_proxyModel;
-  
+
     QLineEdit *m_nameInput;
     MatchList *m_matchList;
+    QPushButton *m_okButton;
 };
 
 #endif

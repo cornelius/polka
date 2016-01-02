@@ -22,7 +22,7 @@
 #include "polkamodel.h"
 #include "fanmenu.h"
 
-#include <KLocale>
+#include <KLocalizedString>
 
 MagicMenuItem::MagicMenuItem()
 {

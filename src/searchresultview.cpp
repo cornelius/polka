@@ -21,7 +21,7 @@
 
 #include "matchlist.h"
 
-#include <KLocale>
+#include <QBoxLayout>
 
 SearchResultView::SearchResultView( PolkaModel *model )
   : m_model( model )
@@ -33,7 +33,7 @@ SearchResultView::SearchResultView( PolkaModel *model )
   m_matchList = new MatchList( m_model );
   connect( m_matchList, SIGNAL( activated() ), SLOT( slotActivated() ) );
   topLayout->addWidget( m_matchList );
-  
+
   topLayout->addStretch( 1 );
 }
 

@@ -25,7 +25,12 @@
 #include "polkamodel.h"
 #include "gitremote.h"
 
-#include <KLocale>
+#include <KLocalizedString>
+
+#include <QBoxLayout>
+#include <QCheckBox>
+#include <QPushButton>
+#include <QLabel>
 
 SettingsWidget::SettingsWidget( PolkaModel *model, QWidget *parent)
   : QWidget( parent ), m_model( model )

@@ -23,7 +23,7 @@
 
 #include "writetransaction.h"
 
-#include <KLocale>
+#include <KLocalizedString>
 #include <KRandom>
 
 FirstStartData::FirstStartData( PolkaModel *model )
@@ -34,13 +34,13 @@ FirstStartData::FirstStartData( PolkaModel *model )
 void FirstStartData::create()
 {
   WriteTransaction t( m_model, i18n("Creating first start data.") );
-  
+
   Polka::Identity me;
   Polka::Name name = me.name();
   name.setValue( "Cornelius Schumacher" );
   me.setName( name );
   me = m_model->addIdentity( me, m_model->rootGroup() );
-  
+
   Polka::Email email;
   email.setEmailAddress( "schumacher@kde.org" );
   Polka::Emails emails;
@@ -51,17 +51,17 @@ void FirstStartData::create()
   comment.setValue( i18n("I'm Cornelius Schumacher, the author of Polka, "
     "the humane address book for the cloud. "
     "If you have feedback or questions, or you would like to help, "
-    "please don't hesitate to contact me. Have fun with Polka.") );  
+    "please don't hesitate to contact me. Have fun with Polka.") );
   Polka::Comments comments;
   comments.addComment( comment );
   me.setComments( comments );
-  
+
   m_model->insert( me, i18n("Welcome to Polka") );
 
   m_model->saveViewPosition( m_model->rootGroup(), me, QPointF( 0, 0 ) );
 
   QString txt;
-  
+
   txt = i18n("Welcome to Polka!\n\n"
     "The goal of Polka is to provide a humane way\n"
     "for managing your information about other people,\n"
@@ -78,7 +78,7 @@ void FirstStartData::create()
   name.setValue( i18n("Help") );
   helpGroup.setName( name );
   helpGroup.setType( "group" );
-  
+
   helpGroup = m_model->addIdentity( helpGroup, m_model->rootGroup() );
 
   m_model->saveViewPosition( m_model->rootGroup(), helpGroup,
@@ -111,6 +111,6 @@ void FirstStartData::createLabel( const Polka::Identity &group,
   label.setText( text );
   label.setX( x );
   label.setY( y );
-  
-  m_model->saveViewLabel( group, label );  
+
+  m_model->saveViewLabel( group, label );
 }

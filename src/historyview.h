@@ -21,9 +21,11 @@
 
 #include "gitcommand.h"
 
-#include <QtGui>
+#include <QWidget>
 
 class PolkaModel;
+
+class QListWidget;
 
 class HistoryView : public QWidget
 {
@@ -40,7 +42,7 @@ class HistoryView : public QWidget
     PolkaModel *m_model;
 
     QListWidget *m_list;
-    
+
     int m_logCommand;
 };
 

@@ -19,18 +19,18 @@
 #ifndef ADDRESSEDITOR_H
 #define ADDRESSEDITOR_H
 
-#include <QtGui>
+#include <QDialog>
 
-#include <KDialog>
+class QTextEdit;
 
-class AddressEditor : public KDialog
+class AddressEditor : public QDialog
 {
   public:
     AddressEditor( QWidget *parent );
 
     void setAddress( const QString & );
     QString address() const;
-    
+
   private:
     QTextEdit *m_edit;
 };

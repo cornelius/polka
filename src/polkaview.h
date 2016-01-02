@@ -23,10 +23,8 @@
 
 #include "polka/polka.h"
 
-#include <QtGui>
+#include <QWidget>
 
-class QPainter;
-class KUrl;
 class PolkaModel;
 class GroupListView;
 class GroupGraphicsView;
@@ -37,6 +35,11 @@ class Overview;
 class HistoryView;
 class SearchEdit;
 class SearchResultView;
+
+class QPainter;
+class QPushButton;
+class QLabel;
+class QStackedLayout;
 
 class PolkaView : public QWidget
 {
@@ -76,10 +79,10 @@ class PolkaView : public QWidget
 
   signals:
     void dataWritten();
-  
+
   protected:
     void connectGroupView( GroupView * );
-  
+
   protected slots:
     void finishShowPerson();
     void closePersonView();

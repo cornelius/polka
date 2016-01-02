@@ -22,7 +22,8 @@
 #include "polka/polka.h"
 #include "polkamodel.h"
 
-#include <QtGui>
+#include <QWidget>
+#include <QLineEdit>
 
 class ImageLoader;
 
@@ -34,7 +35,7 @@ class AddPictureWidget : public QWidget
     ~AddPictureWidget();
 
     void show( const Polka::Identity & );
-    
+
   signals:
     void grabPicture();
     void gotPicture( ImageLoader * );
@@ -46,14 +47,14 @@ class AddPictureWidget : public QWidget
 
   private slots:
     void emitGrabPicture();
-    
+
   private:
     PolkaModel *m_model;
-    
+
     QLineEdit *m_twitterNameEdit;
     QLineEdit *m_facebookNameEdit;
 
-    Polka::Identity m_identity;    
+    Polka::Identity m_identity;
 };
 
 #endif

@@ -19,7 +19,7 @@
 
 #include "searchedit.h"
 
-#include <KLocale>
+#include <KLocalizedString>
 
 SearchEdit::SearchEdit()
 {

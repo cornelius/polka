@@ -23,34 +23,40 @@
 
 #include "polkaversion.h"
 
-#include <kapplication.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
-#include <KDE/KLocale>
+#include <KAboutData>
+#include <KLocalizedString>
 
-static const char description[] =
-  I18N_NOOP("The humane address book for the cloud");
+#include <QApplication>
+#include <QCommandLineParser>
 
 static const char version[] = POLKA_VERSION;
 
 int main(int argc, char **argv)
 {
-  KAboutData about( "polka", 0, ki18n("Polka"), version, ki18n(description),
-    KAboutData::License_GPL, ki18n("(C) 2011 Cornelius Schumacher"),
-    KLocalizedString(), 0, "schumacher@kde.org" );
-  about.addAuthor( ki18n("Cornelius Schumacher"), KLocalizedString(),
-    "schumacher@kde.org" );
-  KCmdLineArgs::init( argc, argv, &about );
+  QApplication app(argc, argv);
 
-  KApplication app;
+  KLocalizedString::setApplicationDomain("polka");
+
+  KAboutData about( QStringLiteral("polka"), i18n("Polka"), version,
+    i18n("The humane address book for the cloud"), KAboutLicense::GPL,
+    i18n("(c) 2009-2015 Cornelius Schumacher"), QStringLiteral(),
+    QStringLiteral("http://cornelius-schumacher.de/polka/"),
+    QStringLiteral("schumacher@kde.org"));
+
+  about.addAuthor(i18n("Cornelius Schumacher"), i18n("Creator"),
+    QStringLiteral("schumacher@kde.org"));
+
+  KAboutData::setApplicationData(about);
+
+  QCommandLineParser parser;
+  parser.addHelpOption();
+  parser.addVersionOption();
+  about.setupCommandLine(&parser);
+  parser.process(app);
+  about.processCommandLine(&parser);
 
   MainWindow *widget = new MainWindow;
-
-  if ( app.isSessionRestored() ) {
-    RESTORE(MainWindow);
-  } else {
-    widget->show();
-  }
+  widget->show();
 
   return app.exec();
 }

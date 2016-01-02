@@ -21,7 +21,10 @@
 
 #include "polkamodel.h"
 
-#include <KLocale>
+#include <KLocalizedString>
+
+#include <QBoxLayout>
+#include <QLabel>
 
 PictureSelectorButton::PictureSelectorButton( PolkaModel *model,
   QWidget *parent )
@@ -36,9 +39,9 @@ PictureSelectorButton::PictureSelectorButton( PolkaModel *model,
   m_label->setMidLineWidth( 2 );
 
   setSelected( false );
-  
+
   m_label->setFixedSize( 78, 78 );
-  
+
   m_label->setText( i18n("Loading...") );
 }
 

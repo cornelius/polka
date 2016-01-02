@@ -22,9 +22,9 @@
 #include "polka/polka.h"
 #include "polkamodel.h"
 
-#include <KDialog>
-
-#include <QtGui>
+#include <QWidget>
+#include <QSortFilterProxyModel>
+#include <QListView>
 
 class MatchList : public QWidget
 {

@@ -36,18 +36,23 @@
 #include "searchresultview.h"
 
 #include <KMessageBox>
-#include <KLocale>
-#include <KInputDialog>
+#include <KLocalizedString>
+
+#include <QPushButton>
+#include <QBoxLayout>
+#include <QLabel>
+#include <QStackedLayout>
+#include <QInputDialog>
 
 PolkaView::PolkaView(QWidget *parent)
   : QWidget( parent )
 {
   m_model = new PolkaModel( this );
   connect( m_model, SIGNAL( dataWritten() ), SIGNAL( dataWritten() ) );
-  
+
   QBoxLayout *topLayout = new QVBoxLayout( this );
 
-  
+
   QBoxLayout *buttonLayout = new QHBoxLayout;
   topLayout->addLayout( buttonLayout );
 
@@ -81,7 +86,7 @@ PolkaView::PolkaView(QWidget *parent)
 
   m_groupWidget = new QWidget;
   viewLayout->addWidget( m_groupWidget );
-  
+
   m_viewStack = new QStackedLayout( m_groupWidget );
 
 #ifndef MAKE_IT_MEEGO
@@ -214,8 +219,8 @@ void PolkaView::newSubGroup()
 void PolkaView::cloneGroup( const Polka::Identity &group )
 {
   bool ok;
-  QString name = KInputDialog::getText( i18n("Clone Group"),
-    i18n("Enter name of new group"),
+  QString name = QInputDialog::getText( this, i18n("Clone Group"),
+    i18n("Enter name of new group"), QLineEdit::Normal,
     i18n("Clone of %1").arg( group.name().value() ),
     &ok );
   if ( ok ) {
@@ -234,7 +239,7 @@ void PolkaView::cloneGroup( const Polka::Identity &group )
     }
 
     m_model->addIdentity( new_group, m_group );
-    
+
     showGroup( new_group );
   }
 }
@@ -392,7 +397,7 @@ void PolkaView::showOverview()
   m_searchEdit->blockSignals( true );
   m_searchEdit->setText( QString() );
   m_searchEdit->blockSignals( false );
-  
+
   m_viewStack->setCurrentWidget( m_overview );
 }
 

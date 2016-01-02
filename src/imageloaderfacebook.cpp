@@ -25,13 +25,13 @@ void ImageLoaderFacebook::load( const QString &facebookName )
 {
   setPictureType( "facebook" );
   setUsername( facebookName );
-  
-  KUrl url( "http://graph.facebook.com/" + facebookName + "/picture" );
+
+  QUrl url( "http://graph.facebook.com/" + facebookName + "/picture" );
 
   ImageLoader::load( url );
 }
 
-KUrl ImageLoaderFacebook::profileUrl() const
+QUrl ImageLoaderFacebook::profileUrl() const
 {
-  return KUrl( "http://facebook.com/" + username() );
+  return QUrl( "http://facebook.com/" + username() );
 }

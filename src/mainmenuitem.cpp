@@ -22,7 +22,7 @@
 #include "polkamodel.h"
 #include "fanmenu.h"
 
-#include <KLocale>
+#include <KLocalizedString>
 
 MainMenuItem::MainMenuItem()
   : m_defaultItemSize( 55 )
@@ -31,7 +31,7 @@ MainMenuItem::MainMenuItem()
   connect( &m_timer, SIGNAL( timeout() ), SLOT( hideItems() ) );
 
   setItemSize( m_defaultItemSize );
- 
+
   setBrush( QColor( 230,229,229 ) );
 
   QPen pen;

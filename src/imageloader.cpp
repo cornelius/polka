@@ -45,7 +45,7 @@ Polka::Identity ImageLoader::identity() const
   return m_identity;
 }
 
-void ImageLoader::load( const KUrl &url )
+void ImageLoader::load( const QUrl &url )
 {
   setUrl( url );
 
@@ -56,19 +56,19 @@ void ImageLoader::load( const KUrl &url )
     SLOT( slotData( KIO::Job *, const QByteArray & ) ) );
 }
 
-void ImageLoader::setUrl( const KUrl &url )
+void ImageLoader::setUrl( const QUrl &url )
 {
   m_url = url;
 }
 
-KUrl ImageLoader::url() const
+QUrl ImageLoader::url() const
 {
   return m_url;
 }
 
-KUrl ImageLoader::profileUrl() const
+QUrl ImageLoader::profileUrl() const
 {
-  return KUrl();
+  return QUrl();
 }
 
 void ImageLoader::slotResult( KJob *job )
@@ -86,7 +86,7 @@ void ImageLoader::slotResult( KJob *job )
       emit loaded( this );
     }
   }
-  
+
   deleteLater();
 }
 
@@ -128,6 +128,6 @@ Polka::Picture ImageLoader::picture()
   picture.setUrl( url().url() );
   picture.setPictureType( pictureType() );
   picture.setUsername( username() );
-  
+
   return picture;
 }

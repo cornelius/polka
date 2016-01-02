@@ -19,24 +19,44 @@
 
 #include "addresseditor.h"
 
-#include <KLocale>
+#include <KLocalizedString>
+#include <KConfigGroup>
+
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QTextEdit>
 
 AddressEditor::AddressEditor( QWidget *parent )
-  : KDialog( parent )
+  : QDialog( parent )
 {
-  setCaption( i18n("Add address") );
-  setButtons( Ok | Cancel );
+  setWindowTitle( i18n("Add address") );
+
+  QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+  QWidget *mainWidget = new QWidget(this);
+  QVBoxLayout *mainLayout = new QVBoxLayout;
+  setLayout(mainLayout);
+  mainLayout->addWidget(mainWidget);
+
+  QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+  okButton->setDefault(true);
+  okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+  connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+  connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
   setModal( true );
 
   m_edit = new QTextEdit;
-  setMainWidget( m_edit );
+
+  mainLayout->addWidget( m_edit );
+  mainLayout->addWidget(buttonBox);
 
   m_edit->setFocus();
 }
 
 void AddressEditor::setAddress( const QString &text )
 {
-  setCaption( i18n("Edit address") );
+  setWindowTitle( i18n("Edit address") );
 
   m_edit->setPlainText( text );
 }

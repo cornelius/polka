@@ -21,9 +21,9 @@
 
 #include "htmlcreator.h"
 
-#include <KLocale>
-#include <KStandardDirs>
+#include <KLocalizedString>
 
+#include <QStandardPaths>
 #include <QDebug>
 
 namespace Polka {
@@ -43,12 +43,12 @@ QString HtmlRenderer::personEditor( const Identity &identity,
 
   rule.add( "background-color", "#80CCFF" );
   rule.add( "border", "1px solid" );
-  
+
 //  rule.add( "position", "absolute" );
   rule.add( "bottom", "10px" );
-  
+
   QString radius = "6px 6px";
-  
+
   rule.add( "padding", radius );
   rule.add( "margin-top", "20px" );
 
@@ -82,7 +82,7 @@ QString HtmlRenderer::personEditor( const Identity &identity,
   buttonRule.add( "position", "absolute" );
   buttonRule.add( "top", "10px" );
   buttonRule.add( "right", "10px" );
-  
+
   css.addRule( ".global-buttons a", "padding-left", "10px" );
 
   css.addRule( "h1 img", "padding-right", "10px" );
@@ -92,13 +92,13 @@ QString HtmlRenderer::personEditor( const Identity &identity,
 
   HtmlElement &buttons = doc.element("div");
   buttons.c("global-buttons");
-  
+
   if ( enableMagic ) {
     HtmlElement &magicButton = buttons.element("a");
     magicButton.attribute("href","polka:magic");
     magicButton.text("Magic");
   }
-  
+
   HtmlElement &closeButton = buttons.element("a");
   closeButton.attribute("href","polka:close");
   closeButton.text("Close");
@@ -327,7 +327,7 @@ void HtmlRenderer::addEditControls( HtmlElement &div, const QString &typeName,
   const Comment &comment, bool commentEnabled )
 {
   QString commentSrc = "file://" +
-    KStandardDirs::locate( "appdata", "comment.png" );
+    QStandardPaths::locate( QStandardPaths::DataLocation, "comment.png" );
 
   if ( !comment.value().isEmpty() ) {
     HtmlElement &aImg = div.element("a");

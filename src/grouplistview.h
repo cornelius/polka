@@ -21,9 +21,9 @@
 
 #include "groupview.h"
 
-#include <QtGui>
-
 class PolkaItemModel;
+
+class QListView;
 
 class GroupListView : public GroupView
 {

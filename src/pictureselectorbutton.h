@@ -21,9 +21,11 @@
 
 #include "polka/polka.h"
 
-#include <QtGui>
+#include <QWidget>
 
 class PolkaModel;
+
+class QLabel;
 
 class PictureSelectorButton : public QWidget
 {
@@ -48,9 +50,9 @@ class PictureSelectorButton : public QWidget
 
   private:
     PolkaModel *m_model;
-  
+
     Polka::Picture m_picture;
-  
+
     QLabel *m_label;
 };
 

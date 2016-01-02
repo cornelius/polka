@@ -23,23 +23,37 @@
 
 #include <KConfig>
 #include <KMessageBox>
-#include <KPushButton>
-#include <KGlobal>
+#include <KConfigGroup>
+#include <KSharedConfig>
+#include <KWindowConfig>
+
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
 
 NewPersonDialog::NewPersonDialog( PolkaModel *model, QWidget *parent )
-  : KDialog( parent ), m_model( model ), m_proxyModel( 0 ), m_matchList( 0 )
+  : QDialog( parent ), m_model( model ), m_proxyModel( 0 ), m_matchList( 0 )
 {
-  setCaption( "New Person" );
-  setButtons( KDialog::Ok | KDialog::Cancel );
+  setWindowTitle( "New Person" );
+
   setModal( true );
 
-  QWidget *topWidget = new QWidget;
-  
+  QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+  m_okButton = buttonBox->button(QDialogButtonBox::Ok);
+  m_okButton->setDefault(true);
+  m_okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+  connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+  connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
+  QWidget *topWidget = new QWidget(this);
+
   QBoxLayout *topLayout = new QVBoxLayout( topWidget );
 
   QLabel *label = new QLabel( "Enter name of new person" );
   topLayout->addWidget( label );
-  
+
   m_nameInput = new QLineEdit;
   topLayout->addWidget( m_nameInput );
   connect( m_nameInput, SIGNAL( textChanged( const QString & ) ),
@@ -47,14 +61,15 @@ NewPersonDialog::NewPersonDialog( PolkaModel *model, QWidget *parent )
 
   m_matchList = new MatchList( m_model );
   topLayout->addWidget( m_matchList );
-  
+
   connect( m_matchList, SIGNAL( activated() ), SLOT( accept() ) );
   connect( m_nameInput, SIGNAL( textChanged( const QString & ) ),
     m_matchList, SLOT( filter( const QString & ) ) );
 
-  setMainWidget( topWidget );
+  topLayout->addWidget( buttonBox );
 
-  restoreDialogSize( KGlobal::config()->group("newpersondialog") );
+  KConfigGroup cg = KSharedConfig::openConfig()->group("NewPersonDialog");
+  KWindowConfig::restoreWindowSize( windowHandle(), cg );
 
   m_nameInput->setFocus();
 
@@ -63,8 +78,8 @@ NewPersonDialog::NewPersonDialog( PolkaModel *model, QWidget *parent )
 
 NewPersonDialog::~NewPersonDialog()
 {
-  KConfigGroup cg( KGlobal::config(), "newpersondialog" );
-  saveDialogSize( cg );
+  KConfigGroup cg = KSharedConfig::openConfig()->group("NewPersonDialog");
+  KWindowConfig::saveWindowSize( windowHandle(), cg );
 }
 
 Polka::Identity NewPersonDialog::identity()
@@ -82,5 +97,5 @@ Polka::Identity NewPersonDialog::identity()
 
 void NewPersonDialog::checkOkButton()
 {
-  button( Ok )->setEnabled( !m_nameInput->text().isEmpty() );
+  m_okButton->setEnabled( !m_nameInput->text().isEmpty() );
 }

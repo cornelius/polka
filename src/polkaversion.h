@@ -1,1 +1,1 @@
-#define POLKA_VERSION "0.8"
+#define POLKA_VERSION "1.0"
